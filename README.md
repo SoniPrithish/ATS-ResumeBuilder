@@ -1,3 +1,3 @@
-# TechResume
+# ATS-ResumeBuilder
 
-A personal tech resume project.
+A personal ATS-friendly resume builder project.
