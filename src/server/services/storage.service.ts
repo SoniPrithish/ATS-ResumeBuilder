@@ -101,12 +101,16 @@ export const storageService = {
       const url = getFileUrl(key);
       log.info({ key }, "Resume file URL retrieved");
 
-      // In production, this would fetch from R2
-      // For now, return success with URL info
+      const res = await fetch(url);
+      if (!res.ok) {
+        throw new Error(`Failed to fetch file (status ${res.status})`);
+      }
+      const bytes = await res.arrayBuffer();
       return {
         success: true,
-        data: Buffer.from(url),
+        data: Buffer.from(bytes),
       };
+    } catch (err) {
     } catch (err) {
       const message =
         err instanceof Error ? err.message : "Unknown error";
