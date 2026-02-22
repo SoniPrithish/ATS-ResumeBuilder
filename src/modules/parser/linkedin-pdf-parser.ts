@@ -149,12 +149,10 @@ function parseLinkedInExperience(lines: string[]): ExperienceEntry[] {
     if (dateMatch) {
       const bullets: string[] = [];
       let j = i + 3;
-      while (j < lines.length && lines[j].length > 0 && !LINKEDIN_DATE_RE.test(lines[j + 1] ?? "")) {
-        if (lines[j].length > 0) {
-          bullets.push(lines[j]);
-        }
+      while (j < lines.length && lines[j].length > 0) {
+        bullets.push(lines[j]);
         j++;
-        // Stop if next line looks like a new title (followed by company + date)
+        // Stop if two lines ahead looks like a date range (new entry pattern)
         if (j + 2 < lines.length && LINKEDIN_DATE_RE.test(lines[j + 2] ?? "")) {
           break;
         }

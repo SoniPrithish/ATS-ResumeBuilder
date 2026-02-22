@@ -63,14 +63,13 @@ export const storageService = {
     }
 
     try {
-      const key = `resumes/${userId}/${resumeId}/${fileName}`;
       const result = await uploadFile(buffer, fileName, contentType);
 
       if (!result.success) {
         return result as ServiceResult<{ url: string; key: string }>;
       }
 
-      log.info({ userId, resumeId, key }, "Resume file uploaded");
+      log.info({ userId, resumeId, key: result.data.key }, "Resume file uploaded");
 
       return {
         success: true,
