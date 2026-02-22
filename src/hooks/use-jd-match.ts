@@ -1,8 +1,7 @@
 import { trpc } from '@/lib/trpc-client';
-import { useToast } from '@/hooks/use-toast';
+import { toast } from 'sonner';
 
 export function useJDMatch() {
-    const { toast } = useToast();
     const utils = trpc.useUtils();
 
     return trpc.match.matchResumeToJD.useMutation({
@@ -10,10 +9,8 @@ export function useJDMatch() {
             utils.match.getMatch.invalidate({ id: data.id });
         },
         onError: (error) => {
-            toast({
-                title: 'Matching failed',
+            toast.error('Matching failed', {
                 description: error.message || 'Failed to match resume to JD.',
-                variant: 'destructive',
             });
         }
     });
