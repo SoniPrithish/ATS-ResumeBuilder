@@ -85,13 +85,13 @@ export async function publishJob<T extends Record<string, unknown>>(
  * @param request - The incoming Request object
  * @returns True if the signature is valid
  */
-export async function verifySignature(request: Request): Promise<boolean> {
+export async function verifySignature(request: Request): Promise<{ valid: boolean; body?: string }> {
     try {
         const body = await request.text();
         const signature = request.headers.get("upstash-signature");
 
         if (!signature) {
-            return false;
+            return { valid: false };
         }
 
         const isValid = await qstashReceiver.verify({
@@ -99,9 +99,10 @@ export async function verifySignature(request: Request): Promise<boolean> {
             signature,
         });
 
-        return isValid;
+        return { valid: isValid, body };
     } catch (error) {
         console.error("[QStash] Signature verification failed:", error);
-        return false;
+        return { valid: false };
     }
+}
 }
