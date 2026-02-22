@@ -1,0 +1,27 @@
+import { trpc } from '@/lib/trpc-client';
+import { useToast } from '@/hooks/use-toast';
+
+export function useATSScore(resumeId: string) {
+    const { toast } = useToast();
+    const utils = trpc.useUtils();
+
+    return trpc.ats.score.useMutation({
+        onSuccess: () => {
+            utils.ats.getScore.invalidate(resumeId);
+            utils.resume.getById.invalidate(resumeId);
+        },
+        onError: (error) => {
+            toast({
+                title: 'Scoring failed',
+                description: error.message || 'Failed to score resume.',
+                variant: 'destructive',
+            });
+        }
+    });
+}
+
+export function useCachedScore(resumeId: string) {
+    return trpc.ats.getScore.useQuery(resumeId, {
+        enabled: !!resumeId,
+    });
+}

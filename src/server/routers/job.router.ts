@@ -1,5 +1,6 @@
 import { z } from "zod/v4";
 import { protectedProcedure, router } from "@/server/trpc/trpc";
+import { TRPCError } from "@trpc/server";
 import { matcherService } from "@/server/services/matcher.service";
 
 export const jobRouter = router({
@@ -11,7 +12,11 @@ export const jobRouter = router({
                 rawText: z.string().min(50).max(20000),
             })
         )
-        .mutation(({ ctx, input }) => matcherService.saveJobDescription(ctx.session.user.id, input)),
+        .mutation(async ({ ctx, input }) => {
+            const result = await matcherService.saveJobDescription(ctx.session.user.id, input);
+            if (!result.success) throw new TRPCError({ code: "INTERNAL_SERVER_ERROR", message: result.error });
+            return result.data;
+        }),
 
     list: protectedProcedure
         .input(
@@ -20,15 +25,25 @@ export const jobRouter = router({
                 pageSize: z.number().min(1).max(50).default(10),
             })
         )
-        .query(({ ctx, input }) =>
-            matcherService.getUserJobDescriptions(ctx.session.user.id, input.page, input.pageSize)
-        ),
+        .query(async ({ ctx, input }) => {
+            const result = await matcherService.getUserJobDescriptions(ctx.session.user.id, input.page, input.pageSize);
+            if (!result.success) throw new TRPCError({ code: "INTERNAL_SERVER_ERROR", message: result.error });
+            return result.data;
+        }),
 
     getById: protectedProcedure
         .input(z.object({ id: z.string() }))
-        .query(({ ctx, input }) => matcherService.getJobDescription(input.id, ctx.session.user.id)),
+        .query(async ({ ctx, input }) => {
+            const result = await matcherService.getJobDescription(input.id, ctx.session.user.id);
+            if (!result.success) throw new TRPCError({ code: result.code === "NOT_FOUND" ? "NOT_FOUND" : "INTERNAL_SERVER_ERROR", message: result.error });
+            return result.data;
+        }),
 
     delete: protectedProcedure
         .input(z.object({ id: z.string() }))
-        .mutation(({ ctx, input }) => matcherService.deleteJobDescription(input.id, ctx.session.user.id)),
+        .mutation(async ({ ctx, input }) => {
+            const result = await matcherService.deleteJobDescription(input.id, ctx.session.user.id);
+            if (!result.success) throw new TRPCError({ code: result.code === "NOT_FOUND" ? "NOT_FOUND" : "INTERNAL_SERVER_ERROR", message: result.error });
+            return result.data;
+        }),
 });

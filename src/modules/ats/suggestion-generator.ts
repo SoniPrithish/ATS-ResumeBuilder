@@ -76,7 +76,7 @@ export function generateSuggestions(breakdown: ATSBreakdown): ATSSuggestion[] {
     if (breakdown.bullets) {
         const priority = scoreToPriority(breakdown.bullets.score);
         if (priority) {
-            const message = getBulletMessage(breakdown.bullets.score, breakdown.bullets.suggestions);
+            const message = getBulletMessage(breakdown.bullets.score);
             suggestions.push({
                 id: nanoid(),
                 category: "bullets",
@@ -177,7 +177,7 @@ function getSectionMessage(score: number, details: string[]): string {
     return "Consider adding optional sections like Projects or Certifications for a more complete resume.";
 }
 
-function getBulletMessage(score: number, details: string[]): string {
+function getBulletMessage(score: number): string {
     if (score < 40) {
         return (
             "Most bullet points use weak language. Replace phrases like 'Responsible for' " +

@@ -77,6 +77,7 @@ export async function parseResume(
       return {
         success: true,
         data,
+        rawText,
         errors: [],
         warnings: ["Detected LinkedIn PDF format"],
         parseTimeMs: Math.round(performance.now() - startTime),
@@ -169,6 +170,7 @@ export async function parseResume(
   return {
     success: errors.length === 0,
     data: resume,
+    rawText,
     errors,
     warnings,
     parseTimeMs: Math.round(performance.now() - startTime),

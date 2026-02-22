@@ -42,11 +42,12 @@ export async function withRetry<T>(
     for (let attempt = 0; attempt <= maxRetries; attempt++) {
         try {
             return await fn();
-        } catch (error: any) {
+        } catch (err: unknown) {
+            const error = err as Record<string, unknown>;
             const status =
                 error?.statusCode ??
                 error?.status ??
-                error?.response?.status;
+                (error?.response as Record<string, unknown>)?.status;
 
             if (status === 429) {
                 if (attempt === maxRetries) {
@@ -73,9 +74,9 @@ export async function withRetry<T>(
 
             throw new AIProviderError(
                 AI_ERROR_CODES.GENERATION_FAILED,
-                error?.message ?? 'Unknown error',
+                (error?.message as string) ?? 'Unknown error',
                 providerName,
-                status,
+                status as number | undefined,
             );
         }
     }
