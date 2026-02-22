@@ -5,9 +5,7 @@
  */
 
 import { NextResponse } from "next/server";
-import { storageService } from "@/server/services/storage.service";
 import { resumeService } from "@/server/services/resume.service";
-import { parseResume } from "@/modules/parser";
 
 /** Maximum file size: 5MB */
 const MAX_FILE_SIZE = 5 * 1024 * 1024;
@@ -25,7 +23,6 @@ const ALLOWED_TYPES: Record<string, "pdf" | "docx"> = {
 export async function POST(request: Request): Promise<Response> {
   try {
     // Check authentication (simplified — in production use NextAuth)
-    const authHeader = request.headers.get("authorization");
     const userId = request.headers.get("x-user-id");
 
     if (!userId) {

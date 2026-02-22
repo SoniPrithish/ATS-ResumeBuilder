@@ -34,7 +34,7 @@ export function extractContact(text: string): ContactInfo {
   const phone = extractPhone(headerBlock);
   const linkedin = extractLinkedIn(headerBlock);
   const github = extractGitHub(headerBlock);
-  const website = extractWebsite(headerBlock, linkedin, github);
+  const website = extractWebsite(headerBlock);
   const location = extractLocation(headerBlock);
   const fullName = extractName(headerLines, email, phone);
 
@@ -70,9 +70,7 @@ function extractGitHub(text: string): string | null {
 }
 
 function extractWebsite(
-  text: string,
-  _linkedin: string | null,
-  _github: string | null
+  text: string
 ): string | null {
   const urls = text.match(URL_RE);
   if (!urls) return null;

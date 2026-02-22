@@ -6,7 +6,6 @@
 
 import { NextResponse } from "next/server";
 import { verifySignature } from "@/server/lib/qstash";
-import { parseResume } from "@/modules/parser";
 import { resumeService } from "@/server/services/resume.service";
 import { createChildLogger } from "@/server/lib/logger";
 
@@ -45,10 +44,9 @@ export async function POST(request: Request): Promise<Response> {
     // Route by job type
     switch (payload.type) {
       case "PARSE_RESUME": {
-        const { resumeId, userId, fileType } = payload.data as {
+        const { resumeId, userId } = payload.data as {
           resumeId: string;
           userId: string;
-          fileType: "pdf" | "docx";
         };
 
         // Idempotency: check if already parsed
