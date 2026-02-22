@@ -49,6 +49,14 @@ export async function POST(request: Request): Promise<Response> {
           userId: string;
         };
 
+        if (!resumeId || typeof resumeId !== "string" || 
+            !userId || typeof userId !== "string") {
+          return NextResponse.json(
+            { success: false, error: "Missing resumeId or userId" },
+            { status: 400 }
+          );
+        }
+
         // Idempotency: check if already parsed
         const existing = await resumeService.getResume(resumeId, userId);
         if (
