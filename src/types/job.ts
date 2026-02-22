@@ -6,10 +6,15 @@
 
 /** Keywords extracted from a job description */
 export interface ExtractedKeywords {
+    hardSkills: string[];
+    tools: string[];
+    certifications: string[];
     required: string[];
     preferred: string[];
     technologies: string[];
     softSkills: string[];
+    yearsExperience?: number;
+    educationLevel?: string;
 }
 
 /** Experience level parsed from a job description */
@@ -25,11 +30,14 @@ export type ExperienceLevel =
 export interface ParsedJobDescription {
     title: string;
     company: string;
+    rawText: string;
     location?: string;
     remote?: boolean;
     experienceLevel: ExperienceLevel;
     keywords: ExtractedKeywords;
     responsibilities: string[];
+    requirements: string[];
+    preferred: string[];
     qualifications: string[];
     salaryRange?: {
         min?: number;
@@ -41,8 +49,11 @@ export interface ParsedJobDescription {
 /** A gap identified between resume skills and job requirements */
 export interface SkillGap {
     skill: string;
-    importance: "required" | "preferred";
-    suggestion: string;
+    category: "critical" | "recommended" | "bonus";
+    source: "required" | "preferred";
+    relatedSkillsInResume: string[];
+    importance?: "required" | "preferred";
+    suggestion?: string;
 }
 
 /** Result of matching a resume against a job description */
