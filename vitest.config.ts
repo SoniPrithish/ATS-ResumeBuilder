@@ -13,7 +13,7 @@ export default defineConfig({
         coverage: {
             provider: "v8",
             reporter: ["text", "json", "html", "lcov"],
-            include: ["src/modules/parser/**/*.{ts,tsx}"],
+            include: ["src/modules/parser/**/*.{ts,tsx}", "src/modules/ats/**/*.{ts,tsx}"],
             exclude: [
                 "src/**/*.test.{ts,tsx}",
                 "src/**/*.d.ts",
