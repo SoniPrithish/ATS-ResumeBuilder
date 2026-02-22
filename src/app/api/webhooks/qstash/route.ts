@@ -32,13 +32,22 @@ export async function POST(request: Request): Promise<Response> {
     }
 
     // Parse payload
-    const payload = JSON.parse(verification.body) as JobPayload;
+    let payload: JobPayload;
+    try {
+      payload = JSON.parse(verification.body) as JobPayload;
+    } catch {
+      return NextResponse.json(
+        { success: false, error: "Invalid JSON payload" },
+        { status: 400 }
+      );
+    }
 
     if (!payload.type || !payload.data) {
       return NextResponse.json(
         { success: false, error: "Invalid job payload" },
         { status: 400 }
       );
+    }
     }
 
     // Route by job type
