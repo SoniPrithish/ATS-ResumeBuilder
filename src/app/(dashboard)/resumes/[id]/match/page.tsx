@@ -84,23 +84,23 @@ export default function JDMatchPage({ params }: { params: Promise<{ id: string }
                     <div className="flex justify-between items-center bg-muted/20 p-4 rounded-xl border">
                         <div>
                             <p className="text-sm text-muted-foreground mb-1">Matching against:</p>
-                            <h3 className="font-semibold">{matchData.jobTitle || "Job Description"} {matchData.company ? `at ${matchData.company}` : ""}</h3>
+                            <h3 className="font-semibold">{(matchData as any).jobTitle || "Job Description"} {(matchData as any).company ? `at ${(matchData as any).company}` : ""}</h3>
                         </div>
                         <Button variant="outline" onClick={() => setMatchData(null)} size="sm">
                             <RefreshCw className="w-4 h-4 mr-2" /> Match Another
                         </Button>
                     </div>
 
-                    <MatchResults matchData={matchData} />
+                    <MatchResults matchData={matchData as any} />
                     <KeywordComparison
-                        matched={matchData.keywords?.matched || []}
-                        missing={matchData.keywords?.missing || []}
+                        matched={(matchData as any).keywords?.matched || []}
+                        missing={(matchData as any).keywords?.missing || []}
                     />
-                    <GapReport gaps={matchData.gaps || []} />
+                    <GapReport gaps={(matchData as any).gaps || []} />
 
                     <div className="flex justify-center pt-8 border-t">
                         <Button size="lg" asChild className="gap-2">
-                            <Link href={`/resumes/${resume.id}/tailor?jobId=${matchData.jobId}`}>
+                            <Link href={`/resumes/${resume.id}/tailor?jobId=${(matchData as any).jobId}`}>
                                 ✨ Tailor Resume for this Role
                             </Link>
                         </Button>

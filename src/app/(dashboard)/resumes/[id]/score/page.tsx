@@ -83,10 +83,10 @@ export default function ScorePage({ params }: { params: Promise<{ id: string }> 
                                 </div>
                                 <div className="p-6">
                                     <TabsContent value="suggestions" className="m-0 border-none outline-none">
-                                        <SuggestionList suggestions={scoreData.suggestions || []} />
+                                        <SuggestionList suggestions={(scoreData.suggestions as any) || []} />
                                     </TabsContent>
                                     <TabsContent value="breakdown" className="m-0 border-none outline-none">
-                                        <ScoreBreakdown categories={scoreData.categories || []} />
+                                        <ScoreBreakdown categories={(scoreData as any).categories || []} />
                                     </TabsContent>
                                 </div>
                             </Tabs>
@@ -96,12 +96,12 @@ export default function ScorePage({ params }: { params: Promise<{ id: string }> 
 
                 {/* Right Column: Sidebar */}
                 <div className="space-y-6">
-                    {scoreData && scoreData.keywords && (
+                    {scoreData && (scoreData as any).keywords && (
                         <div className="sticky top-24">
                             <h3 className="font-semibold text-lg mb-4">Keyword Analysis</h3>
                             <KeywordCloud
-                                matched={scoreData.keywords.matched || []}
-                                missing={scoreData.keywords.missing || []}
+                                matched={(scoreData as any).keywords.matched || []}
+                                missing={(scoreData as any).keywords.missing || []}
                             />
                         </div>
                     )}
