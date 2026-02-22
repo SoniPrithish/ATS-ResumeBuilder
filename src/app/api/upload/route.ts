@@ -7,8 +7,7 @@
 import { NextResponse } from "next/server";
 import { resumeService } from "@/server/services/resume.service";
 
-/** Maximum file size: 5MB */
-const MAX_FILE_SIZE = 5 * 1024 * 1024;
+import { MAX_FILE_SIZE } from "@/lib/constants";
 
 /** Allowed MIME types */
 const ALLOWED_TYPES: Record<string, "pdf" | "docx"> = {
