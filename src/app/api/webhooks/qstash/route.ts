@@ -23,8 +23,8 @@ interface JobPayload {
 export async function POST(request: Request): Promise<Response> {
   try {
     // Verify QStash signature
-    const isValid = await verifySignature(request);
-    if (!isValid) {
+    const verification = await verifySignature(request);
+    if (!verification.valid || !verification.body) {
       return NextResponse.json(
         { success: false, error: "Invalid signature" },
         { status: 401 }
@@ -32,7 +32,7 @@ export async function POST(request: Request): Promise<Response> {
     }
 
     // Parse payload
-    const payload = (await request.json()) as JobPayload;
+    const payload = JSON.parse(verification.body) as JobPayload;
 
     if (!payload.type || !payload.data) {
       return NextResponse.json(
