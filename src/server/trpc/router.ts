@@ -11,19 +11,21 @@
 
 import { router } from "./trpc";
 import { resumeRouter } from "@/server/routers/resume.router";
+import { atsRouter } from "@/server/routers/ats.router";
 
 /**
  * Root application router.
  * Sub-routers will be added by other agents:
  * - resumeRouter (Agent 1) ✓
  * - parserRouter (Agent 2)
- * - atsRouter (Agent 3)
+ * - atsRouter (Agent 2) ✓
  * - aiRouter (Agent 4)
  * - dashboardRouter (Agent 5)
  * - exportRouter (Agent 6)
  */
 export const appRouter = router({
     resume: resumeRouter,
+    ats: atsRouter,
 });
 
 /** Type definition for the root router (used by tRPC client) */
