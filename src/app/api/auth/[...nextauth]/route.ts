@@ -4,4 +4,6 @@
  * Handles sign-in, sign-out, session management, and OAuth callbacks.
  */
 
-export { handlers as GET, handlers as POST } from "@/server/auth/config";
+import { handlers } from "@/server/auth/config";
+
+export const { GET, POST } = handlers;

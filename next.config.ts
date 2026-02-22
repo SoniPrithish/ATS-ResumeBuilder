@@ -6,7 +6,7 @@ const nextConfig: NextConfig = {
 
   /** Experimental features */
   experimental: {
-    /** Server actions are enabled by default in Next 15 */
+    /** Server actions are enabled by default in Next 15+ */
     serverActions: {
       bodySizeLimit: "5mb",
     },
@@ -20,9 +20,11 @@ const nextConfig: NextConfig = {
     ],
   },
 
-  /** Webpack customizations */
+  /** Turbopack config (Next 16 default bundler) */
+  turbopack: {},
+
+  /** Webpack fallback for pdf-parse in server environment */
   webpack: (config, { isServer }) => {
-    // Fix for pdf-parse in server environment
     if (isServer) {
       config.externals = [...(config.externals || []), "canvas"];
     }
