@@ -69,6 +69,11 @@ describe("storageService", () => {
     it("should return file data on success", async () => {
       mockR2.getFileUrl.mockReturnValue("https://test.r2.dev/file.pdf");
 
+      global.fetch = vi.fn().mockResolvedValue({
+        ok: true,
+        arrayBuffer: vi.fn().mockResolvedValue(new ArrayBuffer(8))
+      });
+
       const result = await storageService.getResumeFile("uploads/test.pdf");
 
       expect(result.success).toBe(true);

@@ -111,7 +111,6 @@ export const storageService = {
         data: Buffer.from(bytes),
       };
     } catch (err) {
-    } catch (err) {
       const message =
         err instanceof Error ? err.message : "Unknown error";
       log.error({ key, error: message }, "Failed to get resume file");

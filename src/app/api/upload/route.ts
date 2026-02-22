@@ -6,6 +6,7 @@
 
 import { NextResponse } from "next/server";
 import { resumeService } from "@/server/services/resume.service";
+import { auth } from "@/server/auth/config";
 
 import { MAX_FILE_SIZE } from "@/lib/constants";
 
@@ -21,8 +22,8 @@ const ALLOWED_TYPES: Record<string, "pdf" | "docx"> = {
  */
 export async function POST(request: Request): Promise<Response> {
   try {
-    // Check authentication (simplified — in production use NextAuth)
-    const userId = request.headers.get("x-user-id");
+    const session = await auth();
+    const userId = session?.user?.id;
 
     if (!userId) {
       return NextResponse.json(
