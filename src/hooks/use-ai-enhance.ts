@@ -42,3 +42,4 @@ export function useGenerateSummary() {
         }
     });
 }
+// group 1 modifications
