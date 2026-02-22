@@ -33,7 +33,7 @@ export interface PromptTemplate {
     userPrompt: string;
     maxTokens: number;
     temperature: number;
-    outputSchema?: ZodSchema<any>;
+    outputSchema?: ZodSchema<unknown>;
 }
 
 /**

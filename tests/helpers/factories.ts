@@ -220,9 +220,15 @@ export function createMockATSScore(
 export function createMockExtractedKeywords(
     overrides: Partial<ExtractedKeywords> = {}
 ): ExtractedKeywords {
+    const hardSkills = ["TypeScript", "React", "Node.js", "PostgreSQL"];
+    const preferred = ["GraphQL", "Docker", "Kubernetes", "AWS"];
+
     return {
-        required: ["TypeScript", "React", "Node.js", "PostgreSQL"],
-        preferred: ["GraphQL", "Docker", "Kubernetes", "AWS"],
+        hardSkills,
+        tools: ["Docker", "Kubernetes", "AWS"],
+        certifications: [],
+        required: hardSkills,
+        preferred,
         technologies: ["TypeScript", "React", "Node.js", "PostgreSQL", "Redis"],
         softSkills: ["Leadership", "Communication", "Problem Solving"],
         ...overrides,
@@ -235,6 +241,7 @@ export function createMockJobDescription(
     return {
         title: "Senior Full-Stack Engineer",
         company: "InnovateTech",
+        rawText: "Senior Full-Stack Engineer at InnovateTech. 5+ years experience required.",
         location: "Remote",
         experienceLevel: "senior",
         keywords: createMockExtractedKeywords(),
@@ -243,6 +250,11 @@ export function createMockJobDescription(
             "Design and implement scalable APIs",
             "Mentor junior engineers",
         ],
+        requirements: [
+            "5+ years of software engineering experience",
+            "Strong TypeScript and React skills",
+        ],
+        preferred: ["Experience with Kubernetes"],
         qualifications: [
             "5+ years of software engineering experience",
             "Strong TypeScript and React skills",
@@ -258,9 +270,11 @@ export function createMockSkillGap(
 ): SkillGap {
     return {
         skill: "Kubernetes",
+        category: "recommended",
+        source: "preferred",
+        relatedSkillsInResume: ["Docker"],
         importance: "preferred",
-        suggestion:
-            "Consider adding container orchestration experience or relevant coursework",
+        suggestion: "Consider adding container orchestration experience",
         ...overrides,
     };
 }

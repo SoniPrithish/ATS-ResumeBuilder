@@ -53,4 +53,6 @@ export interface ParseResult {
   warnings: string[];
   /** Total parse time in milliseconds */
   parseTimeMs: number;
+  /** Raw extracted text */
+  rawText?: string;
 }

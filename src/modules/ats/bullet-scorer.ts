@@ -90,7 +90,7 @@ export function scoreBullets(input: BulletInput): CategoryScore {
                         ? "Many bullets need stronger action verbs and quantified results."
                         : "Most bullets need significant improvement — use the STAR/XYZ method.",
         suggestions: suggestions.filter(
-            (d) => d.startsWith("⚠️") || d.startsWith("❌")
+            (d) => d.startsWith("⚠️") || d.startsWith("❌") || d.startsWith("✅")
         ),
     };
 }

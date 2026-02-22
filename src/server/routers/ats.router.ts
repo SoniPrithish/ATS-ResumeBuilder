@@ -5,6 +5,7 @@
 
 import { z } from "zod/v4";
 import { protectedProcedure, router } from "@/server/trpc/trpc";
+import { TRPCError } from "@trpc/server";
 import { atsService } from "@/server/services/ats.service";
 
 export const atsRouter = router({
@@ -19,22 +20,26 @@ export const atsRouter = router({
                 targetKeywords: z.array(z.string()).optional(),
             })
         )
-        .mutation(({ ctx, input }) =>
-            atsService.scoreResume(
+        .mutation(async ({ ctx, input }) => {
+            const result = await atsService.scoreResume(
                 input.resumeId,
                 ctx.session.user.id,
                 input.targetKeywords
-            )
-        ),
+            );
+            if (!result.success) throw new TRPCError({ code: "INTERNAL_SERVER_ERROR", message: result.error });
+            return result.data;
+        }),
 
     /**
      * Get a previously calculated ATS score.
      */
     getScore: protectedProcedure
         .input(z.object({ resumeId: z.string() }))
-        .query(({ ctx, input }) =>
-            atsService.getScore(input.resumeId, ctx.session.user.id)
-        ),
+        .query(async ({ ctx, input }) => {
+            const result = await atsService.getScore(input.resumeId, ctx.session.user.id);
+            if (!result.success) throw new TRPCError({ code: "INTERNAL_SERVER_ERROR", message: result.error });
+            return result.data;
+        }),
 
     /**
      * Compare ATS scores across multiple resumes.
@@ -45,7 +50,9 @@ export const atsRouter = router({
                 resumeIds: z.array(z.string()).min(2).max(5),
             })
         )
-        .query(({ ctx, input }) =>
-            atsService.compareScores(input.resumeIds, ctx.session.user.id)
-        ),
+        .query(async ({ ctx, input }) => {
+            const result = await atsService.compareScores(input.resumeIds, ctx.session.user.id);
+            if (!result.success) throw new TRPCError({ code: "INTERNAL_SERVER_ERROR", message: result.error });
+            return result.data;
+        }),
 });

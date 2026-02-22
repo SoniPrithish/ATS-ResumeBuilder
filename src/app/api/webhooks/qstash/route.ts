@@ -108,7 +108,7 @@ export async function POST(request: Request): Promise<Response> {
         // 3. Assemble and persist the parsed output
         const updateData = {
           status: "COMPLETE" as const,
-          rawText: existingData?.originalFileName as string || "Parsed Resume",
+          rawText: parseResult.rawText || existingData?.originalFileName as string || "Parsed Resume",
           title: parseResult.data.contactInfo.fullName ? `${parseResult.data.contactInfo.fullName}'s Resume` : "Uploaded Resume",
           contactInfo: parseResult.data.contactInfo as unknown as Record<string, unknown>,
           summary: parseResult.data.summary,

@@ -1,5 +1,5 @@
 import type { AIProvider, AIOptions, AIResponse } from '@/types/ai';
-import type { ExtendedAIProvider, ExtendedAIOptions } from '@/modules/ai/types';
+import type { ExtendedAIProvider } from '@/modules/ai/types';
 
 /**
  * MockAIProvider — deterministic AI provider for testing.
@@ -21,6 +21,7 @@ export class MockAIProvider implements AIProvider, ExtendedAIProvider {
      * Routes to different mock responses based on content detection.
      */
     async generateText(prompt: string, options?: AIOptions): Promise<AIResponse<string>> {
+        void options;
         const start = performance.now();
         await new Promise((resolve) => setTimeout(resolve, this.delay));
 
