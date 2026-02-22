@@ -3,7 +3,7 @@ import { Sidebar } from '@/components/layout/sidebar';
 import { Topbar } from '@/components/layout/topbar';
 import { MobileNav } from '@/components/layout/mobile-nav';
 import { redirect } from 'next/navigation';
-import { auth } from '@/server/auth';
+import { auth } from '@/server/auth/config';
 
 export default async function DashboardLayout({ children }: { children: ReactNode }) {
     const session = await auth();
