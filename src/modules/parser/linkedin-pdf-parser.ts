@@ -35,8 +35,7 @@ const LINKEDIN_SECTIONS = [
  * @returns Whether the text matches LinkedIn PDF format
  */
 export function isLinkedInFormat(text: string): boolean {
-  const lower = text.toLowerCase();
-  if (lower.includes("linkedin.com")) return true;
+  if (/(?:^|\.)linkedin\.com(?:\/|$)/im.test(text)) return true;
 
   // Check for LinkedIn-specific section naming
   let sectionCount = 0;

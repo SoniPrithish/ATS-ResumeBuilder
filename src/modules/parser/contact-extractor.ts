@@ -78,9 +78,17 @@ function extractWebsite(
   if (!urls) return null;
 
   for (const url of urls) {
-    const lower = url.toLowerCase();
-    if (lower.includes("linkedin.com")) continue;
-    if (lower.includes("github.com")) continue;
+    try {
+      const parsed = new URL(url);
+      const host = parsed.hostname.toLowerCase();
+      if (host === "linkedin.com" || host.endsWith(".linkedin.com")) continue;
+      if (host === "github.com" || host.endsWith(".github.com")) continue;
+    } catch {
+      // If URL parsing fails, use string check as fallback
+      const lower = url.toLowerCase();
+      if (/(?:^|\.)linkedin\.com(?:\/|$)/i.test(lower)) continue;
+      if (/(?:^|\.)github\.com(?:\/|$)/i.test(lower)) continue;
+    }
     return url;
   }
   return null;
