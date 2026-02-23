@@ -14,6 +14,9 @@ import { resumeRouter } from "@/server/routers/resume.router";
 import { atsRouter } from "@/server/routers/ats.router";
 import { matchRouter } from "@/server/routers/match.router";
 import { jobRouter } from "@/server/routers/job.router";
+import { versionRouter } from "@/server/routers/version.router";
+import { analyticsRouter } from "@/server/routers/analytics.router";
+import { userRouter } from "@/server/routers/user.router";
 
 /**
  * Root application router.
@@ -30,6 +33,9 @@ export const appRouter = router({
     ats: atsRouter,
     match: matchRouter,
     job: jobRouter,
+    version: versionRouter,
+    analytics: analyticsRouter,
+    user: userRouter,
 });
 
 /** Type definition for the root router (used by tRPC client) */
