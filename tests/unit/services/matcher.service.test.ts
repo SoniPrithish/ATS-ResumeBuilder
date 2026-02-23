@@ -50,7 +50,7 @@ describe("matcher.service", () => {
         const result = await matcherService.matchResumeToJD("r1", "j1", "u1");
         expect(result.success).toBe(true);
         if (result.success) {
-            expect((result.data as any).overallScore).toBe(90);
+            expect(((result as any).data as any).overallScore).toBe(90);
         }
     });
 
@@ -83,7 +83,7 @@ describe("matcher.service", () => {
         const result = await matcherService.getUserJobDescriptions("u1", 1, 10);
         expect(result.success).toBe(true);
         if (result.success) {
-            expect(result.data.items).toHaveLength(1);
+            expect((result as any).data.items).toHaveLength(1);
         }
     });
 

@@ -58,14 +58,14 @@ describe('userService', () => {
 
         const res = await userService.getProfile('u1')
         expect(res.success).toBe(true)
-        expect(res.data?.githubConnected).toBe(true)
-        expect(res.data?.googleConnected).toBe(true)
+        expect((res as any).data?.githubConnected).toBe(true)
+        expect((res as any).data?.googleConnected).toBe(true)
     })
 
     it('setGithubRepoUrl validates URL length', async () => {
         const res = await userService.setGithubRepoUrl('u1', 'invalid')
         expect(res.success).toBe(false)
-        expect(res.error).toBe('Must be a valid GitHub repository URL')
+        expect((res as any).error).toBe('Must be a valid GitHub repository URL')
 
         const res2 = await userService.setGithubRepoUrl('u1', 'https://github.com/a/b')
         expect(res2.success).toBe(true)
@@ -85,8 +85,8 @@ describe('userService', () => {
 
         const res = await userService.exportUserData('u1')
         expect(res.success).toBe(true)
-        expect(res.data?.resumes).toBeDefined()
-        expect(res.data?.user.githubConnected).toBe(true)
+        expect((res as any).data?.resumes).toBeDefined()
+        expect((res as any).data?.user.githubConnected).toBe(true)
     })
 
     it('deleteAccount handles R2 deletion, db transaction, and caches', async () => {

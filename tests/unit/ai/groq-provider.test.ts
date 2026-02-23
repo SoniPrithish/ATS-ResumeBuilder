@@ -174,8 +174,8 @@ describe('GroqProvider', () => {
             await vi.runAllTimersAsync();
             const res = await promise;
 
-            expect(res.data.name).toBe('test');
-            expect(res.data.count).toBe(42);
+            expect((res as any).data.name).toBe('test');
+            expect((res as any).data.count).toBe(42);
         });
     });
 

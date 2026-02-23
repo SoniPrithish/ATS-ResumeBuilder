@@ -38,7 +38,7 @@ describe('githubService', () => {
 
         const result = await githubService.createOrUpdateResumeVersion('user-1', 'res-1', 1, {} as any)
         expect(result.success).toBe(true)
-        expect(result.data?.commitSha).toBe('sha1')
+        expect((result as any).data?.commitSha).toBe('sha1')
     })
 
     it('createOrUpdateResumeVersion: existing file updated', async () => {
@@ -60,7 +60,7 @@ describe('githubService', () => {
 
         const result = await githubService.createOrUpdateResumeVersion('user-1', 'res-1', 2, {} as any)
         expect(result.success).toBe(true)
-        expect(result.data?.commitSha).toBe('new-sha')
+        expect((result as any).data?.commitSha).toBe('new-sha')
     })
 
     it('getResumeVersions returns sorted versions', async () => {
@@ -78,7 +78,7 @@ describe('githubService', () => {
 
         const result = await githubService.getResumeVersions('user-1', 'res-1')
         expect(result.success).toBe(true)
-        expect(result.data?.[0].version).toBe(2)
+        expect((result as any).data?.[0].version).toBe(2)
     })
 
     it('getResumeVersion returns data', async () => {
@@ -94,7 +94,7 @@ describe('githubService', () => {
 
         const result = await githubService.getResumeVersion('user-1', 'res-1', 1)
         expect(result.success).toBe(true)
-        expect((result.data as any).summary).toBe('Hello')
+        expect(((result as any).data as any).summary).toBe('Hello')
     })
 
     it('testConnection connected true', async () => {
@@ -108,7 +108,7 @@ describe('githubService', () => {
 
         const result = await githubService.testConnection('user-1')
         expect(result.success).toBe(true)
-        expect(result.data?.connected).toBe(true)
+        expect((result as any).data?.connected).toBe(true)
     })
 
     it('testConnection errors on invalid repo', async () => {

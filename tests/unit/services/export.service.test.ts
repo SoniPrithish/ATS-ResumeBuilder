@@ -53,8 +53,8 @@ describe('exportService', () => {
         })
 
         expect(result.success).toBe(true)
-        expect(result.data?.mimeType).toBe('application/pdf')
-        expect(result.data?.buffer).toBeDefined()
+        expect((result as any).data?.mimeType).toBe('application/pdf')
+        expect((result as any).data?.buffer).toBeDefined()
         expect(db.resume.findUnique).toHaveBeenCalledWith({ where: { id: 'res-1' } })
     })
 
@@ -80,7 +80,7 @@ describe('exportService', () => {
         })
 
         expect(result.success).toBe(true)
-        expect(result.data?.mimeType).toBe('application/docx')
+        expect((result as any).data?.mimeType).toBe('application/docx')
     })
 
     it('returns error if resume not found', async () => {
@@ -92,7 +92,7 @@ describe('exportService', () => {
         })
 
         expect(result.success).toBe(false)
-        expect(result.error).toBe('Resume not found')
+        expect((result as any).error).toBe('Resume not found')
     })
 
     it('returns error if unauthorized user', async () => {
@@ -109,7 +109,7 @@ describe('exportService', () => {
         })
 
         expect(result.success).toBe(false)
-        expect(result.error).toBe('Unauthorized')
+        expect((result as any).error).toBe('Unauthorized')
     })
 
     it('returns error if archived', async () => {
@@ -126,6 +126,6 @@ describe('exportService', () => {
         })
 
         expect(result.success).toBe(false)
-        expect(result.error).toBe('Cannot export archived resume')
+        expect((result as any).error).toBe('Cannot export archived resume')
     })
 })

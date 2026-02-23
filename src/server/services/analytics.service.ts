@@ -52,7 +52,7 @@ export const analyticsService = {
         const cacheKey = `analytics:stats:${userId}`
         const cached = await cacheService.getCached<UserStats>(cacheKey)
         if (cached) {
-            return { success: true, data: cached, error: null, warnings: [] }
+            return { success: true, data: cached }
         }
 
         try {
@@ -100,10 +100,10 @@ export const analyticsService = {
             }
 
             await cacheService.setCached(cacheKey, stats, 5 * 60) // 5 minutes TTL
-            return { success: true, data: stats, error: null, warnings: [] }
+            return { success: true, data: stats }
         } catch (error) {
             logger.error({ err: error, userId }, 'Failed to get user stats')
-            return { success: false, data: null, error: 'Internal server error', warnings: [] }
+            return { success: false, error: 'Internal server error' }
         }
     },
 
@@ -128,10 +128,10 @@ export const analyticsService = {
             })
 
             // Return oldest first for charting
-            return { success: true, data: points.reverse(), error: null, warnings: [] }
+            return { success: true, data: points.reverse() }
         } catch (error) {
             logger.error({ err: error, userId }, 'Failed to get score trend')
-            return { success: false, data: null, error: 'Internal server error', warnings: [] }
+            return { success: false, error: 'Internal server error' }
         }
     },
 
@@ -196,10 +196,10 @@ export const analyticsService = {
                 }
             })
 
-            return { success: true, data: items, error: null, warnings: [] }
+            return { success: true, data: items }
         } catch (error) {
             logger.error({ err: error, userId }, 'Failed to get recent activity')
-            return { success: false, data: null, error: 'Internal server error', warnings: [] }
+            return { success: false, error: 'Internal server error' }
         }
     },
 }

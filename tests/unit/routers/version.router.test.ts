@@ -33,7 +33,7 @@ describe('versionRouter', () => {
 
     it('create', async () => {
         const caller = createCaller('user-1')
-        vi.mocked(versionService.createVersion).mockResolvedValue({ success: true, data: { version: 1 } } as any)
+        vi.mocked(versionService.createVersion).mockResolvedValue({ success: true,  data: { version: 1 } as any } as any)
 
         const result = await caller.create({ resumeId: 'res-1', changeNote: 'note' })
 
@@ -43,7 +43,7 @@ describe('versionRouter', () => {
 
     it('list', async () => {
         const caller = createCaller('user-1')
-        vi.mocked(versionService.getVersions).mockResolvedValue({ success: true, data: [] } as any)
+        vi.mocked(versionService.getVersions).mockResolvedValue({ success: true,  data: [] } as any)
 
         const result = await caller.list({ resumeId: 'res-1' })
 
@@ -53,7 +53,7 @@ describe('versionRouter', () => {
 
     it('get', async () => {
         const caller = createCaller('user-1')
-        vi.mocked(versionService.getVersion).mockResolvedValue({ success: true, data: { version: 2 } } as any)
+        vi.mocked(versionService.getVersion).mockResolvedValue({ success: true,  data: { version: 2 } as any } as any)
 
         const result = await caller.get({ resumeId: 'res-1', version: 2 })
 
@@ -63,7 +63,7 @@ describe('versionRouter', () => {
 
     it('restore', async () => {
         const caller = createCaller('user-1')
-        vi.mocked(versionService.restoreVersion).mockResolvedValue({ success: true, data: { id: 'res-1' } } as any)
+        vi.mocked(versionService.restoreVersion).mockResolvedValue({ success: true,  data: { id: 'res-1' } as any } as any)
 
         const result = await caller.restore({ resumeId: 'res-1', version: 2 })
 
@@ -73,7 +73,7 @@ describe('versionRouter', () => {
 
     it('testGithub', async () => {
         const caller = createCaller('user-1')
-        vi.mocked(githubService.testConnection).mockResolvedValue({ success: true, data: { connected: true, repoName: 'u/r' } } as any)
+        vi.mocked(githubService.testConnection).mockResolvedValue({ success: true,  data: { connected: true, repoName: 'u/r' } as any } as any)
 
         const result = await caller.testGithub()
 

@@ -18,7 +18,7 @@ export const versionService = {
             })
 
             if (!resume || resume.userId !== userId) {
-                return { success: false, data: null, error: 'Resume not found or unauthorized', warnings: [] }
+                return { success: false, error: 'Resume not found or unauthorized' }
             }
 
             const latestVersion = await db.resumeVersion.findFirst({
@@ -72,10 +72,10 @@ export const versionService = {
                 }
             }
 
-            return { success: true, data: newVersion, error: null, warnings: [] }
+            return { success: true, data: newVersion }
         } catch (error) {
             logger.error({ err: error }, 'Failed to create resume version')
-            return { success: false, data: null, error: 'Internal server error', warnings: [] }
+            return { success: false, error: 'Internal server error' }
         }
     },
 
@@ -85,7 +85,7 @@ export const versionService = {
     ): Promise<ServiceResult<ResumeVersion[]>> {
         const resume = await db.resume.findUnique({ where: { id: resumeId } })
         if (!resume || resume.userId !== userId) {
-            return { success: false, data: null, error: 'Resume not found or unauthorized', warnings: [] }
+            return { success: false, error: 'Resume not found or unauthorized' }
         }
 
         const versions = await db.resumeVersion.findMany({
@@ -93,7 +93,7 @@ export const versionService = {
             orderBy: { version: 'desc' },
         })
 
-        return { success: true, data: versions, error: null, warnings: [] }
+        return { success: true, data: versions }
     },
 
     async getVersion(
@@ -103,7 +103,7 @@ export const versionService = {
     ): Promise<ServiceResult<ResumeVersion>> {
         const resume = await db.resume.findUnique({ where: { id: resumeId } })
         if (!resume || resume.userId !== userId) {
-            return { success: false, data: null, error: 'Resume not found or unauthorized', warnings: [] }
+            return { success: false, error: 'Resume not found or unauthorized' }
         }
 
         const versionDoc = await db.resumeVersion.findFirst({
@@ -111,10 +111,10 @@ export const versionService = {
         })
 
         if (!versionDoc) {
-            return { success: false, data: null, error: 'Version not found', warnings: [] }
+            return { success: false, error: 'Version not found' }
         }
 
-        return { success: true, data: versionDoc, error: null, warnings: [] }
+        return { success: true, data: versionDoc }
     },
 
     async restoreVersion(
@@ -124,7 +124,7 @@ export const versionService = {
     ): Promise<ServiceResult<Resume>> {
         const targetVersionResponse = await this.getVersion(resumeId, userId, version)
         if (!targetVersionResponse.success || !targetVersionResponse.data) {
-            return { success: false, data: null, error: targetVersionResponse.error, warnings: [] }
+            return { success: false, error: targetVersionResponse.error }
         }
 
         const targetVersion = targetVersionResponse.data

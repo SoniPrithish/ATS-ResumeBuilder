@@ -46,9 +46,9 @@ describe('POST /api/upload/linkedin', () => {
         vi.mocked(auth).mockResolvedValue({ user: { id: 'u1' } } as any)
         const req = new Request('http://localhost/api/upload/linkedin', {
             method: 'POST',
-            headers: { 'content-type': 'multipart/form-data; boundary=---' },
-            body: new FormData(), // empty form data
+            headers: { 'content-type': 'multipart/form-data' },
         })
+        req.formData = async () => new FormData()
         const res = await POST(req)
         expect(res.status).toBe(400)
         expect(await res.json()).toEqual({ error: 'No file uploaded' })
@@ -60,9 +60,9 @@ describe('POST /api/upload/linkedin', () => {
 
         const req = new Request('http://localhost/api/upload/linkedin', {
             method: 'POST',
-            headers: { 'content-type': 'multipart/form-data; boundary=---' },
-            body: createFormData(fakeFile),
+            headers: { 'content-type': 'multipart/form-data' },
         })
+        req.formData = async () => createFormData(fakeFile)
 
         const res = await POST(req)
         expect(res.status).toBe(400)
@@ -81,9 +81,9 @@ describe('POST /api/upload/linkedin', () => {
         const fakeFile = new File(['pdf-data'], 'resume.pdf', { type: 'application/pdf' })
         const req = new Request('http://localhost/api/upload/linkedin', {
             method: 'POST',
-            headers: { 'content-type': 'multipart/form-data; boundary=---' },
-            body: createFormData(fakeFile),
+            headers: { 'content-type': 'multipart/form-data' },
         })
+        req.formData = async () => createFormData(fakeFile)
 
         const res = await POST(req)
         expect(res.status).toBe(400)
@@ -102,9 +102,9 @@ describe('POST /api/upload/linkedin', () => {
         const fakeFile = new File(['pdf-data'], 'resume.pdf', { type: 'application/pdf' })
         const req = new Request('http://localhost/api/upload/linkedin', {
             method: 'POST',
-            headers: { 'content-type': 'multipart/form-data; boundary=---' },
-            body: createFormData(fakeFile),
+            headers: { 'content-type': 'multipart/form-data' },
         })
+        req.formData = async () => createFormData(fakeFile)
 
         const res = await POST(req)
         expect(res.status).toBe(200)

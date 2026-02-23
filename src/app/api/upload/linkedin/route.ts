@@ -36,7 +36,7 @@ export async function POST(request: Request): Promise<Response> {
 
         const result = await linkedinService.importFromPdf(session.user.id, buffer)
 
-        if (!result.success || !result.data) {
+        if (!result.success) {
             return NextResponse.json({ error: result.error || 'Import failed' }, { status: 400 })
         }
 

@@ -16,7 +16,7 @@ export const linkedinService = {
             const text = await extractTextFromPdf(buffer)
 
             if (!text || text.trim() === '') {
-                return { success: false, data: null, error: 'Could not extract text from PDF', warnings: [] }
+                return { success: false, error: 'Could not extract text from PDF' }
             }
 
             // 2. Check if it's a LinkedIn export
@@ -39,7 +39,7 @@ export const linkedinService = {
             })
 
             if (!createRes.success || !createRes.data) {
-                return { success: false, data: null, error: createRes.error || 'Failed to create resume', warnings: [] }
+                return { success: false, error: createRes.error || 'Failed to create resume' }
             }
 
             const resumeId = createRes.data.id
@@ -57,7 +57,7 @@ export const linkedinService = {
             })
 
             if (!updateRes.success) {
-                return { success: false, data: null, error: 'Failed to save parsed LinkedIn data', warnings: [] }
+                return { success: false, error: 'Failed to save parsed LinkedIn data' }
             }
 
             // 6. Log analytics event

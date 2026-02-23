@@ -67,7 +67,7 @@ describe('analyticsService', () => {
         const res = await analyticsService.getUserStats('u1')
 
         expect(res.success).toBe(true)
-        expect(res.data).toEqual({
+        expect((res as any).data).toEqual({
             totalResumes: 5,
             averageAtsScore: 85,
             totalJDsMatched: 10,
@@ -83,7 +83,7 @@ describe('analyticsService', () => {
 
         const res = await analyticsService.getUserStats('u1')
 
-        expect(res.data?.totalResumes).toBe(99)
+        expect((res as any).data?.totalResumes).toBe(99)
         expect(db.resume.count).not.toHaveBeenCalled()
     })
 
@@ -96,10 +96,10 @@ describe('analyticsService', () => {
         const res = await analyticsService.getScoreTrend('u1', 5)
 
         expect(res.success).toBe(true)
-        expect(res.data?.length).toBe(2)
+        expect((res as any).data?.length).toBe(2)
         // Points reversed for chart
-        expect(res.data?.[0].score).toBe(80)
-        expect(res.data?.[1].score).toBe(90)
+        expect((res as any).data?.[0].score).toBe(80)
+        expect((res as any).data?.[1].score).toBe(90)
     })
 
     it('getRecentActivity: maps events to readable descriptions', async () => {
@@ -112,13 +112,13 @@ describe('analyticsService', () => {
         const res = await analyticsService.getRecentActivity('u1', 3)
 
         expect(res.success).toBe(true)
-        expect(res.data?.[0].description).toBe('Created resume: R1')
-        expect(res.data?.[0].icon).toBe('FilePlus')
+        expect((res as any).data?.[0].description).toBe('Created resume: R1')
+        expect((res as any).data?.[0].icon).toBe('FilePlus')
 
-        expect(res.data?.[1].description).toBe('ATS scored resume: R2 — Score: 85')
-        expect(res.data?.[1].icon).toBe('BarChart')
+        expect((res as any).data?.[1].description).toBe('ATS scored resume: R2 — Score: 85')
+        expect((res as any).data?.[1].icon).toBe('BarChart')
 
-        expect(res.data?.[2].description).toBe('unknown_event')
-        expect(res.data?.[2].icon).toBe('Activity')
+        expect((res as any).data?.[2].description).toBe('unknown_event')
+        expect((res as any).data?.[2].icon).toBe('Activity')
     })
 })

@@ -126,7 +126,7 @@ describe('versionService', () => {
         const res = await versionService.getVersion('res-1', 'user-1', 2)
 
         expect(res.success).toBe(true)
-        expect(res.data?.version).toBe(2)
+        expect((res as any).data?.version).toBe(2)
     })
 
     it('restoreVersion: creates new version + updates resume', async () => {

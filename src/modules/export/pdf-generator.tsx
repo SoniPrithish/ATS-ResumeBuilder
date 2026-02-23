@@ -14,10 +14,10 @@ function slugify(text: string): string {
         .toString()
         .toLowerCase()
         .trim()
-        .replace(/\\s+/g, '-') // Replace spaces with -
+        .replace(/\s+/g, '-') // Replace spaces with -
         .replace(/&/g, '-and-') // Replace & with 'and'
-        .replace(/[^\\w\\-]+/g, '') // Remove all non-word chars
-        .replace(/\\-\\-+/g, '-') // Replace multiple - with single -
+        .replace(/[^\w-]+/g, '') // Remove all non-word chars
+        .replace(/--+/g, '-') // Replace multiple - with single -
 }
 
 /**
@@ -56,12 +56,12 @@ export async function generatePdf(
     // 4. Select template content
     let TemplateContent: React.JSX.Element
     if (options.templateId === 'classic') {
-        TemplateContent = <ClassicTemplate resume={ resume } config = { config } />
-  } else if (options.templateId === 'modern') {
-        TemplateContent = <ModernTemplate resume={ resume } config = { config } />
-  } else if (options.templateId === 'minimal') {
-        TemplateContent = <MinimalTemplate resume={ resume } config = { config } />
-  } else {
+        TemplateContent = <ClassicTemplate resume={resume} config={config} />
+    } else if (options.templateId === 'modern') {
+        TemplateContent = <ModernTemplate resume={resume} config={config} />
+    } else if (options.templateId === 'minimal') {
+        TemplateContent = <MinimalTemplate resume={resume} config={config} />
+    } else {
         throw new Error(`EXPORT_UNSUPPORTED_TEMPLATE: ${options.templateId}`)
     }
 

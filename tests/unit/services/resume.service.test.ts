@@ -30,7 +30,7 @@ describe("resumeService", () => {
 
       expect(result.success).toBe(true);
       if (result.success) {
-        expect(result.data).toEqual(mockResume);
+        expect((result as any).data).toEqual(mockResume);
       }
     });
 
@@ -103,9 +103,9 @@ describe("resumeService", () => {
 
       expect(result.success).toBe(true);
       if (result.success) {
-        expect(result.data.items.length).toBe(2);
-        expect(result.data.total).toBe(2);
-        expect(result.data.page).toBe(1);
+        expect((result as any).data.items.length).toBe(2);
+        expect((result as any).data.total).toBe(2);
+        expect((result as any).data.page).toBe(1);
       }
     });
   });

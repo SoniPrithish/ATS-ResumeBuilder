@@ -35,7 +35,7 @@ export async function GET(
         const { id: resumeId } = params // Ensure id is resolved synchronously (or just use params.id)
         const result = await exportService.exportResume(resumeId, session.user.id, options)
 
-        if (!result.success || !result.data) {
+        if (!result.success) {
             if (result.error === 'Resume not found') {
                 return new NextResponse(result.error, { status: 404 })
             }
@@ -50,7 +50,7 @@ export async function GET(
         headers.set('Content-Disposition', `attachment; filename="${result.data.fileName}"`)
         headers.set('Content-Length', result.data.sizeBytes.toString())
 
-        return new NextResponse(result.data.buffer, {
+        return new NextResponse(result.data.buffer as any, {
             status: 200,
             headers,
         })

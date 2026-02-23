@@ -46,17 +46,17 @@ export const githubService = {
     ): Promise<ServiceResult<{ commitSha: string; url: string }>> {
         const token = await this.getAccessToken(userId)
         if (!token) {
-            return { success: false, data: null, error: 'Link your GitHub account in Settings', warnings: [] }
+            return { success: false, error: 'Link your GitHub account in Settings' }
         }
 
         const user = await db.user.findUnique({ where: { id: userId } })
         if (!user?.githubRepoUrl) {
-            return { success: false, data: null, error: 'Configure a GitHub repo URL in Settings', warnings: [] }
+            return { success: false, error: 'Configure a GitHub repo URL in Settings' }
         }
 
         const repoObj = this._parseRepoObj(user.githubRepoUrl)
         if (!repoObj) {
-            return { success: false, data: null, error: 'Repository not found. Check your repo URL.', warnings: [] }
+            return { success: false, error: 'Repository not found. Check your repo URL.' }
         }
 
         const path = `resumes/${resumeId}/v${version}.json`
@@ -77,13 +77,13 @@ export const githubService = {
             const getJson = await getRes.json()
             sha = getJson.sha
         } else if (getRes.status === 401) {
-            return { success: false, data: null, error: 'GitHub token expired. Please re-link your account.', warnings: [] }
+            return { success: false, error: 'GitHub token expired. Please re-link your account.' }
         } else if (getRes.status === 403) {
-            return { success: false, data: null, error: 'GitHub API rate limit reached. Try again later.', warnings: [] }
+            return { success: false, error: 'GitHub API rate limit reached. Try again later.' }
         } else if (getRes.status === 404) {
             // File doesn't exist, which is fine
         } else {
-            return { success: false, data: null, error: 'Repository not found. Check your repo URL.', warnings: [] }
+            return { success: false, error: 'Repository not found. Check your repo URL.' }
         }
 
         // 2. PUT to create/update
@@ -103,9 +103,9 @@ export const githubService = {
         })
 
         if (!putRes.ok) {
-            if (putRes.status === 401) return { success: false, data: null, error: 'GitHub token expired. Please re-link your account.', warnings: [] }
-            if (putRes.status === 403 || putRes.status === 404) return { success: false, data: null, error: 'Insufficient permissions. Ensure the repo scope is granted.', warnings: [] }
-            return { success: false, data: null, error: 'Failed to update GitHub repository.', warnings: [] }
+            if (putRes.status === 401) return { success: false, error: 'GitHub token expired. Please re-link your account.' }
+            if (putRes.status === 403 || putRes.status === 404) return { success: false, error: 'Insufficient permissions. Ensure the repo scope is granted.' }
+            return { success: false, error: 'Failed to update GitHub repository.' }
         }
 
         const putJson = await putRes.json()
@@ -125,13 +125,13 @@ export const githubService = {
         resumeId: string
     ): Promise<ServiceResult<GitHubVersion[]>> {
         const token = await this.getAccessToken(userId)
-        if (!token) return { success: false, data: null, error: 'Link your GitHub account in Settings', warnings: [] }
+        if (!token) return { success: false, error: 'Link your GitHub account in Settings' }
 
         const user = await db.user.findUnique({ where: { id: userId } })
-        if (!user?.githubRepoUrl) return { success: false, data: null, error: 'Configure a GitHub repo URL in Settings', warnings: [] }
+        if (!user?.githubRepoUrl) return { success: false, error: 'Configure a GitHub repo URL in Settings' }
 
         const repoObj = this._parseRepoObj(user.githubRepoUrl)
-        if (!repoObj) return { success: false, data: null, error: 'Repository not found. Check your repo URL.', warnings: [] }
+        if (!repoObj) return { success: false, error: 'Repository not found. Check your repo URL.' }
 
         const apiUrl = `https://api.github.com/repos/${repoObj.owner}/${repoObj.repo}/commits?path=resumes/${resumeId}/`
 
@@ -143,7 +143,7 @@ export const githubService = {
         })
 
         if (!res.ok) {
-            return { success: false, data: null, error: 'Failed to fetch commits from GitHub', warnings: [] }
+            return { success: false, error: 'Failed to fetch commits from GitHub' }
         }
 
         const commits = await res.json()
@@ -163,7 +163,7 @@ export const githubService = {
         // Sort descending
         versions.sort((a, b) => b.version - a.version)
 
-        return { success: true, data: versions, error: null, warnings: [] }
+        return { success: true, data: versions }
     },
 
     async getResumeVersion(
@@ -172,13 +172,13 @@ export const githubService = {
         version: number
     ): Promise<ServiceResult<CanonicalResume>> {
         const token = await this.getAccessToken(userId)
-        if (!token) return { success: false, data: null, error: 'Link your GitHub account in Settings', warnings: [] }
+        if (!token) return { success: false, error: 'Link your GitHub account in Settings' }
 
         const user = await db.user.findUnique({ where: { id: userId } })
-        if (!user?.githubRepoUrl) return { success: false, data: null, error: 'Configure a GitHub repo URL in Settings', warnings: [] }
+        if (!user?.githubRepoUrl) return { success: false, error: 'Configure a GitHub repo URL in Settings' }
 
         const repoObj = this._parseRepoObj(user.githubRepoUrl)
-        if (!repoObj) return { success: false, data: null, error: 'Repository not found. Check your repo URL.', warnings: [] }
+        if (!repoObj) return { success: false, error: 'Repository not found. Check your repo URL.' }
 
         const path = `resumes/${resumeId}/v${version}.json`
         const apiUrl = `https://api.github.com/repos/${repoObj.owner}/${repoObj.repo}/contents/${path}`
@@ -191,8 +191,8 @@ export const githubService = {
         })
 
         if (!res.ok) {
-            if (res.status === 404) return { success: false, data: null, error: 'Version not found in repository', warnings: [] }
-            return { success: false, data: null, error: 'Failed to fetch version from GitHub', warnings: [] }
+            if (res.status === 404) return { success: false, error: 'Version not found in repository' }
+            return { success: false, error: 'Failed to fetch version from GitHub' }
         }
 
         const fileMeta = await res.json()
@@ -201,21 +201,21 @@ export const githubService = {
 
         try {
             const canonicalResume = JSON.parse(fileContent) as CanonicalResume
-            return { success: true, data: canonicalResume, error: null, warnings: [] }
+            return { success: true, data: canonicalResume }
         } catch (e) {
-            return { success: false, data: null, error: 'Failed to parse version JSON data', warnings: [] }
+            return { success: false, error: 'Failed to parse version JSON data' }
         }
     },
 
     async testConnection(userId: string): Promise<ServiceResult<{ connected: boolean; repoName: string }>> {
         const token = await this.getAccessToken(userId)
-        if (!token) return { success: false, data: null, error: 'Link your GitHub account in Settings', warnings: [] }
+        if (!token) return { success: false, error: 'Link your GitHub account in Settings' }
 
         const user = await db.user.findUnique({ where: { id: userId } })
-        if (!user?.githubRepoUrl) return { success: false, data: null, error: 'Configure a GitHub repo URL in Settings', warnings: [] }
+        if (!user?.githubRepoUrl) return { success: false, error: 'Configure a GitHub repo URL in Settings' }
 
         const repoObj = this._parseRepoObj(user.githubRepoUrl)
-        if (!repoObj) return { success: false, data: null, error: 'Repository not found. Check your repo URL.', warnings: [] }
+        if (!repoObj) return { success: false, error: 'Repository not found. Check your repo URL.' }
 
         const apiUrl = `https://api.github.com/repos/${repoObj.owner}/${repoObj.repo}`
         const res = await fetch(apiUrl, {
@@ -227,13 +227,13 @@ export const githubService = {
 
         if (res.status === 200) {
             const json = await res.json()
-            return { success: true, data: { connected: true, repoName: json.full_name }, error: null, warnings: [] }
+            return { success: true, data: { connected: true, repoName: json.full_name } }
         } else if (res.status === 401) {
-            return { success: false, data: null, error: 'GitHub token expired. Please re-link your account.', warnings: [] }
+            return { success: false, error: 'GitHub token expired. Please re-link your account.' }
         } else if (res.status === 404) {
-            return { success: false, data: null, error: 'Repository not found. Check your repo URL.', warnings: [] }
+            return { success: false, error: 'Repository not found. Check your repo URL.' }
         }
 
-        return { success: false, data: null, error: 'Insufficient permissions. Ensure the repo scope is granted.', warnings: [] }
+        return { success: false, error: 'Insufficient permissions. Ensure the repo scope is granted.' }
     },
 }

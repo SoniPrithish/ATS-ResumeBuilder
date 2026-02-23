@@ -24,7 +24,7 @@ describe('analyticsRouter', () => {
 
     it('stats', async () => {
         const caller = createCaller('u1')
-        vi.mocked(analyticsService.getUserStats).mockResolvedValue({ success: true, data: { totalResumes: 5 } } as any)
+        vi.mocked(analyticsService.getUserStats).mockResolvedValue({ success: true,  data: { totalResumes: 5 } as any } as any)
 
         const res = await caller.stats()
         expect(analyticsService.getUserStats).toHaveBeenCalledWith('u1')
@@ -33,7 +33,7 @@ describe('analyticsRouter', () => {
 
     it('scoreTrend', async () => {
         const caller = createCaller('u1')
-        vi.mocked(analyticsService.getScoreTrend).mockResolvedValue({ success: true, data: [] } as any)
+        vi.mocked(analyticsService.getScoreTrend).mockResolvedValue({ success: true,  data: [] } as any)
 
         const res = await caller.scoreTrend({ limit: 5 })
         expect(analyticsService.getScoreTrend).toHaveBeenCalledWith('u1', 5)
@@ -42,7 +42,7 @@ describe('analyticsRouter', () => {
 
     it('recentActivity', async () => {
         const caller = createCaller('u1')
-        vi.mocked(analyticsService.getRecentActivity).mockResolvedValue({ success: true, data: [] } as any)
+        vi.mocked(analyticsService.getRecentActivity).mockResolvedValue({ success: true,  data: [] } as any)
 
         const res = await caller.recentActivity({ limit: 15 })
         expect(analyticsService.getRecentActivity).toHaveBeenCalledWith('u1', 15)

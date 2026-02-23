@@ -38,7 +38,7 @@ export const userService = {
         })
 
         if (!user) {
-            return { success: false, data: null, error: 'User not found', warnings: [] }
+            return { success: false, error: 'User not found' }
         }
 
         const githubConnected = user.accounts.some((a) => a.provider === 'github')
@@ -70,7 +70,7 @@ export const userService = {
             })
             return this.getProfile(userId)
         } catch (e) {
-            return { success: false, data: null, error: 'Failed to update profile', warnings: [] }
+            return { success: false, error: 'Failed to update profile' }
         }
     },
 
@@ -78,16 +78,16 @@ export const userService = {
         try {
             const match = repoUrl.match(/^https:\/\/github\.com\/[\w.-]+\/[\w.-]+$/)
             if (!match) {
-                return { success: false, data: null, error: 'Must be a valid GitHub repository URL', warnings: [] }
+                return { success: false, error: 'Must be a valid GitHub repository URL' }
             }
 
             await db.user.update({
                 where: { id: userId },
                 data: { githubRepoUrl: repoUrl },
             })
-            return { success: true, data: undefined, error: null, warnings: [] }
+            return { success: true, data: undefined }
         } catch (e) {
-            return { success: false, data: null, error: 'Failed to update repository URL', warnings: [] }
+            return { success: false, error: 'Failed to update repository URL' }
         }
     },
 
@@ -95,7 +95,7 @@ export const userService = {
         try {
             const profileResult = await this.getProfile(userId)
             if (!profileResult.success || !profileResult.data) {
-                return { success: false, data: null, error: 'User not found', warnings: [] }
+                return { success: false, error: 'User not found' }
             }
 
             const [resumes, jobDescriptions, matchResults, aiGenerations, analyticsEvents] = await Promise.all([
@@ -124,7 +124,7 @@ export const userService = {
                 warnings: [],
             }
         } catch (e) {
-            return { success: false, data: null, error: 'Failed to export data', warnings: [] }
+            return { success: false, error: 'Failed to export data' }
         }
     },
 
@@ -159,10 +159,10 @@ export const userService = {
             // Invalidate caches
             await cacheService.invalidate(`analytics:stats:${userId}`)
 
-            return { success: true, data: undefined, error: null, warnings: [] }
+            return { success: true, data: undefined }
         } catch (e) {
             console.error(e)
-            return { success: false, data: null, error: 'Failed to delete account', warnings: [] }
+            return { success: false, error: 'Failed to delete account' }
         }
     },
 }

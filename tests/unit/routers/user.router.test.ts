@@ -26,7 +26,7 @@ describe('userRouter', () => {
 
     it('profile', async () => {
         const caller = createCaller('u1')
-        vi.mocked(userService.getProfile).mockResolvedValue({ success: true, data: { name: 'n' } } as any)
+        vi.mocked(userService.getProfile).mockResolvedValue({ success: true,  data: { name: 'n' } as any } as any)
         const res = await caller.profile()
         expect((res as any).data.name).toBe('n')
     })

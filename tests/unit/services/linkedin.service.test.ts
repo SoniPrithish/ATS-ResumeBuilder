@@ -60,8 +60,8 @@ describe('linkedinService', () => {
         const result = await linkedinService.importFromPdf('user-1', fakeBuffer)
 
         expect(result.success).toBe(true)
-        expect(result.data?.resumeId).toBe('res-import-1')
-        expect(result.data?.parsedData).toEqual(parsedData)
+        expect((result as any).data?.resumeId).toBe('res-import-1')
+        expect((result as any).data?.parsedData).toEqual(parsedData)
         expect(resumeService.createResume).toHaveBeenCalled()
         expect(resumeService.updateResume).toHaveBeenCalled()
     })
@@ -72,7 +72,7 @@ describe('linkedinService', () => {
         const result = await linkedinService.importFromPdf('user-1', Buffer.from(''))
 
         expect(result.success).toBe(false)
-        expect(result.error).toMatch('Could not extract text')
+        expect((result as any).error).toMatch('Could not extract text')
     })
 
     it('fails if not a LinkedIn PDF', async () => {
@@ -82,7 +82,7 @@ describe('linkedinService', () => {
         const result = await linkedinService.importFromPdf('user-1', Buffer.from(''))
 
         expect(result.success).toBe(false)
-        expect(result.error).toMatch("doesn't appear to be a LinkedIn PDF")
+        expect((result as any).error).toMatch("doesn't appear to be a LinkedIn PDF")
     })
 
     it('fails if createResume fails', async () => {
@@ -99,7 +99,7 @@ describe('linkedinService', () => {
         const result = await linkedinService.importFromPdf('user-1', Buffer.from(''))
 
         expect(result.success).toBe(false)
-        expect(result.error).toMatch('DB Error')
+        expect((result as any).error).toMatch('DB Error')
     })
 
     it('fails if updateResume fails', async () => {
@@ -122,6 +122,6 @@ describe('linkedinService', () => {
         const result = await linkedinService.importFromPdf('user-1', Buffer.from(''))
 
         expect(result.success).toBe(false)
-        expect(result.error).toMatch('Failed to save')
+        expect((result as any).error).toMatch('Failed to save')
     })
 })
