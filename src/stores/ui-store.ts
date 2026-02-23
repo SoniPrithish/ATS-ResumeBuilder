@@ -19,3 +19,4 @@ export const useUIStore = create<UIState>((set) => ({
     openModal: (modalId) => set({ activeModal: modalId }),
     closeModal: () => set({ activeModal: null }),
 }));
+// group 1 modifications

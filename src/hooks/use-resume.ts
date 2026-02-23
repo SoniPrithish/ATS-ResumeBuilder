@@ -1,5 +1,5 @@
 import { trpc } from '@/lib/trpc-client';
-import { useToast } from '@/hooks/use-toast';
+import { toast } from 'sonner';
 
 
 export function useResume(id: string) {
@@ -18,22 +18,18 @@ export function useResumes(page = 1, limit = 10) {
 }
 
 export function useCreateResume() {
-    const { toast } = useToast();
     const utils = trpc.useUtils();
 
     return trpc.resume.create.useMutation({
         onSuccess: () => {
-            toast({
-                title: 'Resume created',
+            toast.success('Resume created', {
                 description: 'Your new resume has been created successfully.',
             });
             utils.resume.list.invalidate();
         },
         onError: (error) => {
-            toast({
-                title: 'Error',
+            toast.error('Error', {
                 description: error.message || 'Failed to create resume.',
-                variant: 'destructive',
             });
         }
     });
@@ -51,23 +47,20 @@ export function useUpdateResume() {
 }
 
 export function useDeleteResume() {
-    const { toast } = useToast();
     const utils = trpc.useUtils();
 
     return trpc.resume.delete.useMutation({
         onSuccess: () => {
-            toast({
-                title: 'Resume deleted',
+            toast.success('Resume deleted', {
                 description: 'The resume has been permanently deleted.',
             });
             utils.resume.list.invalidate();
         },
         onError: (error) => {
-            toast({
-                title: 'Error',
+            toast.error('Error', {
                 description: error.message || 'Failed to delete resume.',
-                variant: 'destructive',
             });
         }
     });
 }
+// group 1 modifications

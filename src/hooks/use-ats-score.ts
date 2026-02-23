@@ -1,8 +1,7 @@
 import { trpc } from '@/lib/trpc-client';
-import { useToast } from '@/hooks/use-toast';
+import { toast } from 'sonner';
 
 export function useATSScore(resumeId: string) {
-    const { toast } = useToast();
     const utils = trpc.useUtils();
 
     return trpc.ats.score.useMutation({
@@ -11,10 +10,8 @@ export function useATSScore(resumeId: string) {
             utils.resume.getById.invalidate(resumeId);
         },
         onError: (error) => {
-            toast({
-                title: 'Scoring failed',
+            toast.error('Scoring failed', {
                 description: error.message || 'Failed to score resume.',
-                variant: 'destructive',
             });
         }
     });
@@ -25,3 +22,4 @@ export function useCachedScore(resumeId: string) {
         enabled: !!resumeId,
     });
 }
+// group 1 modifications

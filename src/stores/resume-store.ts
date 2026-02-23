@@ -41,3 +41,4 @@ export const useResumeStore = create<ResumeState>((set) => ({
         previewMode: false
     }),
 }));
+// group 1 modifications

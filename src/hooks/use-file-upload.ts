@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { useToast } from '@/hooks/use-toast';
+import { toast } from 'sonner';
 
 interface UseFileUploadReturn {
     upload: (file: File) => Promise<Record<string, unknown>>;
@@ -15,7 +15,6 @@ export function useFileUpload(): UseFileUploadReturn {
     const [progress, setProgress] = useState(0);
     const [error, setError] = useState<string | null>(null);
     const [isUploading, setIsUploading] = useState(false);
-    const { toast } = useToast();
 
     const reset = () => {
         setFile(null);
@@ -59,10 +58,8 @@ export function useFileUpload(): UseFileUploadReturn {
             setError(errorMessage);
             setIsUploading(false);
             setProgress(0);
-            toast({
-                title: 'Upload failed',
+            toast.error('Upload failed', {
                 description: errorMessage,
-                variant: 'destructive',
             });
             throw err;
         }
@@ -70,3 +67,4 @@ export function useFileUpload(): UseFileUploadReturn {
 
     return { upload, file, progress, error, isUploading, reset };
 }
+// group 1 modifications
