@@ -127,7 +127,7 @@ describe("atsRouter", () => {
         );
         expect(result.success).toBe(true);
         if (result.success) {
-            expect(result.data).toHaveLength(2);
+            expect((result as any).data).toHaveLength(2);
         }
     });
 });

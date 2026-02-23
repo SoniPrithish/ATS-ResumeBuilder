@@ -68,7 +68,7 @@ export function ResumeCard({ resume }: { resume: ResumeRecord }) {
                                 className="text-destructive focus:bg-destructive/10"
                                 onClick={() => {
                                     if (confirm("Are you sure you want to delete this resume?")) {
-                                        deleteResume.mutate(resume.id);
+                                        deleteResume.mutate({ id: resume.id });
                                     }
                                 }}
                             >

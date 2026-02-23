@@ -1,0 +1,191 @@
+
+> techresume-ai@0.1.0 type-check /Users/prithishsoni/Desktop/TechResume
+> tsc --noEmit
+
+src/app/(dashboard)/dashboard/page.tsx(89,35): error TS2322: Type 'unknown' is not assignable to type 'Key | null | undefined'.
+src/app/(dashboard)/dashboard/page.tsx(92,115): error TS2322: Type 'unknown' is not assignable to type 'ReactNode'.
+src/app/(dashboard)/dashboard/page.tsx(95,104): error TS2769: No overload matches this call.
+  Overload 1 of 4, '(value: string | number | Date): Date', gave the following error.
+    Argument of type 'unknown' is not assignable to parameter of type 'string | number | Date'.
+  Overload 2 of 4, '(value: string | number): Date', gave the following error.
+    Argument of type 'unknown' is not assignable to parameter of type 'string | number'.
+src/app/(dashboard)/jobs/page.tsx(49,38): error TS2345: Argument of type '(job: { id: string; title: string; company: string; content: string; createdAt: string; }) => JSX.Element' is not assignable to parameter of type '(value: { id: string; createdAt: Date; updatedAt: Date; title: string; rawText: string; userId: string; company: string; parsedData: JsonValue; }, index: number, array: { id: string; ... 6 more ...; parsedData: JsonValue; }[]) => Element'.
+  Types of parameters 'job' and 'value' are incompatible.
+    Property 'content' is missing in type '{ id: string; createdAt: Date; updatedAt: Date; title: string; rawText: string; userId: string; company: string; parsedData: JsonValue; }' but required in type '{ id: string; title: string; company: string; content: string; createdAt: string; }'.
+src/app/(dashboard)/resumes/[id]/edit/page.tsx(44,55): error TS2322: Type 'unknown' is not assignable to type 'ReactNode'.
+src/app/(dashboard)/resumes/[id]/edit/page.tsx(45,90): error TS2769: No overload matches this call.
+  Overload 1 of 4, '(value: string | number | Date): Date', gave the following error.
+    Argument of type 'unknown' is not assignable to parameter of type 'string | number | Date'.
+  Overload 2 of 4, '(value: string | number): Date', gave the following error.
+    Argument of type 'unknown' is not assignable to parameter of type 'string | number'.
+src/app/(dashboard)/resumes/[id]/match/page.tsx(65,25): error TS2322: Type 'unknown' is not assignable to type 'string'.
+src/app/(dashboard)/resumes/[id]/score/page.tsx(60,25): error TS2322: Type 'unknown' is not assignable to type 'string'.
+src/app/(dashboard)/resumes/[id]/tailor/page.tsx(99,30): error TS2741: Property 'summary' is missing in type 'Record<string, unknown>' but required in type '{ summary: { original: string; suggested: string; }; bullets?: { id: string; original: string; suggested: string; }[] | undefined; keywords?: { missing?: string[] | undefined; } | undefined; }'.
+src/app/(dashboard)/resumes/page.tsx(50,41): error TS2345: Argument of type '(resume: ResumeRecord) => JSX.Element' is not assignable to parameter of type '(value: Resume, index: number, array: Resume[]) => Element'.
+  Types of parameters 'resume' and 'value' are incompatible.
+    Type 'Resume' is missing the following properties from type 'ResumeRecord': id, userId, title, status, and 6 more.
+src/app/(dashboard)/settings/page.tsx(9,53): error TS2307: Cannot find module '@/components/ui/avatar' or its corresponding type declarations.
+src/components/ai/ai-suggestion-card.tsx(4,23): error TS2307: Cannot find module '@/components/ui/badge' or its corresponding type declarations.
+src/components/ai/tailor-panel.tsx(4,23): error TS2307: Cannot find module '@/components/ui/badge' or its corresponding type declarations.
+src/components/layout/mobile-nav.tsx(6,62): error TS2307: Cannot find module '@/components/ui/sheet' or its corresponding type declarations.
+src/components/layout/mobile-nav.tsx(7,53): error TS2307: Cannot find module '@/components/ui/avatar' or its corresponding type declarations.
+src/components/layout/sidebar.tsx(6,53): error TS2307: Cannot find module '@/components/ui/avatar' or its corresponding type declarations.
+src/components/layout/topbar.tsx(6,53): error TS2307: Cannot find module '@/components/ui/avatar' or its corresponding type declarations.
+src/components/matching/jd-input.tsx(27,17): error TS2353: Object literal may only specify known properties, and 'content' does not exist in type '{ resumeId: string; jdId: string; }'.
+src/components/matching/jd-input.tsx(43,17): error TS2353: Object literal may only specify known properties, and 'jobId' does not exist in type '{ resumeId: string; jdId: string; }'.
+src/components/matching/keyword-comparison.tsx(1,23): error TS2307: Cannot find module '@/components/ui/badge' or its corresponding type declarations.
+src/components/resume/experience-form.tsx(6,26): error TS2307: Cannot find module '@/components/ui/checkbox' or its corresponding type declarations.
+src/components/resume/experience-form.tsx(205,31): error TS2322: Type '{ children: string; htmlFor: string; }' is not assignable to type 'DetailedHTMLProps<HTMLAttributes<HTMLSpanElement>, HTMLSpanElement>'.
+  Property 'htmlFor' does not exist on type 'DetailedHTMLProps<HTMLAttributes<HTMLSpanElement>, HTMLSpanElement>'.
+src/components/resume/resume-card.tsx(3,23): error TS2307: Cannot find module '@/components/ui/badge' or its corresponding type declarations.
+src/components/resume/resume-card.tsx(71,61): error TS2345: Argument of type 'string' is not assignable to parameter of type '{ id: string; }'.
+src/components/resume/resume-form.tsx(33,17): error TS2353: Object literal may only specify known properties, and 'data' does not exist in type '{ id: string; title?: string | undefined; status?: "DRAFT" | "COMPLETE" | "ARCHIVED" | undefined; contactInfo?: Record<string, unknown> | undefined; summary?: string | undefined; ... 4 more ...; certifications?: Record<...>[] | undefined; }'.
+src/components/resume/skills-form.tsx(5,23): error TS2307: Cannot find module '@/components/ui/badge' or its corresponding type declarations.
+src/components/resume/upload-dropzone.tsx(4,29): error TS2307: Cannot find module 'react-dropzone' or its corresponding type declarations.
+src/components/scoring/ats-score-card.tsx(27,25): error TS2345: Argument of type 'string' is not assignable to parameter of type '{ resumeId: string; targetKeywords?: string[] | undefined; }'.
+src/components/scoring/keyword-cloud.tsx(1,23): error TS2307: Cannot find module '@/components/ui/badge' or its corresponding type declarations.
+src/components/scoring/score-breakdown.tsx(4,69): error TS2307: Cannot find module '@/components/ui/collapsible' or its corresponding type declarations.
+src/components/shared/confirm-dialog.tsx(10,8): error TS2307: Cannot find module '@/components/ui/alert-dialog' or its corresponding type declarations.
+src/components/shared/confirm-dialog.tsx(43,35): error TS7006: Parameter 'e' implicitly has an 'any' type.
+src/components/ui/form.tsx(16,23): error TS2307: Cannot find module '@/registry/new-york/ui/label' or its corresponding type declarations.
+src/hooks/use-ai-enhance.ts(6,17): error TS2339: Property 'ai' does not exist on type 'CreateTRPCReactBase<BuiltRouter<{ ctx: { session: Session | null; headers: Headers | undefined; db: PrismaClient<PrismaClientOptions, never, DefaultArgs>; redis: Redis; }; meta: object; errorShape: DefaultErrorShape; transformer: true; }, DecorateCreateRouterOptions<...>>, unknown> & DecorateRouterRecord<...>'.
+src/hooks/use-ai-enhance.ts(7,19): error TS7006: Parameter 'error' implicitly has an 'any' type.
+src/hooks/use-ai-enhance.ts(17,17): error TS2339: Property 'ai' does not exist on type 'CreateTRPCReactBase<BuiltRouter<{ ctx: { session: Session | null; headers: Headers | undefined; db: PrismaClient<PrismaClientOptions, never, DefaultArgs>; redis: Redis; }; meta: object; errorShape: DefaultErrorShape; transformer: true; }, DecorateCreateRouterOptions<...>>, unknown> & DecorateRouterRecord<...>'.
+src/hooks/use-ai-enhance.ts(18,19): error TS7006: Parameter 'error' implicitly has an 'any' type.
+src/hooks/use-ai-enhance.ts(28,17): error TS2339: Property 'ai' does not exist on type 'CreateTRPCReactBase<BuiltRouter<{ ctx: { session: Session | null; headers: Headers | undefined; db: PrismaClient<PrismaClientOptions, never, DefaultArgs>; redis: Redis; }; meta: object; errorShape: DefaultErrorShape; transformer: true; }, DecorateCreateRouterOptions<...>>, unknown> & DecorateRouterRecord<...>'.
+src/hooks/use-ai-enhance.ts(29,19): error TS7006: Parameter 'error' implicitly has an 'any' type.
+src/hooks/use-ats-score.ts(9,43): error TS2559: Type 'string' has no properties in common with type '{ resumeId?: string | undefined; }'.
+src/hooks/use-ats-score.ts(10,45): error TS2559: Type 'string' has no properties in common with type '{ id?: string | undefined; }'.
+src/hooks/use-ats-score.ts(21,39): error TS2769: No overload matches this call.
+  Overload 1 of 2, '(input: { resumeId: string; } | typeof skipToken, opts: DefinedUseTRPCQueryOptions<ATSScore | null, ATSScore | null, TRPCClientErrorLike<{ errorShape: DefaultErrorShape; transformer: true; }>, ATSScore | null>): DefinedUseTRPCQueryResult<...>', gave the following error.
+    Argument of type 'string' is not assignable to parameter of type '{ resumeId: string; } | unique symbol'.
+  Overload 2 of 2, '(input: { resumeId: string; } | typeof skipToken, opts?: UseTRPCQueryOptions<ATSScore | null, ATSScore | null, TRPCClientErrorLike<{ input: { resumeId: string; }; output: ATSScore | null; transformer: true; errorShape: DefaultErrorShape; }>, ATSScore | null> | undefined): UseTRPCQueryResult<...>', gave the following error.
+    Argument of type 'string' is not assignable to parameter of type '{ resumeId: string; } | unique symbol'.
+src/hooks/use-jd-match.ts(9,47): error TS2353: Object literal may only specify known properties, and 'id' does not exist in type '{ resumeId?: string | undefined; jdId?: string | undefined; }'.
+src/hooks/use-jd-match.ts(9,56): error TS2339: Property 'id' does not exist on type 'ServiceResult<MatchReport>'.
+  Property 'id' does not exist on type '{ success: false; error: string; code?: string | undefined; }'.
+src/hooks/use-jd-match.ts(22,9): error TS2353: Object literal may only specify known properties, and 'limit' does not exist in type '{ page?: number | undefined; pageSize?: number | undefined; }'.
+src/hooks/use-resume.ts(6,41): error TS2769: No overload matches this call.
+  Overload 1 of 2, '(input: { id: string; } | typeof skipToken, opts: DefinedUseTRPCQueryOptions<Resume, Resume, TRPCClientErrorLike<{ errorShape: DefaultErrorShape; transformer: true; }>, Resume>): DefinedUseTRPCQueryResult<...>', gave the following error.
+    Argument of type 'string' is not assignable to parameter of type '{ id: string; } | unique symbol'.
+  Overload 2 of 2, '(input: { id: string; } | typeof skipToken, opts?: UseTRPCQueryOptions<Resume, Resume, TRPCClientErrorLike<{ input: { id: string; }; output: Resume; transformer: true; errorShape: DefaultErrorShape; }>, Resume> | undefined): UseTRPCQueryResult<...>', gave the following error.
+    Argument of type 'string' is not assignable to parameter of type '{ id: string; } | unique symbol'.
+src/hooks/use-resume.ts(14,9): error TS2353: Object literal may only specify known properties, and 'limit' does not exist in type '{ page?: number | undefined; pageSize?: number | undefined; status?: "DRAFT" | "COMPLETE" | "ARCHIVED" | undefined; }'.
+src/hooks/use-resume.ts(43,45): error TS2345: Argument of type 'unknown' is not assignable to parameter of type '{ id?: string | undefined; } | undefined'.
+src/modules/ai/providers/gemini.ts(36,17): error TS2353: Object literal may only specify known properties, and 'maxTokens' does not exist in type 'CallSettings & { system?: string | SystemModelMessage | SystemModelMessage[] | undefined; } & { prompt: string | ModelMessage[]; messages?: undefined; } & { ...; }'.
+src/modules/ai/providers/gemini.ts(45,41): error TS2339: Property 'promptTokens' does not exist on type 'LanguageModelUsage'.
+src/modules/ai/providers/gemini.ts(46,45): error TS2339: Property 'completionTokens' does not exist on type 'LanguageModelUsage'.
+src/modules/ai/providers/gemini.ts(88,13): error TS2353: Object literal may only specify known properties, and 'maxTokens' does not exist in type 'CallSettings & { system?: string | SystemModelMessage | SystemModelMessage[] | undefined; } & { prompt: string | ModelMessage[]; messages?: undefined; } & { ...; }'.
+src/modules/export/docx-generator.ts(21,10): error TS2554: Expected 2 arguments, but got 1.
+src/modules/export/docx-generator.ts(252,52): error TS2873: This kind of expression is always falsy.
+src/modules/export/docx-generator.ts(311,32): error TS2561: Object literal may only specify known properties, but 'befores' does not exist in type 'ISpacingProperties'. Did you mean to write 'before'?
+src/modules/export/pdf-generator.tsx(19,10): error TS2554: Expected 2 arguments, but got 1.
+src/modules/export/templates/classic.tsx(66,13): error TS2339: Property 'contact' does not exist on type 'CanonicalResume'.
+src/modules/export/templates/classic.tsx(82,48): error TS2304: Cannot find name 'contactInfo'.
+src/modules/export/templates/classic.tsx(138,38): error TS2873: This kind of expression is always falsy.
+src/modules/export/templates/classic.tsx(153,21): error TS18048: 'skills.languages' is possibly 'undefined'.
+src/modules/export/templates/classic.tsx(165,30): error TS18048: 'skills.languages' is possibly 'undefined'.
+src/modules/export/templates/classic.tsx(168,38): error TS18048: 'skills.languages' is possibly 'undefined'.
+src/modules/export/templates/minimal.tsx(59,13): error TS2339: Property 'contact' does not exist on type 'CanonicalResume'.
+src/modules/export/templates/minimal.tsx(74,48): error TS2304: Cannot find name 'contactInfo'.
+src/modules/export/templates/minimal.tsx(124,38): error TS2873: This kind of expression is always falsy.
+src/modules/export/templates/minimal.tsx(138,29): error TS2339: Property 'frameworks' does not exist on type 'SkillSet'.
+src/modules/export/templates/minimal.tsx(149,30): error TS18048: 'skills.languages' is possibly 'undefined'.
+src/modules/export/templates/minimal.tsx(152,38): error TS18048: 'skills.languages' is possibly 'undefined'.
+src/modules/export/templates/modern.tsx(105,13): error TS2339: Property 'contact' does not exist on type 'CanonicalResume'.
+src/modules/export/templates/modern.tsx(111,48): error TS2304: Cannot find name 'contactInfo'.
+src/modules/export/templates/modern.tsx(166,38): error TS2873: This kind of expression is always falsy.
+src/modules/export/templates/modern.tsx(180,29): error TS2339: Property 'frameworks' does not exist on type 'SkillSet'.
+src/modules/export/templates/modern.tsx(195,30): error TS18048: 'skills.languages' is possibly 'undefined'.
+src/modules/export/templates/modern.tsx(199,42): error TS18048: 'skills.languages' is possibly 'undefined'.
+src/server/services/affiliate.service.ts(1,15): error TS2305: Module '"@/types/job"' has no exported member 'RankedSkillGap'.
+src/server/services/analytics.service.ts(53,43): error TS2339: Property 'getCached' does not exist on type '{ get<T>(key: string): Promise<T | null>; set<T>(key: string, data: T, ttlSeconds: number): Promise<void>; invalidate(key: string): Promise<void>; invalidateByPrefix(prefix: string): Promise<...>; withCache<T>(key: string, ttlSeconds: number, fetcher: () => Promise<...>): Promise<...>; }'.
+src/server/services/analytics.service.ts(102,32): error TS2339: Property 'setCached' does not exist on type '{ get<T>(key: string): Promise<T | null>; set<T>(key: string, data: T, ttlSeconds: number): Promise<void>; invalidate(key: string): Promise<void>; invalidateByPrefix(prefix: string): Promise<...>; withCache<T>(key: string, ttlSeconds: number, fetcher: () => Promise<...>): Promise<...>; }'.
+src/server/services/export.service.ts(30,21): error TS2353: Object literal may only specify known properties, and 'data' does not exist in type '{ success: false; error: string; code?: string | undefined; }'.
+src/server/services/export.service.ts(39,21): error TS2353: Object literal may only specify known properties, and 'data' does not exist in type '{ success: false; error: string; code?: string | undefined; }'.
+src/server/services/export.service.ts(48,21): error TS2353: Object literal may only specify known properties, and 'data' does not exist in type '{ success: false; error: string; code?: string | undefined; }'.
+src/server/services/export.service.ts(65,17): error TS2322: Type 'string | null' is not assignable to type 'string | undefined'.
+  Type 'null' is not assignable to type 'string | undefined'.
+src/server/services/export.service.ts(104,17): error TS2353: Object literal may only specify known properties, and 'error' does not exist in type '{ success: true; data: ExportResult; }'.
+src/server/services/export.service.ts(111,17): error TS2353: Object literal may only specify known properties, and 'data' does not exist in type '{ success: false; error: string; code?: string | undefined; }'.
+src/server/services/github.service.ts(118,13): error TS2353: Object literal may only specify known properties, and 'error' does not exist in type '{ success: true; data: { commitSha: string; url: string; }; }'.
+src/server/services/linkedin.service.ts(5,10): error TS2724: '"@/modules/parser/linkedin-pdf-parser"' has no exported member named 'isLinkedInPdf'. Did you mean 'parseLinkedInPdf'?
+src/server/services/linkedin.service.ts(26,21): error TS2353: Object literal may only specify known properties, and 'data' does not exist in type '{ success: false; error: string; code?: string | undefined; }'.
+src/server/services/linkedin.service.ts(42,59): error TS2339: Property 'error' does not exist on type 'ServiceResult<Resume>'.
+  Property 'error' does not exist on type '{ success: true; data: Resume; }'.
+src/server/services/linkedin.service.ts(48,64): error TS2345: Argument of type 'unknown' is not assignable to parameter of type 'string'.
+src/server/services/linkedin.service.ts(49,41): error TS2339: Property 'contact' does not exist on type 'CanonicalResume'.
+src/server/services/linkedin.service.ts(70,29): error TS2322: Type '{ resumeId: unknown; }' is not assignable to type 'InputJsonValue | NullableJsonNullValueInput | undefined'.
+  Types of property 'resumeId' are incompatible.
+    Type 'unknown' is not assignable to type 'InputJsonValue | null | undefined'.
+src/server/services/linkedin.service.ts(81,21): error TS2322: Type 'unknown' is not assignable to type 'string'.
+src/server/services/linkedin.service.ts(91,17): error TS2353: Object literal may only specify known properties, and 'data' does not exist in type '{ success: false; error: string; code?: string | undefined; }'.
+src/server/services/user.service.ts(60,13): error TS2353: Object literal may only specify known properties, and 'error' does not exist in type '{ success: true; data: UserProfile; }'.
+src/server/services/user.service.ts(123,17): error TS2353: Object literal may only specify known properties, and 'error' does not exist in type '{ success: true; data: UserDataExport; }'.
+src/server/services/user.service.ts(141,67): error TS2554: Expected 1 arguments, but got 2.
+src/server/services/version.service.ts(34,17): error TS2322: Type 'string | null' is not assignable to type 'string | undefined'.
+  Type 'null' is not assignable to type 'string | undefined'.
+src/server/services/version.service.ts(127,67): error TS2339: Property 'error' does not exist on type 'ServiceResult<{ id: string; createdAt: Date; resumeId: string; version: number; snapshot: JsonValue; changeNote: string | null; githubCommitSha: string | null; }>'.
+  Property 'error' does not exist on type '{ success: true; data: { id: string; createdAt: Date; resumeId: string; version: number; snapshot: JsonValue; changeNote: string | null; githubCommitSha: string | null; }; }'.
+src/server/services/version.service.ts(145,13): error TS2353: Object literal may only specify known properties, and 'rawText' does not exist in type 'UpdateResumeInput'.
+src/server/services/version.service.ts(148,9): error TS2322: Type 'ServiceResult<Resume>' is not assignable to type 'ServiceResult<{ status: ResumeStatus; id: string; userId: string; createdAt: Date; updatedAt: Date; title: string; templateId: string | null; contactInfo: JsonValue; ... 12 more ...; lastAtsDetails: JsonValue; }>'.
+  Type '{ success: true; data: Resume; }' is not assignable to type 'ServiceResult<{ status: ResumeStatus; id: string; userId: string; createdAt: Date; updatedAt: Date; title: string; templateId: string | null; contactInfo: JsonValue; ... 12 more ...; lastAtsDetails: JsonValue; }>'.
+    Type '{ success: true; data: Resume; }' is not assignable to type '{ success: true; data: { status: ResumeStatus; id: string; userId: string; createdAt: Date; updatedAt: Date; title: string; templateId: string | null; contactInfo: JsonValue; ... 12 more ...; lastAtsDetails: JsonValue; }; }'.
+      Types of property 'data' are incompatible.
+        Type 'Resume' is missing the following properties from type '{ status: ResumeStatus; id: string; userId: string; createdAt: Date; updatedAt: Date; title: string; templateId: string | null; contactInfo: JsonValue; ... 12 more ...; lastAtsDetails: JsonValue; }': status, id, userId, createdAt, and 17 more.
+tests/integration/api/export.api.test.ts(22,43): error TS2345: Argument of type 'null' is not assignable to parameter of type 'NextMiddleware'.
+tests/integration/api/export.api.test.ts(42,13): error TS2353: Object literal may only specify known properties, and 'data' does not exist in type '{ success: false; error: string; code?: string | undefined; }'.
+tests/integration/api/export.api.test.ts(57,13): error TS2353: Object literal may only specify known properties, and 'data' does not exist in type '{ success: false; error: string; code?: string | undefined; }'.
+tests/integration/api/export.api.test.ts(78,13): error TS2353: Object literal may only specify known properties, and 'error' does not exist in type '{ success: true; data: ExportResult; }'.
+tests/integration/api/linkedin-upload.api.test.ts(28,43): error TS2345: Argument of type 'null' is not assignable to parameter of type 'NextMiddleware'.
+tests/integration/api/linkedin-upload.api.test.ts(76,13): error TS2353: Object literal may only specify known properties, and 'data' does not exist in type '{ success: false; error: string; code?: string | undefined; }'.
+tests/integration/api/linkedin-upload.api.test.ts(98,13): error TS2353: Object literal may only specify known properties, and 'error' does not exist in type '{ success: true; data: { resumeId: string; parsedData: CanonicalResume; }; }'.
+tests/unit/ai/utils.test.ts(80,20): error TS18046: 'caughtErr' is of type 'unknown'.
+tests/unit/ai/utils.test.ts(81,20): error TS18046: 'caughtErr' is of type 'unknown'.
+tests/unit/ai/utils.test.ts(96,20): error TS18046: 'caughtErr' is of type 'unknown'.
+tests/unit/ai/utils.test.ts(108,20): error TS18046: 'caughtErr' is of type 'unknown'.
+tests/unit/ai/utils.test.ts(122,20): error TS18046: 'caughtErr' is of type 'unknown'.
+tests/unit/ai/utils.test.ts(135,20): error TS18046: 'caughtErr' is of type 'unknown'.
+tests/unit/components/hooks.test.ts(6,5): error TS2304: Cannot find name 'beforeEach'.
+tests/unit/components/hooks.test.ts(10,5): error TS2304: Cannot find name 'afterEach'.
+tests/unit/export/docx-generator.test.ts(30,60): error TS1117: An object literal cannot have multiple properties with the same name.
+tests/unit/export/docx-generator.test.ts(30,85): error TS2353: Object literal may only specify known properties, and 'other' does not exist in type 'SkillSet'.
+tests/unit/export/docx-generator.test.ts(41,9): error TS2322: Type 'null' is not assignable to type 'string | undefined'.
+tests/unit/export/docx-generator.test.ts(44,60): error TS1117: An object literal cannot have multiple properties with the same name.
+tests/unit/export/docx-generator.test.ts(44,85): error TS2353: Object literal may only specify known properties, and 'other' does not exist in type 'SkillSet'.
+tests/unit/export/docx-generator.test.ts(82,26): error TS2739: Type '{ title: string; company: string; location: string; startDate: string; endDate: string; bullets: string[]; }' is missing the following properties from type 'ExperienceEntry': id, current
+tests/unit/export/docx-generator.test.ts(93,17): error TS2353: Object literal may only specify known properties, and 'location' does not exist in type 'EducationEntry'.
+tests/unit/export/docx-generator.test.ts(102,17): error TS1117: An object literal cannot have multiple properties with the same name.
+tests/unit/export/docx-generator.test.ts(104,17): error TS2353: Object literal may only specify known properties, and 'other' does not exist in type 'SkillSet'.
+tests/unit/export/docx-generator.test.ts(111,17): error TS2353: Object literal may only specify known properties, and 'bullets' does not exist in type 'ProjectEntry'.
+tests/unit/export/docx-generator.test.ts(117,17): error TS2322: Type 'null' is not assignable to type 'string | undefined'.
+tests/unit/export/pdf-generator.test.ts(30,60): error TS1117: An object literal cannot have multiple properties with the same name.
+tests/unit/export/pdf-generator.test.ts(30,85): error TS2353: Object literal may only specify known properties, and 'other' does not exist in type 'SkillSet'.
+tests/unit/export/pdf-generator.test.ts(41,9): error TS2322: Type 'null' is not assignable to type 'string | undefined'.
+tests/unit/export/pdf-generator.test.ts(44,60): error TS1117: An object literal cannot have multiple properties with the same name.
+tests/unit/export/pdf-generator.test.ts(44,85): error TS2353: Object literal may only specify known properties, and 'other' does not exist in type 'SkillSet'.
+tests/unit/export/pdf-generator.test.ts(115,17): error TS2353: Object literal may only specify known properties, and 'contact' does not exist in type 'CanonicalResume'.
+tests/unit/export/pdf-generator.test.ts(115,44): error TS2339: Property 'contact' does not exist on type 'CanonicalResume'.
+tests/unit/lib/utils.test.ts(9,5): error TS2305: Module '"@/lib/utils"' has no exported member 'formatDate'.
+tests/unit/lib/utils.test.ts(10,5): error TS2305: Module '"@/lib/utils"' has no exported member 'formatRelativeDate'.
+tests/unit/lib/utils.test.ts(11,5): error TS2305: Module '"@/lib/utils"' has no exported member 'truncate'.
+tests/unit/lib/utils.test.ts(12,5): error TS2305: Module '"@/lib/utils"' has no exported member 'slugify'.
+tests/unit/lib/utils.test.ts(13,5): error TS2305: Module '"@/lib/utils"' has no exported member 'formatFileSize'.
+tests/unit/lib/utils.test.ts(14,5): error TS2305: Module '"@/lib/utils"' has no exported member 'sleep'.
+tests/unit/routers/analytics.router.test.ts(19,45): error TS2345: Argument of type '{ session: any; db: any; }' is not assignable to parameter of type '{ session: Session | null; headers: Headers | undefined; db: PrismaClient<PrismaClientOptions, never, DefaultArgs>; redis: Redis; } | (() => MaybePromise<...>)'.
+  Type '{ session: any; db: any; }' is missing the following properties from type '{ session: Session | null; headers: Headers | undefined; db: PrismaClient<PrismaClientOptions, never, DefaultArgs>; redis: Redis; }': headers, redis
+tests/unit/routers/user.router.test.ts(21,40): error TS2345: Argument of type '{ session: any; db: any; }' is not assignable to parameter of type '{ session: Session | null; headers: Headers | undefined; db: PrismaClient<PrismaClientOptions, never, DefaultArgs>; redis: Redis; } | (() => MaybePromise<...>)'.
+  Type '{ session: any; db: any; }' is missing the following properties from type '{ session: Session | null; headers: Headers | undefined; db: PrismaClient<PrismaClientOptions, never, DefaultArgs>; redis: Redis; }': headers, redis
+tests/unit/routers/version.router.test.ts(28,43): error TS2345: Argument of type '{ session: any; db: any; }' is not assignable to parameter of type '{ session: Session | null; headers: Headers | undefined; db: PrismaClient<PrismaClientOptions, never, DefaultArgs>; redis: Redis; } | (() => MaybePromise<...>)'.
+  Type '{ session: any; db: any; }' is missing the following properties from type '{ session: Session | null; headers: Headers | undefined; db: PrismaClient<PrismaClientOptions, never, DefaultArgs>; redis: Redis; }': headers, redis
+tests/unit/services/affiliate.service.test.ts(3,15): error TS2305: Module '"@/types/job"' has no exported member 'RankedSkillGap'.
+tests/unit/services/analytics.service.test.ts(58,32): error TS2339: Property 'getCached' does not exist on type '{ get<T>(key: string): Promise<T | null>; set<T>(key: string, data: T, ttlSeconds: number): Promise<void>; invalidate(key: string): Promise<void>; invalidateByPrefix(prefix: string): Promise<...>; withCache<T>(key: string, ttlSeconds: number, fetcher: () => Promise<...>): Promise<...>; }'.
+tests/unit/services/analytics.service.test.ts(78,29): error TS2339: Property 'setCached' does not exist on type '{ get<T>(key: string): Promise<T | null>; set<T>(key: string, data: T, ttlSeconds: number): Promise<void>; invalidate(key: string): Promise<void>; invalidateByPrefix(prefix: string): Promise<...>; withCache<T>(key: string, ttlSeconds: number, fetcher: () => Promise<...>): Promise<...>; }'.
+tests/unit/services/analytics.service.test.ts(82,32): error TS2339: Property 'getCached' does not exist on type '{ get<T>(key: string): Promise<T | null>; set<T>(key: string, data: T, ttlSeconds: number): Promise<void>; invalidate(key: string): Promise<void>; invalidateByPrefix(prefix: string): Promise<...>; withCache<T>(key: string, ttlSeconds: number, fetcher: () => Promise<...>): Promise<...>; }'.
+tests/unit/services/linkedin.service.test.ts(4,10): error TS2724: '"@/modules/parser/linkedin-pdf-parser"' has no exported member named 'isLinkedInPdf'. Did you mean 'parseLinkedInPdf'?
+tests/unit/services/linkedin.service.test.ts(56,13): error TS2353: Object literal may only specify known properties, and 'error' does not exist in type '{ success: true; data: Resume; }'.
+tests/unit/services/linkedin.service.test.ts(94,13): error TS2353: Object literal may only specify known properties, and 'data' does not exist in type '{ success: false; error: string; code?: string | undefined; }'.
+tests/unit/services/linkedin.service.test.ts(112,13): error TS2353: Object literal may only specify known properties, and 'error' does not exist in type '{ success: true; data: Resume; }'.
+tests/unit/services/linkedin.service.test.ts(117,13): error TS2353: Object literal may only specify known properties, and 'data' does not exist in type '{ success: false; error: string; code?: string | undefined; }'.
+tests/unit/services/version.service.test.ts(83,13): error TS2353: Object literal may only specify known properties, and 'error' does not exist in type '{ success: true; data: { commitSha: string; url: string; }; }'.
+ ELIFECYCLE  Command failed with exit code 2.

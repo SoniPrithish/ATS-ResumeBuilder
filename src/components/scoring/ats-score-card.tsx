@@ -24,7 +24,9 @@ export function ATSScoreCard({
     };
 
     const handleScore = () => {
-        atsScore.mutate(resumeId, {
+        atsScore.mutate({
+            resumeId,
+        }, {
             onSuccess: () => {
                 onScore();
             }

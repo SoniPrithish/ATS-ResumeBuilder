@@ -4,7 +4,6 @@ import { PageHeader } from "@/components/shared/page-header";
 import { useResumes } from "@/hooks/use-resume";
 import { ResumeCard } from "@/components/resume/resume-card";
 import { EmptyState } from "@/components/shared/empty-state";
-import { ResumeRecord } from "@/types/resume";
 import { Button } from "@/components/ui/button";
 import { FileText, Plus } from "lucide-react";
 import Link from "next/link";
@@ -47,7 +46,7 @@ export default function ResumesPage() {
                 />
             ) : (
                 <div className="grid gap-6 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3">
-                    {resumes?.items.map((resume: ResumeRecord) => (
+                    {resumes?.items.map((resume) => (
                         <ResumeCard key={resume.id} resume={resume} />
                     ))}
                 </div>

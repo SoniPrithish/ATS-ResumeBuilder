@@ -13,11 +13,72 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Button } from "@/components/ui/button";
 import { ArrowLeft } from "lucide-react";
 import Link from "next/link";
+import type { ATSScore as ATSScoreResult, CategoryScore } from "@/types/ats";
+import type { ATSSuggestion as UISuggestion } from "@/components/scoring/suggestion-list";
+
+interface BreakdownCategory {
+    id: string;
+    name: string;
+    score: number;
+    weight: number;
+    details: string[];
+}
+
+function toUiSuggestions(scoreData: ATSScoreResult | null): UISuggestion[] {
+    if (!scoreData) return [];
+    return scoreData.suggestions.map((suggestion) => ({
+        id: suggestion.id,
+        type: suggestion.priority === "high" ? "CRITICAL" : suggestion.priority === "medium" ? "WARNING" : "INFO",
+        title: suggestion.category.replace(/^./, (char) => char.toUpperCase()),
+        message: suggestion.message,
+        actionableText: suggestion.section ? `Focus on the ${suggestion.section} section.` : undefined,
+    }));
+}
+
+function toBreakdownCategories(scoreData: ATSScoreResult | null): BreakdownCategory[] {
+    if (!scoreData) return [];
+    const breakdown = scoreData.breakdown as Record<string, CategoryScore | undefined>;
+    const orderedKeys = [
+        { key: "format", name: "Format", weight: 15 },
+        { key: "keywords", name: "Keywords", weight: 30 },
+        { key: "sections", name: "Sections", weight: 20 },
+        { key: "bullets", name: "Bullets", weight: 25 },
+        { key: "readability", name: "Readability", weight: 10 },
+    ];
+
+    return orderedKeys
+        .map((item) => {
+            const category = breakdown[item.key];
+            if (!category) return null;
+            return {
+                id: item.key,
+                name: item.name,
+                score: category.score,
+                weight: item.weight,
+                details: [category.feedback, ...category.suggestions].filter(Boolean),
+            };
+        })
+        .filter((item): item is BreakdownCategory => item !== null);
+}
+
+function extractKeywordBuckets(scoreData: ATSScoreResult | null): { matched: string[]; missing: string[] } {
+    if (!scoreData) return { matched: [], missing: [] };
+    const keywordSuggestions = scoreData.breakdown.keywords?.suggestions ?? [];
+    const clean = (value: string) => value.replace(/^[^\w]+/, "").trim();
+    return {
+        matched: keywordSuggestions.filter((item) => item.startsWith("✅")).map(clean),
+        missing: keywordSuggestions.filter((item) => item.startsWith("❌")).map(clean),
+    };
+}
 
 export default function ScorePage({ params }: { params: Promise<{ id: string }> }) {
     const resolvedParams = use(params);
     const { data: resume, isLoading: isLoadingResume } = useResume(resolvedParams.id);
     const { data: scoreData, refetch } = useCachedScore(resolvedParams.id);
+    const score = scoreData ?? null;
+    const uiSuggestions = toUiSuggestions(score);
+    const breakdownCategories = toBreakdownCategories(score);
+    const keywordBuckets = extractKeywordBuckets(score);
 
     if (isLoadingResume) {
         return (
@@ -83,10 +144,10 @@ export default function ScorePage({ params }: { params: Promise<{ id: string }> 
                                 </div>
                                 <div className="p-6">
                                     <TabsContent value="suggestions" className="m-0 border-none outline-none">
-                                        <SuggestionList suggestions={(scoreData.suggestions as any) || []} />
+                                        <SuggestionList suggestions={uiSuggestions} />
                                     </TabsContent>
                                     <TabsContent value="breakdown" className="m-0 border-none outline-none">
-                                        <ScoreBreakdown categories={(scoreData as any).categories || []} />
+                                        <ScoreBreakdown categories={breakdownCategories} />
                                     </TabsContent>
                                 </div>
                             </Tabs>
@@ -96,12 +157,12 @@ export default function ScorePage({ params }: { params: Promise<{ id: string }> 
 
                 {/* Right Column: Sidebar */}
                 <div className="space-y-6">
-                    {scoreData && (scoreData as any).keywords && (
+                    {(keywordBuckets.matched.length > 0 || keywordBuckets.missing.length > 0) && (
                         <div className="sticky top-24">
                             <h3 className="font-semibold text-lg mb-4">Keyword Analysis</h3>
                             <KeywordCloud
-                                matched={(scoreData as any).keywords.matched || []}
-                                missing={(scoreData as any).keywords.missing || []}
+                                matched={keywordBuckets.matched}
+                                missing={keywordBuckets.missing}
                             />
                         </div>
                     )}

@@ -9,7 +9,7 @@ import { Button } from "@/components/ui/button";
 import { ArrowLeft, PlayCircle } from "lucide-react";
 import Link from "next/link";
 import { AILoading } from "@/components/ai/ai-loading";
-import { TailorPanel } from "@/components/ai/tailor-panel";
+import { TailorPanel, type TailorApplyPayload, type TailorPanelData } from "@/components/ai/tailor-panel";
 import { useSearchParams } from "next/navigation";
 
 export default function TailorPage({ params }: { params: Promise<{ id: string }> }) {
@@ -19,7 +19,7 @@ export default function TailorPage({ params }: { params: Promise<{ id: string }>
 
     const { data: resume, isLoading: isLoadingResume } = useResume(resolvedParams.id);
     const tailorResume = useTailorResume();
-    const [tailorData, setTailorData] = useState<Record<string, unknown> | null>(null);
+    const [tailorData, setTailorData] = useState<TailorPanelData | null>(null);
 
     if (isLoadingResume) {
         return (
@@ -56,7 +56,7 @@ export default function TailorPage({ params }: { params: Promise<{ id: string }>
         }
     };
 
-    const applyAll = (data: Record<string, unknown>) => {
+    const applyAll = (data: TailorApplyPayload) => {
         console.log("Applying", data);
         // In real implementation we'd apply this to the resume using the `useUpdateResume` hook or store
         alert("Changes would be applied here in a fully wired app.");

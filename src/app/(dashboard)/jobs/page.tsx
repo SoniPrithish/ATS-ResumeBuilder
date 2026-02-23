@@ -46,7 +46,7 @@ export default function JobsPage() {
                 />
             ) : (
                 <div className="grid gap-6 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3">
-                    {jobs?.items.map((job: { id: string; title: string; company: string; content: string; createdAt: string }) => (
+                    {jobs?.items.map((job) => (
                         <Card key={job.id} className="flex flex-col h-full transition-all duration-200 hover:shadow-lg border-border/50 hover:border-primary/50 group">
                             <CardHeader className="pb-4">
                                 <div className="flex items-start justify-between">
@@ -82,7 +82,7 @@ export default function JobsPage() {
                             <Link href={`/jobs/${job.id}`} className="flex-1">
                                 <CardContent className="flex-1">
                                     <p className="line-clamp-3 text-sm text-muted-foreground bg-muted/20 p-4 rounded-md border border-border/50 font-mono text-xs">
-                                        {job.content.substring(0, 150)}...
+                                        {job.rawText.substring(0, 150)}...
                                     </p>
                                 </CardContent>
                             </Link>

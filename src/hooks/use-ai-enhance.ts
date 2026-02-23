@@ -2,7 +2,6 @@ import { trpc } from '@/lib/trpc-client';
 import { toast } from 'sonner';
 
 export function useEnhanceBullet() {
-
     return trpc.ai.enhanceBullet.useMutation({
         onError: (error) => {
             toast.error('Enhancement failed', {
@@ -13,7 +12,6 @@ export function useEnhanceBullet() {
 }
 
 export function useTailorResume() {
-
     return trpc.ai.tailorResume.useMutation({
         onError: (error) => {
             toast.error('Tailoring failed', {
@@ -24,7 +22,6 @@ export function useTailorResume() {
 }
 
 export function useGenerateSummary() {
-
     return trpc.ai.generateSummary.useMutation({
         onError: (error) => {
             toast.error('Summary generation failed', {
@@ -33,4 +30,3 @@ export function useGenerateSummary() {
         }
     });
 }
-// group 1 modifications

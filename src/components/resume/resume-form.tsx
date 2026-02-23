@@ -30,18 +30,16 @@ export function ResumeForm({ resumeId }: { resumeId: string }) {
         try {
             await updateResume.mutateAsync({
                 id: resumeId,
-                data: {
-                    title: resumeRef.current.title,
-                    templateId: resumeRef.current.templateId,
-                    contactInfo: resumeRef.current.contactInfo,
-                    summary: resumeRef.current.summary,
-                    experience: resumeRef.current.experience,
-                    education: resumeRef.current.education,
-                    skills: resumeRef.current.skills,
-                    projects: resumeRef.current.projects,
-                    certifications: resumeRef.current.certifications,
-                    customSections: resumeRef.current.customSections,
-                }
+                title: resumeRef.current.title,
+                templateId: resumeRef.current.templateId,
+                contactInfo: resumeRef.current.contactInfo as unknown as Record<string, unknown>,
+                summary: resumeRef.current.summary,
+                experience: resumeRef.current.experience as unknown as Record<string, unknown>[],
+                education: resumeRef.current.education as unknown as Record<string, unknown>[],
+                skills: resumeRef.current.skills as unknown as Record<string, unknown>,
+                projects: (resumeRef.current.projects ?? []) as unknown as Record<string, unknown>[],
+                certifications: (resumeRef.current.certifications ?? []) as unknown as Record<string, unknown>[],
+                customSections: (resumeRef.current.customSections ?? []) as unknown as Record<string, unknown>[],
             });
             setLastSavedTime(new Date());
         } catch {

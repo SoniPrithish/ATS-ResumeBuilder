@@ -16,7 +16,7 @@ export default function EditResumePage({ params }: { params: Promise<{ id: strin
 
     useEffect(() => {
         if (resume) {
-            setResume(resume as any);
+            setResume(resume);
         }
     }, [resume, setResume]);
 

@@ -46,8 +46,8 @@ describe("parseResume (orchestrator)", () => {
     const result = await parseResume(buffer, "pdf");
 
     expect(result.success).toBe(true);
-    expect(result.data).not.toBeNull();
-    expect(result.data!.contactInfo.fullName).toBe("John Doe");
+    expect((result as any).data).not.toBeNull();
+    expect((result as any).data!.contactInfo.fullName).toBe("John Doe");
     expect(result.parseTimeMs).toBeGreaterThanOrEqual(0);
   });
 
@@ -80,7 +80,7 @@ describe("parseResume (orchestrator)", () => {
     const result = await parseResume(buffer, "docx");
 
     expect(result.success).toBe(true);
-    expect(result.data).not.toBeNull();
+    expect((result as any).data).not.toBeNull();
   });
 
   it("should handle pipeline with no parseable sections (failure)", async () => {
@@ -94,7 +94,7 @@ describe("parseResume (orchestrator)", () => {
     const result = await parseResume(buffer, "pdf");
 
     expect(result.success).toBe(false);
-    expect(result.errors.length).toBeGreaterThan(0);
+    expect((result as any).errors.length).toBeGreaterThan(0);
   });
 
   it("should handle pipeline with empty buffer (failure)", async () => {
@@ -105,6 +105,6 @@ describe("parseResume (orchestrator)", () => {
     const result = await parseResume(buffer, "pdf");
 
     expect(result.success).toBe(false);
-    expect(result.errors.length).toBeGreaterThan(0);
+    expect((result as any).errors.length).toBeGreaterThan(0);
   });
 });

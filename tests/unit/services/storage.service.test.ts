@@ -45,7 +45,7 @@ describe("storageService", () => {
 
       expect(result.success).toBe(false);
       if (!result.success) {
-        expect(result.error).toContain("5MB");
+        expect((result as any).error).toContain("5MB");
       }
     });
 
@@ -60,7 +60,7 @@ describe("storageService", () => {
 
       expect(result.success).toBe(false);
       if (!result.success) {
-        expect(result.error).toContain("Invalid content type");
+        expect((result as any).error).toContain("Invalid content type");
       }
     });
   });
@@ -82,7 +82,7 @@ describe("storageService", () => {
 
   describe("deleteResumeFile", () => {
     it("should delete file successfully", async () => {
-      mockR2.deleteFile.mockResolvedValue({ success: true, data: { key: "test" } });
+      mockR2.deleteFile.mockResolvedValue({ success: true,  data: { key: "test" } as any });
 
       const result = await storageService.deleteResumeFile("uploads/test.pdf");
 

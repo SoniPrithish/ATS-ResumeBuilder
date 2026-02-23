@@ -29,22 +29,30 @@ export class GeminiProvider implements AIProvider, ExtendedAIProvider {
 
         return withRetry(async () => {
             const start = performance.now();
-            const { text, usage } = await aiGenerateText({
+            const request = {
                 model: google(this.model),
                 system: extOptions?.systemPrompt,
                 prompt,
                 maxTokens: options?.maxTokens ?? 2048,
                 temperature: options?.temperature ?? 0.7,
-            });
+            } as unknown as Parameters<typeof aiGenerateText>[0];
+            const { text, usage } = await aiGenerateText(request);
+            const usageRecord = usage as {
+                inputTokens?: number;
+                outputTokens?: number;
+                promptTokens?: number;
+                completionTokens?: number;
+                totalTokens?: number;
+            } | undefined;
 
             const latencyMs = Math.round(performance.now() - start);
 
             return {
                 data: text,
                 usage: {
-                    promptTokens: usage.promptTokens ?? 0,
-                    completionTokens: usage.completionTokens ?? 0,
-                    totalTokens: usage.totalTokens ?? 0,
+                    promptTokens: usageRecord?.inputTokens ?? usageRecord?.promptTokens ?? 0,
+                    completionTokens: usageRecord?.outputTokens ?? usageRecord?.completionTokens ?? 0,
+                    totalTokens: usageRecord?.totalTokens ?? 0,
                 },
                 model: this.model,
                 latencyMs,
@@ -81,13 +89,14 @@ export class GeminiProvider implements AIProvider, ExtendedAIProvider {
     async *generateStream(prompt: string, options?: AIOptions): AsyncIterable<string> {
         const extOptions = options as AIOptions & ExtendedAIOptions | undefined;
 
-        const { textStream } = streamText({
+        const request = {
             model: google(this.model),
             system: extOptions?.systemPrompt,
             prompt,
             maxTokens: options?.maxTokens ?? 2048,
             temperature: options?.temperature ?? 0.7,
-        });
+        } as unknown as Parameters<typeof streamText>[0];
+        const { textStream } = streamText(request);
 
         for await (const chunk of textStream) {
             yield chunk;

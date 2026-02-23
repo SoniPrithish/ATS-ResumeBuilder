@@ -22,7 +22,7 @@ describe('MockAIProvider', () => {
         it('returns enhanced bullet response for "enhance" prompt', async () => {
             const provider = new MockAIProvider({ delay: 1 });
             const res = await provider.generateText('please enhance this bullet');
-            const parsed = JSON.parse(res.data);
+            const parsed = JSON.parse((res as any).data);
 
             expect(parsed).toHaveProperty('original');
             expect(parsed).toHaveProperty('enhanced');
@@ -32,7 +32,7 @@ describe('MockAIProvider', () => {
         it('returns enhanced bullet response for "bullet" prompt', async () => {
             const provider = new MockAIProvider({ delay: 1 });
             const res = await provider.generateText('rewrite this bullet point');
-            const parsed = JSON.parse(res.data);
+            const parsed = JSON.parse((res as any).data);
 
             expect(parsed).toHaveProperty('enhanced');
         });
@@ -40,7 +40,7 @@ describe('MockAIProvider', () => {
         it('returns tailor result for "tailor" prompt', async () => {
             const provider = new MockAIProvider({ delay: 1 });
             const res = await provider.generateText('tailor this resume');
-            const parsed = JSON.parse(res.data);
+            const parsed = JSON.parse((res as any).data);
 
             expect(parsed).toHaveProperty('tailoredSummary');
             expect(parsed).toHaveProperty('bulletSuggestions');
@@ -52,7 +52,7 @@ describe('MockAIProvider', () => {
         it('returns summary result for "summary" prompt', async () => {
             const provider = new MockAIProvider({ delay: 1 });
             const res = await provider.generateText('generate a summary');
-            const parsed = JSON.parse(res.data);
+            const parsed = JSON.parse((res as any).data);
 
             expect(parsed).toHaveProperty('summary');
             expect(parsed).toHaveProperty('alternatives');
@@ -62,7 +62,7 @@ describe('MockAIProvider', () => {
         it('returns keywords for "extract" prompt', async () => {
             const provider = new MockAIProvider({ delay: 1 });
             const res = await provider.generateText('extract keywords');
-            const parsed = JSON.parse(res.data);
+            const parsed = JSON.parse((res as any).data);
 
             expect(parsed).toHaveProperty('hardSkills');
             expect(parsed).toHaveProperty('softSkills');
@@ -72,7 +72,7 @@ describe('MockAIProvider', () => {
         it('returns skill gaps for "skill gap" prompt', async () => {
             const provider = new MockAIProvider({ delay: 1 });
             const res = await provider.generateText('find skill gap');
-            const parsed = JSON.parse(res.data);
+            const parsed = JSON.parse((res as any).data);
 
             expect(parsed).toHaveProperty('missingSkills');
             expect(parsed).toHaveProperty('recommendations');
@@ -81,7 +81,7 @@ describe('MockAIProvider', () => {
         it('returns parsed JD for "job description" prompt', async () => {
             const provider = new MockAIProvider({ delay: 1 });
             const res = await provider.generateText('parse job description');
-            const parsed = JSON.parse(res.data);
+            const parsed = JSON.parse((res as any).data);
 
             expect(parsed).toHaveProperty('title');
             expect(parsed).toHaveProperty('company');
@@ -91,7 +91,7 @@ describe('MockAIProvider', () => {
         it('returns generic response for unrecognized prompt', async () => {
             const provider = new MockAIProvider({ delay: 1 });
             const res = await provider.generateText('hello world random');
-            const parsed = JSON.parse(res.data);
+            const parsed = JSON.parse((res as any).data);
 
             expect(parsed).toEqual({ message: 'Generic response' });
         });
@@ -107,7 +107,7 @@ describe('MockAIProvider', () => {
         it('handles empty prompt gracefully', async () => {
             const provider = new MockAIProvider({ delay: 1 });
             const res = await provider.generateText('');
-            const parsed = JSON.parse(res.data);
+            const parsed = JSON.parse((res as any).data);
 
             expect(parsed).toEqual({ message: 'Generic response' });
         });
@@ -121,8 +121,8 @@ describe('MockAIProvider', () => {
                 { summary: 'string' },
             );
 
-            expect(res.data).toHaveProperty('summary');
-            expect(typeof res.data.summary).toBe('string');
+            expect((res as any).data).toHaveProperty('summary');
+            expect(typeof (res as any).data.summary).toBe('string');
         });
 
         it('preserves usage and model metadata', async () => {

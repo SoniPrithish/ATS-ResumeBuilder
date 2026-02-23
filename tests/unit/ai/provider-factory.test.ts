@@ -53,7 +53,7 @@ describe('AI Provider Factory', () => {
 
             expect(primary.generateText).toHaveBeenCalled();
             expect(secondary.generateText).not.toHaveBeenCalled();
-            expect(res.data).toBe('primary success');
+            expect((res as any).data).toBe('primary success');
         });
 
         it('falls back to secondary when primary fails', async () => {
@@ -74,7 +74,7 @@ describe('AI Provider Factory', () => {
 
             expect(primary.generateText).toHaveBeenCalled();
             expect(secondary.generateText).toHaveBeenCalled();
-            expect(res.data).toBe('fallback success');
+            expect((res as any).data).toBe('fallback success');
         });
 
         it('throws when both primary and secondary fail', async () => {
@@ -105,7 +105,7 @@ describe('AI Provider Factory', () => {
             const fallback = new FallbackProvider(primary, secondary);
             const res = await fallback.generateObject('test', { name: 'string' });
 
-            expect(res.data).toEqual({ name: 'test' });
+            expect((res as any).data).toEqual({ name: 'test' });
         });
 
         it('logs a warning when falling back (console.warn)', async () => {

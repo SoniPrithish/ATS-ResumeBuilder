@@ -5,8 +5,12 @@ export function useJDMatch() {
     const utils = trpc.useUtils();
 
     return trpc.match.matchResumeToJD.useMutation({
-        onSuccess: (data) => {
-            utils.match.getMatch.invalidate({ id: data.id });
+        onSuccess: (_data, variables) => {
+            utils.match.getMatch.invalidate({
+                resumeId: variables.resumeId,
+                jdId: variables.jdId,
+            });
+            utils.job.list.invalidate();
         },
         onError: (error) => {
             toast.error('Matching failed', {
@@ -16,12 +20,24 @@ export function useJDMatch() {
     });
 }
 
-export function useJobDescriptions(page = 1, limit = 10) {
+export function useJobDescriptions(page = 1, pageSize = 10) {
     return trpc.job.list.useQuery({
         page,
-        limit,
-        sortBy: 'updatedAt',
-        sortOrder: 'desc'
+        pageSize,
     });
 }
-// group 1 modifications
+
+export function useCreateJobDescription() {
+    const utils = trpc.useUtils();
+
+    return trpc.job.create.useMutation({
+        onSuccess: () => {
+            utils.job.list.invalidate();
+        },
+        onError: (error) => {
+            toast.error('Failed to save job description', {
+                description: error.message || 'Please try again.',
+            });
+        },
+    });
+}

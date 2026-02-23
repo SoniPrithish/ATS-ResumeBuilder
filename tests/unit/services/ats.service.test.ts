@@ -60,10 +60,10 @@ describe("atsService.scoreResume", () => {
 
         expect(result.success).toBe(true);
         if (result.success) {
-            expect(result.data.overallScore).toBeGreaterThanOrEqual(0);
-            expect(result.data.overallScore).toBeLessThanOrEqual(100);
-            expect(result.data.breakdown).toBeDefined();
-            expect(result.data.suggestions).toBeDefined();
+            expect((result as any).data.overallScore).toBeGreaterThanOrEqual(0);
+            expect((result as any).data.overallScore).toBeLessThanOrEqual(100);
+            expect((result as any).data.breakdown).toBeDefined();
+            expect((result as any).data.suggestions).toBeDefined();
         }
 
         // Should have updated DB
@@ -88,7 +88,7 @@ describe("atsService.scoreResume", () => {
 
         expect(result.success).toBe(true);
         if (result.success) {
-            expect(result.data.overallScore).toBe(85);
+            expect((result as any).data.overallScore).toBe(85);
         }
 
         // Should NOT have updated DB or recalculated
@@ -102,7 +102,7 @@ describe("atsService.scoreResume", () => {
 
         expect(result.success).toBe(false);
         if (!result.success) {
-            expect(result.error).toContain("not found");
+            expect((result as any).error).toContain("not found");
         }
     });
 
@@ -114,7 +114,7 @@ describe("atsService.scoreResume", () => {
 
         expect(result.success).toBe(false);
         if (!result.success) {
-            expect(result.error).toContain("not found");
+            expect((result as any).error).toContain("not found");
         }
     });
 
@@ -154,7 +154,7 @@ describe("atsService.getScore", () => {
 
         expect(result.success).toBe(true);
         if (result.success) {
-            expect(result.data?.overallScore).toBe(78);
+            expect((result as any).data?.overallScore).toBe(78);
         }
     });
 
@@ -174,7 +174,7 @@ describe("atsService.getScore", () => {
 
         expect(result.success).toBe(true);
         if (result.success) {
-            expect(result.data?.overallScore).toBe(72);
+            expect((result as any).data?.overallScore).toBe(72);
         }
     });
 
@@ -187,7 +187,7 @@ describe("atsService.getScore", () => {
 
         expect(result.success).toBe(true);
         if (result.success) {
-            expect(result.data).toBeNull();
+            expect((result as any).data).toBeNull();
         }
     });
 });
@@ -223,9 +223,9 @@ describe("atsService.compareScores", () => {
 
         expect(result.success).toBe(true);
         if (result.success) {
-            expect(result.data).toHaveLength(2);
-            expect(result.data[0].overallScore).toBe(85);
-            expect(result.data[1].overallScore).toBe(72);
+            expect((result as any).data).toHaveLength(2);
+            expect((result as any).data[0].overallScore).toBe(85);
+            expect((result as any).data[1].overallScore).toBe(72);
         }
     });
 });

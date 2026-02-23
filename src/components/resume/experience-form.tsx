@@ -171,7 +171,7 @@ function ExperienceFormItem({
 
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-6 pt-6 md:pt-0">
                 <div className="space-y-2">
-                    <Label htmlFor={`title-${experience.id}`}>Job Title</Label>
+                    <Label id={`title-${experience.id}`}>Job Title</Label>
                     <Input
                         id={`title-${experience.id}`}
                         name="title"
@@ -181,7 +181,7 @@ function ExperienceFormItem({
                     />
                 </div>
                 <div className="space-y-2">
-                    <Label htmlFor={`company-${experience.id}`}>Company</Label>
+                    <Label id={`company-${experience.id}`}>Company</Label>
                     <Input
                         id={`company-${experience.id}`}
                         name="company"
@@ -191,7 +191,7 @@ function ExperienceFormItem({
                     />
                 </div>
                 <div className="space-y-2">
-                    <Label htmlFor={`startDate-${experience.id}`}>Start Date</Label>
+                    <Label id={`startDate-${experience.id}`}>Start Date</Label>
                     <Input
                         id={`startDate-${experience.id}`}
                         name="startDate"
@@ -202,7 +202,7 @@ function ExperienceFormItem({
                 </div>
                 <div className="space-y-2">
                     <Label className="flex items-center justify-between">
-                        <span htmlFor={`endDate-${experience.id}`}>End Date</span>
+                        <span id={`endDate-${experience.id}`}>End Date</span>
                         <div className="flex items-center space-x-2">
                             <Checkbox
                                 id={`current-${experience.id}`}
@@ -210,7 +210,7 @@ function ExperienceFormItem({
                                 onCheckedChange={handleCheckboxChange}
                             />
                             <Label
-                                htmlFor={`current-${experience.id}`}
+                                id={`current-${experience.id}`}
                                 className="text-xs font-normal"
                             >
                                 I currently work here
@@ -228,7 +228,7 @@ function ExperienceFormItem({
                     />
                 </div>
                 <div className="space-y-2 md:col-span-2">
-                    <Label htmlFor={`location-${experience.id}`}>Location (Optional)</Label>
+                    <Label id={`location-${experience.id}`}>Location (Optional)</Label>
                     <Input
                         id={`location-${experience.id}`}
                         name="location"

@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { useJDMatch, useJobDescriptions } from "@/hooks/use-jd-match";
+import { useCreateJobDescription, useJDMatch, useJobDescriptions } from "@/hooks/use-jd-match";
 import { Button } from "@/components/ui/button";
 import { Textarea } from "@/components/ui/textarea";
 import { Input } from "@/components/ui/input";
@@ -7,8 +7,16 @@ import { Label } from "@/components/ui/label";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Loader2, Plus, Search } from "lucide-react";
+import type { MatchReport } from "@/modules/matcher/types";
 
-export function JDInput({ resumeId, onMatchStart, onMatchComplete }: { resumeId: string; onMatchStart?: () => void; onMatchComplete?: (data: Record<string, unknown>) => void }) {
+export interface JDMatchCompletion {
+    jobId: string;
+    jobTitle: string;
+    company: string;
+    report: MatchReport;
+}
+
+export function JDInput({ resumeId, onMatchStart, onMatchComplete }: { resumeId: string; onMatchStart?: () => void; onMatchComplete?: (data: JDMatchCompletion) => void }) {
     const [tab, setTab] = useState("paste");
     const [title, setTitle] = useState("");
     const [company, setCompany] = useState("");
@@ -17,18 +25,28 @@ export function JDInput({ resumeId, onMatchStart, onMatchComplete }: { resumeId:
 
     const { data: jobs, isLoading: isLoadingJobs } = useJobDescriptions(1, 100);
     const matchMutation = useJDMatch();
+    const createJobMutation = useCreateJobDescription();
+    const isBusy = matchMutation.isPending || createJobMutation.isPending;
 
     const handleMatchNew = async () => {
         if (jdText.length < 50) return;
         if (onMatchStart) onMatchStart();
         try {
-            const data = await matchMutation.mutateAsync({
-                resumeId,
-                content: jdText,
+            const createdJob = await createJobMutation.mutateAsync({
                 title: title || "New Job",
                 company: company || "Unknown Company",
+                rawText: jdText,
             });
-            if (onMatchComplete) onMatchComplete(data);
+            const report = await matchMutation.mutateAsync({
+                resumeId,
+                jdId: createdJob.id,
+            });
+            if (onMatchComplete) onMatchComplete({
+                jobId: createdJob.id,
+                jobTitle: createdJob.title,
+                company: createdJob.company,
+                report,
+            });
         } catch {
             // Handled in mutation
         }
@@ -38,11 +56,17 @@ export function JDInput({ resumeId, onMatchStart, onMatchComplete }: { resumeId:
         if (!selectedJdId) return;
         if (onMatchStart) onMatchStart();
         try {
-            const data = await matchMutation.mutateAsync({
+            const report = await matchMutation.mutateAsync({
                 resumeId,
-                jobId: selectedJdId,
+                jdId: selectedJdId,
             });
-            if (onMatchComplete) onMatchComplete(data);
+            const selectedJob = jobs?.items.find((job) => job.id === selectedJdId);
+            if (onMatchComplete) onMatchComplete({
+                jobId: selectedJdId,
+                jobTitle: selectedJob?.title ?? "Job Description",
+                company: selectedJob?.company ?? "Unknown Company",
+                report,
+            });
         } catch {
             // Handled in mutation
         }
@@ -111,10 +135,10 @@ export function JDInput({ resumeId, onMatchStart, onMatchComplete }: { resumeId:
                             <Button
                                 className="w-full gap-2 mt-2"
                                 size="lg"
-                                disabled={jdText.length < 50 || matchMutation.isPending}
+                                disabled={jdText.length < 50 || isBusy}
                                 onClick={handleMatchNew}
                             >
-                                {matchMutation.isPending ? (
+                                {isBusy ? (
                                     <Loader2 className="w-5 h-5 animate-spin" />
                                 ) : (
                                     <Plus className="w-5 h-5" />
@@ -159,10 +183,10 @@ export function JDInput({ resumeId, onMatchStart, onMatchComplete }: { resumeId:
                                 <Button
                                     className="w-full gap-2"
                                     size="lg"
-                                    disabled={!selectedJdId || matchMutation.isPending}
+                                    disabled={!selectedJdId || isBusy}
                                     onClick={handleMatchExisting}
                                 >
-                                    {matchMutation.isPending ? (
+                                    {isBusy ? (
                                         <Loader2 className="w-5 h-5 animate-spin" />
                                     ) : (
                                         <span className="flex items-center gap-2">Match Selected JD</span>

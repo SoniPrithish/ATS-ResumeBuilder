@@ -74,7 +74,7 @@ describe('AI Utils', () => {
 
             const promise = withRetry(fn, 2, 100, 'test-provider').catch(e => e);
             await vi.runAllTimersAsync();
-            const caughtErr = await promise;
+            const caughtErr: any = await promise;
 
             expect(caughtErr).toBeInstanceOf(AIProviderError);
             expect(caughtErr.code).toBe('RATE_LIMITED');
@@ -90,7 +90,7 @@ describe('AI Utils', () => {
 
             const promise = withRetry(fn, 3, 100, 'test').catch(e => e);
             await vi.runAllTimersAsync();
-            const caughtErr = await promise;
+            const caughtErr: any = await promise;
 
             expect(caughtErr).toBeInstanceOf(AIProviderError);
             expect(caughtErr.code).toBe('INVALID_API_KEY');
@@ -102,7 +102,7 @@ describe('AI Utils', () => {
 
             const promise = withRetry(fn, 3, 100, 'test').catch(e => e);
             await vi.runAllTimersAsync();
-            const caughtErr = await promise;
+            const caughtErr: any = await promise;
 
             expect(caughtErr).toBeInstanceOf(AIProviderError);
             expect(caughtErr.code).toBe('AI_GENERATION_FAILED');
@@ -117,7 +117,7 @@ describe('AI Utils', () => {
 
             const promise = withRetry(fn, 3, 100, 'test').catch(e => e);
             await vi.runAllTimersAsync();
-            const caughtErr = await promise;
+            const caughtErr: any = await promise;
 
             expect(caughtErr.code).toBe('INVALID_API_KEY');
         });
@@ -130,7 +130,7 @@ describe('AI Utils', () => {
 
             const promise = withRetry(fn, 0, 100, 'test').catch(e => e);
             await vi.runAllTimersAsync();
-            const caughtErr = await promise;
+            const caughtErr: any = await promise;
 
             expect(caughtErr.code).toBe('RATE_LIMITED');
         });

@@ -21,7 +21,7 @@ export function SummaryForm() {
             const result = await generateSummary.mutateAsync({
                 resumeData: {
                     experience: currentResume.experience,
-                    skills: currentResume.skills,
+                    skills: currentResume.skills as unknown as Record<string, unknown>,
                     title: currentResume.title,
                 }
             });

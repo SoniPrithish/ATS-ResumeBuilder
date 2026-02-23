@@ -1,20 +1,28 @@
 import { trpc } from '@/lib/trpc-client';
 import { toast } from 'sonner';
+import type { PaginatedResult } from '@/types/common';
+import type { ResumeRecord } from '@/types/resume';
 
 
 export function useResume(id: string) {
-    return trpc.resume.getById.useQuery(id, {
+    const query = trpc.resume.getById.useQuery({ id }, {
         enabled: !!id,
     });
+    return {
+        ...query,
+        data: query.data as ResumeRecord | undefined,
+    };
 }
 
-export function useResumes(page = 1, limit = 10) {
-    return trpc.resume.list.useQuery({
+export function useResumes(page = 1, pageSize = 10) {
+    const query = trpc.resume.list.useQuery({
         page,
-        limit,
-        sortBy: 'updatedAt',
-        sortOrder: 'desc'
+        pageSize,
     });
+    return {
+        ...query,
+        data: query.data as PaginatedResult<ResumeRecord> | undefined,
+    };
 }
 
 export function useCreateResume() {
@@ -39,8 +47,8 @@ export function useUpdateResume() {
     const utils = trpc.useUtils();
 
     return trpc.resume.update.useMutation({
-        onSuccess: (data) => {
-            utils.resume.getById.invalidate(data.id);
+        onSuccess: (_data, variables) => {
+            utils.resume.getById.invalidate({ id: variables.id });
             utils.resume.list.invalidate();
         },
     });
@@ -63,4 +71,3 @@ export function useDeleteResume() {
         }
     });
 }
-// group 1 modifications
