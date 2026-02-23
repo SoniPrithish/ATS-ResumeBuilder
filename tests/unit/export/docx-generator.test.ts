@@ -15,36 +15,35 @@ vi.mock('docx', async () => {
 
 describe('generateDocx', () => {
     const sampleResume: CanonicalResume = {
-        contact: {
-            name: 'John Doe',
+        contactInfo: {
+            fullName: 'John Doe',
             email: 'john@example.com',
             phone: '123-456-7890',
-            linkedin: null,
-            github: null,
-            website: null,
-            location: null,
+            linkedin: undefined,
+            github: undefined,
+            website: undefined
         },
         summary: 'A summary',
         experience: [],
         education: [],
-        skills: { technical: [], frameworks: [], tools: [], languages: [], soft: [], other: [] },
+        skills: { technical: [], tools: [], soft: [] },
         projects: [],
         certifications: [],
-        rawText: 'Raw',
+        
     }
 
     const emptyResume: CanonicalResume = {
-        contact: {
-            name: null, email: null, phone: null, linkedin: null,
-            github: null, website: null, location: null,
+        contactInfo: {
+            fullName: undefined as any, email: undefined as any, phone: undefined as any, linkedin: undefined,
+            github: undefined, website: undefined
         },
-        summary: null,
+        summary: undefined,
         experience: [],
         education: [],
-        skills: { technical: [], frameworks: [], tools: [], languages: [], soft: [], other: [] },
+        skills: { technical: [], tools: [], soft: [] },
         projects: [],
         certifications: [],
-        rawText: '',
+        
     }
 
     beforeEach(() => {
@@ -80,6 +79,8 @@ describe('generateDocx', () => {
         const result = await generateDocx({
             ...sampleResume,
             experience: [{
+                id: 'exp1',
+                current: false,
                 title: 'SWE',
                 company: 'Company A',
                 location: 'Remote',
@@ -88,33 +89,35 @@ describe('generateDocx', () => {
                 bullets: ['Did stuff']
             }],
             education: [{
+                id: 'edu1',
                 degree: 'BS',
+                field: 'Computer Science',
                 institution: 'University',
-                location: 'Campus',
-                graduationDate: '2019',
+                startDate: '2015',
+                endDate: '2019',
                 gpa: '4.0',
-                relevantCoursework: ['Math']
+                coursework: ['Math']
             }],
             skills: {
                 technical: ['JS'],
-                frameworks: ['React'],
+                languages: ['React'],
                 tools: ['Git'],
-                languages: [],
-                soft: ['Talking'],
-                other: []
+                soft: ['Talking']
             },
             projects: [{
+                id: 'proj1',
                 name: 'Project B',
                 description: 'Desc',
                 technologies: ['React'],
                 url: 'example.com',
-                bullets: ['Built UI']
+                highlights: ['Built UI']
             }],
             certifications: [{
+                id: 'cert1',
                 name: 'AWS',
                 issuer: 'Amazon',
                 date: '2023',
-                url: null
+                url: undefined
             }]
         }, { templateId: 'modern', format: 'docx', includeLinks: true })
 

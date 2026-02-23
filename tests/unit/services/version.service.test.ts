@@ -80,8 +80,7 @@ describe('versionService', () => {
         vi.mocked(githubService.createOrUpdateResumeVersion).mockResolvedValue({
             success: true,
             data: { commitSha: 'sha1', url: 'url' },
-            error: null,
-            warnings: [],
+                        
         })
 
         vi.mocked(db.resumeVersion.update).mockResolvedValue({ id: 'v1' } as any)

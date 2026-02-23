@@ -30,19 +30,17 @@ export function ResumeForm({ resumeId }: { resumeId: string }) {
         try {
             await updateResume.mutateAsync({
                 id: resumeId,
-                data: {
-                    title: resumeRef.current.title,
-                    templateId: resumeRef.current.templateId,
-                    contactInfo: resumeRef.current.contactInfo,
-                    summary: resumeRef.current.summary,
-                    experience: resumeRef.current.experience,
-                    education: resumeRef.current.education,
-                    skills: resumeRef.current.skills,
-                    projects: resumeRef.current.projects,
-                    certifications: resumeRef.current.certifications,
-                    customSections: resumeRef.current.customSections,
-                }
-            });
+                title: resumeRef.current.title,
+                templateId: resumeRef.current.templateId,
+                contactInfo: resumeRef.current.contactInfo,
+                summary: resumeRef.current.summary,
+                experience: resumeRef.current.experience,
+                education: resumeRef.current.education,
+                skills: resumeRef.current.skills,
+                projects: resumeRef.current.projects,
+                certifications: resumeRef.current.certifications,
+                customSections: resumeRef.current.customSections,
+            } as any);
             setLastSavedTime(new Date());
         } catch {
             setDirty(true); // Revert on failure

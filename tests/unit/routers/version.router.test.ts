@@ -27,7 +27,7 @@ describe('versionRouter', () => {
     const createCaller = (userId: string) => {
         return versionRouter.createCaller({
             session: { user: { id: userId, email: 'test@test.com', role: 'USER' } } as any,
-            db: {} as any,
+            db: {} as any, headers: undefined, redis: {} as any,
         })
     }
 

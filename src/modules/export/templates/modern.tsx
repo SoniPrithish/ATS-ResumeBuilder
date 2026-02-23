@@ -102,20 +102,19 @@ export function ModernTemplate({
         },
     })
 
-    const { contact, summary, experience, education, skills, projects, certifications } = resume
-
+    const { contactInfo, summary, experience, education, skills, projects, certifications } = resume as any
     return (
         <Document>
             <Page size="A4" style={styles.page}>
                 <View style={styles.header}>
-                    <Text style={styles.name}>{contact.name || 'Your Name'}</Text>
+                    <Text style={styles.fullName}>{contactInfo?.fullName || 'Your Name'}</Text>
                     <View style={styles.contactLine}>
-                        {contact.email && <Text style={styles.contactItem}>✉ {contact.email}</Text>}
-                        {contact.phone && <Text style={styles.contactItem}>☎ {contact.phone}</Text>}
-                        {contact.linkedin && <Text style={styles.contactItem}>in {contact.linkedin}</Text>}
-                        {contact.github && <Text style={styles.contactItem}>gh {contact.github}</Text>}
-                        {contact.website && <Text style={styles.contactItem}>🌐 {contact.website}</Text>}
-                        {contact.location && <Text style={styles.contactItem}>📍 {contact.location}</Text>}
+                        {(contactInfo?.email) && <Text style={styles.contactItem}>✉ {(contactInfo?.email)}</Text>}
+                        {(contactInfo?.phone) && <Text style={styles.contactItem}>☎ {(contactInfo?.phone)}</Text>}
+                        {(contactInfo?.linkedin) && <Text style={styles.contactItem}>in {(contactInfo?.linkedin)}</Text>}
+                        {(contactInfo?.github) && <Text style={styles.contactItem}>gh {(contactInfo?.github)}</Text>}
+                        {(contactInfo?.website) && <Text style={styles.contactItem}>🌐 {(contactInfo?.website)}</Text>}
+                        {(contactInfo?.location) && <Text style={styles.contactItem}>📍 {(contactInfo?.location)}</Text>}
                     </View>
                 </View>
 
@@ -141,7 +140,7 @@ export function ModernTemplate({
                                     {exp.company}
                                     {exp.location ? `, ${exp.location}` : ''}
                                 </Text>
-                                {exp.bullets.map((bullet, j) => (
+                                {(exp.bullets || []).map((bullet, j) => (
                                     <View key={j} style={styles.bulletRow}>
                                         <Text style={styles.bulletDot}>•</Text>
                                         <Text style={styles.bulletText}>{bullet}</Text>
@@ -159,16 +158,16 @@ export function ModernTemplate({
                             <View key={i} style={styles.item}>
                                 <View style={styles.itemHeader}>
                                     <Text style={styles.itemTitle}>{edu.degree}</Text>
-                                    <Text style={styles.itemDate}>{edu.graduationDate}</Text>
+                                    <Text style={styles.itemDate}>{edu.endDate}</Text>
                                 </View>
                                 <Text style={styles.itemSubtitle}>
                                     {edu.institution}
-                                    {edu.location ? `, ${edu.location}` : ''}
+                                    {'' ? `, ${''}` : ''}
                                 </Text>
                                 {edu.gpa && <Text style={styles.bodyText}>GPA: {edu.gpa}</Text>}
-                                {edu.relevantCoursework && edu.relevantCoursework.length > 0 && (
+                                {(edu.coursework || []) && (edu.coursework || []).length > 0 && (
                                     <Text style={styles.bodyText}>
-                                        Relevant Coursework: {edu.relevantCoursework.join(', ')}
+                                        Relevant Coursework: {(edu.coursework || []).join(', ')}
                                     </Text>
                                 )}
                             </View>
@@ -176,46 +175,46 @@ export function ModernTemplate({
                     </View>
                 )}
 
-                {(skills?.technical?.length > 0 ||
-                    skills?.frameworks?.length > 0 ||
-                    skills?.tools?.length > 0 ||
-                    skills?.soft?.length > 0) && (
+                {((skills?.technical || []).length > 0 ||
+                    (skills?.languages || []).length > 0 ||
+                    (skills?.tools || []).length > 0 ||
+                    (skills?.soft || []).length > 0) && (
                         <View style={styles.section}>
                             <Text style={styles.sectionHeader}>Skills</Text>
-                            {skills.technical.length > 0 && (
+                            {(skills?.technical || []).length > 0 && (
                                 <View>
                                     <Text style={styles.skillCategory}>Languages</Text>
                                     <View style={styles.skillsContainer}>
-                                        {skills.technical.map((s, idx) => (
+                                        {(skills?.technical || []).map((s, idx) => (
                                             <Text key={idx} style={styles.skillBadge}>{s}</Text>
                                         ))}
                                     </View>
                                 </View>
                             )}
-                            {skills.frameworks.length > 0 && (
+                            {(skills?.languages || []).length > 0 && (
                                 <View>
                                     <Text style={styles.skillCategory}>Frameworks</Text>
                                     <View style={styles.skillsContainer}>
-                                        {skills.frameworks.map((s, idx) => (
+                                        {(skills?.languages || []).map((s, idx) => (
                                             <Text key={idx} style={styles.skillBadge}>{s}</Text>
                                         ))}
                                     </View>
                                 </View>
                             )}
-                            {skills.tools.length > 0 && (
+                            {(skills?.tools || []).length > 0 && (
                                 <View>
                                     <Text style={styles.skillCategory}>Tools</Text>
                                     <View style={styles.skillsContainer}>
-                                        {skills.tools.map((s, idx) => (
+                                        {(skills?.tools || []).map((s, idx) => (
                                             <Text key={idx} style={styles.skillBadge}>{s}</Text>
                                         ))}
                                     </View>
                                 </View>
                             )}
-                            {skills.soft.length > 0 && (
+                            {(skills?.soft || []).length > 0 && (
                                 <View>
                                     <Text style={styles.skillCategory}>Soft Skills</Text>
-                                    <Text style={styles.skillText}>{skills.soft.join(', ')}</Text>
+                                    <Text style={styles.skillText}>{(skills?.soft || []).join(', ')}</Text>
                                 </View>
                             )}
                         </View>
@@ -242,8 +241,8 @@ export function ModernTemplate({
                                     </View>
                                 )}
                                 {proj.description && <Text style={styles.bodyText}>{proj.description}</Text>}
-                                {proj.bullets &&
-                                    proj.bullets.map((bullet, j) => (
+                                {(proj.highlights || []) &&
+                                    (proj.highlights || []).map((bullet, j) => (
                                         <View key={j} style={styles.bulletRow}>
                                             <Text style={styles.bulletDot}>•</Text>
                                             <Text style={styles.bulletText}>{bullet}</Text>

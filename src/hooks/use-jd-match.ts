@@ -6,7 +6,7 @@ export function useJDMatch() {
 
     return trpc.match.matchResumeToJD.useMutation({
         onSuccess: (data) => {
-            utils.match.getMatch.invalidate({ id: data.id });
+            utils.match.getMatch.invalidate({ jdId: data.jdId });
         },
         onError: (error) => {
             toast.error('Matching failed', {
@@ -16,12 +16,11 @@ export function useJDMatch() {
     });
 }
 
-export function useJobDescriptions(page = 1, limit = 10) {
+export function useJobDescriptions(page = 1, pageSize = 10) {
     return trpc.job.list.useQuery({
         page,
-        limit,
-        sortBy: 'updatedAt',
-        sortOrder: 'desc'
+        pageSize,
+        
     });
 }
 // group 1 modifications

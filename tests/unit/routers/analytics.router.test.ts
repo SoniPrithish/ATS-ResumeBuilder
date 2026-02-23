@@ -18,7 +18,7 @@ describe('analyticsRouter', () => {
     const createCaller = (userId: string) => {
         return analyticsRouter.createCaller({
             session: { user: { id: userId, email: 'test@test.com', role: 'USER' } } as any,
-            db: {} as any,
+            db: {} as any, headers: undefined, redis: {} as any,
         })
     }
 

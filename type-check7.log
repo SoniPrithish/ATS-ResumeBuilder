@@ -1,0 +1,95 @@
+
+> techresume-ai@0.1.0 type-check /Users/prithishsoni/Desktop/TechResume
+> tsc --noEmit
+
+src/app/(dashboard)/dashboard/page.tsx(89,35): error TS2322: Type 'unknown' is not assignable to type 'Key | null | undefined'.
+src/app/(dashboard)/dashboard/page.tsx(92,115): error TS2322: Type 'unknown' is not assignable to type 'ReactNode'.
+src/app/(dashboard)/dashboard/page.tsx(95,104): error TS2769: No overload matches this call.
+  Overload 1 of 4, '(value: string | number | Date): Date', gave the following error.
+    Argument of type 'unknown' is not assignable to parameter of type 'string | number | Date'.
+  Overload 2 of 4, '(value: string | number): Date', gave the following error.
+    Argument of type 'unknown' is not assignable to parameter of type 'string | number'.
+src/app/(dashboard)/resumes/[id]/edit/page.tsx(44,55): error TS2322: Type 'unknown' is not assignable to type 'ReactNode'.
+src/app/(dashboard)/resumes/[id]/edit/page.tsx(45,90): error TS2769: No overload matches this call.
+  Overload 1 of 4, '(value: string | number | Date): Date', gave the following error.
+    Argument of type 'unknown' is not assignable to parameter of type 'string | number | Date'.
+  Overload 2 of 4, '(value: string | number): Date', gave the following error.
+    Argument of type 'unknown' is not assignable to parameter of type 'string | number'.
+src/app/(dashboard)/resumes/[id]/match/page.tsx(65,25): error TS2322: Type 'unknown' is not assignable to type 'string'.
+src/app/(dashboard)/resumes/[id]/score/page.tsx(60,25): error TS2322: Type 'unknown' is not assignable to type 'string'.
+src/app/(dashboard)/resumes/[id]/tailor/page.tsx(99,30): error TS2741: Property 'summary' is missing in type 'Record<string, unknown>' but required in type '{ summary: { original: string; suggested: string; }; bullets?: { id: string; original: string; suggested: string; }[] | undefined; keywords?: { missing?: string[] | undefined; } | undefined; }'.
+src/components/matching/jd-input.tsx(27,17): error TS2353: Object literal may only specify known properties, and 'jobId' does not exist in type '{ resumeId: string; jdId: string; }'.
+src/components/matching/jd-input.tsx(43,17): error TS2353: Object literal may only specify known properties, and 'jobId' does not exist in type '{ resumeId: string; jdId: string; }'.
+src/components/resume/resume-card.tsx(71,61): error TS2345: Argument of type 'string' is not assignable to parameter of type '{ id: string; }'.
+src/components/resume/upload-dropzone.tsx(4,29): error TS2307: Cannot find module 'react-dropzone' or its corresponding type declarations.
+src/components/scoring/ats-score-card.tsx(27,25): error TS2345: Argument of type 'string' is not assignable to parameter of type '{ resumeId: string; targetKeywords?: string[] | undefined; }'.
+src/hooks/use-ats-score.ts(9,43): error TS2559: Type 'string' has no properties in common with type '{ resumeId?: string | undefined; }'.
+src/hooks/use-ats-score.ts(10,45): error TS2559: Type 'string' has no properties in common with type '{ id?: string | undefined; }'.
+src/hooks/use-jd-match.ts(9,58): error TS2339: Property 'jdId' does not exist on type 'ServiceResult<MatchReport>'.
+  Property 'jdId' does not exist on type '{ success: false; error: string; code?: string | undefined; }'.
+src/hooks/use-resume.ts(42,47): error TS2322: Type 'unknown' is not assignable to type 'string | undefined'.
+src/modules/ai/providers/gemini.ts(45,42): error TS2339: Property 'promptTokens' does not exist on type 'LanguageModelUsage'.
+src/modules/ai/providers/gemini.ts(46,46): error TS2339: Property 'completionTokens' does not exist on type 'LanguageModelUsage'.
+src/modules/export/docx-generator.ts(252,52): error TS2873: This kind of expression is always falsy.
+src/modules/export/templates/classic.tsx(81,41): error TS2339: Property 'fullName' does not exist on type '{ page: { padding: number; fontFamily: string; fontSize: number; color: string; backgroundColor: string; }; header: { marginBottom: number; textAlign: "center"; }; name: { fontSize: number; fontFamily: string; color: string; fontWeight: string; marginBottom: number; }; ... 14 more ...; link: { ...; }; }'.
+src/modules/export/templates/classic.tsx(101,42): error TS7006: Parameter 'exp' implicitly has an 'any' type.
+src/modules/export/templates/classic.tsx(101,47): error TS7006: Parameter 'i' implicitly has an 'any' type.
+src/modules/export/templates/classic.tsx(113,59): error TS7006: Parameter 'bullet' implicitly has an 'any' type.
+src/modules/export/templates/classic.tsx(113,67): error TS7006: Parameter 'j' implicitly has an 'any' type.
+src/modules/export/templates/classic.tsx(129,41): error TS7006: Parameter 'edu' implicitly has an 'any' type.
+src/modules/export/templates/classic.tsx(129,46): error TS7006: Parameter 'i' implicitly has an 'any' type.
+src/modules/export/templates/classic.tsx(137,38): error TS2873: This kind of expression is always falsy.
+src/modules/export/templates/classic.tsx(190,40): error TS7006: Parameter 'proj' implicitly has an 'any' type.
+src/modules/export/templates/classic.tsx(190,46): error TS7006: Parameter 'i' implicitly has an 'any' type.
+src/modules/export/templates/classic.tsx(207,66): error TS7006: Parameter 'bullet' implicitly has an 'any' type.
+src/modules/export/templates/classic.tsx(207,74): error TS7006: Parameter 'j' implicitly has an 'any' type.
+src/modules/export/templates/classic.tsx(223,46): error TS7006: Parameter 'cert' implicitly has an 'any' type.
+src/modules/export/templates/classic.tsx(223,52): error TS7006: Parameter 'i' implicitly has an 'any' type.
+src/modules/export/templates/minimal.tsx(73,41): error TS2339: Property 'fullName' does not exist on type '{ page: { padding: number; fontFamily: string; fontSize: number; color: string; backgroundColor: string; }; header: { marginBottom: number; textAlign: "left"; }; name: { fontSize: number; fontFamily: string; color: string; fontWeight: string; marginBottom: number; }; ... 13 more ...; link: { ...; }; }'.
+src/modules/export/templates/minimal.tsx(89,42): error TS7006: Parameter 'exp' implicitly has an 'any' type.
+src/modules/export/templates/minimal.tsx(89,47): error TS7006: Parameter 'i' implicitly has an 'any' type.
+src/modules/export/templates/minimal.tsx(101,59): error TS7006: Parameter 'bullet' implicitly has an 'any' type.
+src/modules/export/templates/minimal.tsx(101,67): error TS7006: Parameter 'j' implicitly has an 'any' type.
+src/modules/export/templates/minimal.tsx(115,41): error TS7006: Parameter 'edu' implicitly has an 'any' type.
+src/modules/export/templates/minimal.tsx(115,46): error TS7006: Parameter 'i' implicitly has an 'any' type.
+src/modules/export/templates/minimal.tsx(123,38): error TS2873: This kind of expression is always falsy.
+src/modules/export/templates/minimal.tsx(172,40): error TS7006: Parameter 'proj' implicitly has an 'any' type.
+src/modules/export/templates/minimal.tsx(172,46): error TS7006: Parameter 'i' implicitly has an 'any' type.
+src/modules/export/templates/minimal.tsx(187,66): error TS7006: Parameter 'bullet' implicitly has an 'any' type.
+src/modules/export/templates/minimal.tsx(187,74): error TS7006: Parameter 'j' implicitly has an 'any' type.
+src/modules/export/templates/minimal.tsx(201,46): error TS7006: Parameter 'cert' implicitly has an 'any' type.
+src/modules/export/templates/minimal.tsx(201,52): error TS7006: Parameter 'i' implicitly has an 'any' type.
+src/modules/export/templates/modern.tsx(110,41): error TS2339: Property 'fullName' does not exist on type '{ page: { padding: number; fontFamily: string; fontSize: number; color: string; backgroundColor: string; }; header: { marginBottom: number; textAlign: "center" | "left"; }; name: { fontSize: number; fontFamily: string; color: string; fontWeight: string; marginBottom: number; }; ... 18 more ...; skillText: { ...; }; }'.
+src/modules/export/templates/modern.tsx(131,42): error TS7006: Parameter 'exp' implicitly has an 'any' type.
+src/modules/export/templates/modern.tsx(131,47): error TS7006: Parameter 'i' implicitly has an 'any' type.
+src/modules/export/templates/modern.tsx(143,59): error TS7006: Parameter 'bullet' implicitly has an 'any' type.
+src/modules/export/templates/modern.tsx(143,67): error TS7006: Parameter 'j' implicitly has an 'any' type.
+src/modules/export/templates/modern.tsx(157,41): error TS7006: Parameter 'edu' implicitly has an 'any' type.
+src/modules/export/templates/modern.tsx(157,46): error TS7006: Parameter 'i' implicitly has an 'any' type.
+src/modules/export/templates/modern.tsx(165,38): error TS2873: This kind of expression is always falsy.
+src/modules/export/templates/modern.tsx(188,73): error TS7006: Parameter 's' implicitly has an 'any' type.
+src/modules/export/templates/modern.tsx(188,76): error TS7006: Parameter 'idx' implicitly has an 'any' type.
+src/modules/export/templates/modern.tsx(198,73): error TS7006: Parameter 's' implicitly has an 'any' type.
+src/modules/export/templates/modern.tsx(198,76): error TS7006: Parameter 'idx' implicitly has an 'any' type.
+src/modules/export/templates/modern.tsx(208,69): error TS7006: Parameter 's' implicitly has an 'any' type.
+src/modules/export/templates/modern.tsx(208,72): error TS7006: Parameter 'idx' implicitly has an 'any' type.
+src/modules/export/templates/modern.tsx(226,40): error TS7006: Parameter 'proj' implicitly has an 'any' type.
+src/modules/export/templates/modern.tsx(226,46): error TS7006: Parameter 'i' implicitly has an 'any' type.
+src/modules/export/templates/modern.tsx(238,65): error TS7006: Parameter 't' implicitly has an 'any' type.
+src/modules/export/templates/modern.tsx(238,68): error TS7006: Parameter 'idx' implicitly has an 'any' type.
+src/modules/export/templates/modern.tsx(245,66): error TS7006: Parameter 'bullet' implicitly has an 'any' type.
+src/modules/export/templates/modern.tsx(245,74): error TS7006: Parameter 'j' implicitly has an 'any' type.
+src/modules/export/templates/modern.tsx(259,46): error TS7006: Parameter 'cert' implicitly has an 'any' type.
+src/modules/export/templates/modern.tsx(259,52): error TS7006: Parameter 'i' implicitly has an 'any' type.
+src/server/services/affiliate.service.ts(312,20): error TS2304: Cannot find name 'RankedSkillGap'.
+src/server/services/export.service.ts(59,17): error TS2322: Type 'string | null' is not assignable to type 'string | undefined'.
+  Type 'null' is not assignable to type 'string | undefined'.
+src/server/services/linkedin.service.ts(57,17): error TS2353: Object literal may only specify known properties, and 'rawText' does not exist in type 'UpdateResumeInput'.
+src/server/services/user.service.ts(139,67): error TS2554: Expected 1 arguments, but got 2.
+src/server/services/version.service.ts(34,17): error TS2322: Type 'string | null' is not assignable to type 'string | undefined'.
+  Type 'null' is not assignable to type 'string | undefined'.
+src/server/services/version.service.ts(127,67): error TS2339: Property 'error' does not exist on type 'ServiceResult<{ id: string; resumeId: string; version: number; snapshot: JsonValue; changeNote: string | null; githubCommitSha: string | null; createdAt: Date; }>'.
+  Property 'error' does not exist on type '{ success: true; data: { id: string; resumeId: string; version: number; snapshot: JsonValue; changeNote: string | null; githubCommitSha: string | null; createdAt: Date; }; }'.
+tests/unit/services/affiliate.service.test.ts(7,21): error TS2304: Cannot find name 'RankedSkillGap'.
+tests/unit/services/affiliate.service.test.ts(25,21): error TS2304: Cannot find name 'RankedSkillGap'.
+ ELIFECYCLE  Command failed with exit code 2.

@@ -46,7 +46,7 @@ export default function JobsPage() {
                 />
             ) : (
                 <div className="grid gap-6 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3">
-                    {jobs?.items.map((job: { id: string; title: string; company: string; content: string; createdAt: string }) => (
+                    {jobs?.items.map((job: any) => (
                         <Card key={job.id} className="flex flex-col h-full transition-all duration-200 hover:shadow-lg border-border/50 hover:border-primary/50 group">
                             <CardHeader className="pb-4">
                                 <div className="flex items-start justify-between">

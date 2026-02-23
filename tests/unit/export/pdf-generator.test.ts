@@ -15,36 +15,35 @@ vi.mock('@react-pdf/renderer', () => ({
 
 describe('generatePdf', () => {
     const sampleResume: CanonicalResume = {
-        contact: {
-            name: 'John Doe',
+        contactInfo: {
+            fullName: 'John Doe',
             email: 'john@example.com',
             phone: '123-456-7890',
-            linkedin: null,
-            github: null,
-            website: null,
-            location: null,
+            linkedin: undefined,
+            github: undefined,
+            website: undefined
         },
         summary: 'A summary',
         experience: [],
         education: [],
-        skills: { technical: [], frameworks: [], tools: [], languages: [], soft: [], other: [] },
+        skills: { technical: [], tools: [], soft: [] },
         projects: [],
         certifications: [],
-        rawText: 'Raw',
+        
     }
 
     const emptyResume: CanonicalResume = {
-        contact: {
-            name: null, email: null, phone: null, linkedin: null,
-            github: null, website: null, location: null,
+        contactInfo: {
+            fullName: "", email: "", phone: "", linkedin: "",
+            github: undefined, website: undefined
         },
-        summary: null,
+        summary: undefined,
         experience: [],
         education: [],
-        skills: { technical: [], frameworks: [], tools: [], languages: [], soft: [], other: [] },
+        skills: { technical: [], tools: [], soft: [] },
         projects: [],
         certifications: [],
-        rawText: '',
+        
     }
 
     beforeEach(() => {
@@ -112,7 +111,7 @@ describe('generatePdf', () => {
         const result = await generatePdf(
             {
                 ...sampleResume,
-                contact: { ...sampleResume.contact, name: 'Jane & Doe!' },
+                contactInfo: { ...sampleResume.contactInfo, fullName: 'Jane & Doe!' },
             },
             { templateId: 'classic', format: 'pdf', includeLinks: true }
         )

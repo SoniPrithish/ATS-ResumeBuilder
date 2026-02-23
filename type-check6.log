@@ -1,0 +1,84 @@
+
+> techresume-ai@0.1.0 type-check /Users/prithishsoni/Desktop/TechResume
+> tsc --noEmit
+
+src/app/(dashboard)/dashboard/page.tsx(89,35): error TS2322: Type 'unknown' is not assignable to type 'Key | null | undefined'.
+src/app/(dashboard)/dashboard/page.tsx(92,115): error TS2322: Type 'unknown' is not assignable to type 'ReactNode'.
+src/app/(dashboard)/dashboard/page.tsx(95,104): error TS2769: No overload matches this call.
+  Overload 1 of 4, '(value: string | number | Date): Date', gave the following error.
+    Argument of type 'unknown' is not assignable to parameter of type 'string | number | Date'.
+  Overload 2 of 4, '(value: string | number): Date', gave the following error.
+    Argument of type 'unknown' is not assignable to parameter of type 'string | number'.
+src/app/(dashboard)/jobs/page.tsx(49,38): error TS2345: Argument of type '(job: { id: string; title: string; company: string; content: string; createdAt: string; }) => JSX.Element' is not assignable to parameter of type '(value: { title: string; id: string; createdAt: Date; userId: string; rawText: string; updatedAt: Date; company: string; parsedData: JsonValue; }, index: number, array: { title: string; ... 6 more ...; parsedData: JsonValue; }[]) => Element'.
+  Types of parameters 'job' and 'value' are incompatible.
+    Property 'content' is missing in type '{ title: string; id: string; createdAt: Date; userId: string; rawText: string; updatedAt: Date; company: string; parsedData: JsonValue; }' but required in type '{ id: string; title: string; company: string; content: string; createdAt: string; }'.
+src/app/(dashboard)/resumes/[id]/edit/page.tsx(44,55): error TS2322: Type 'unknown' is not assignable to type 'ReactNode'.
+src/app/(dashboard)/resumes/[id]/edit/page.tsx(45,90): error TS2769: No overload matches this call.
+  Overload 1 of 4, '(value: string | number | Date): Date', gave the following error.
+    Argument of type 'unknown' is not assignable to parameter of type 'string | number | Date'.
+  Overload 2 of 4, '(value: string | number): Date', gave the following error.
+    Argument of type 'unknown' is not assignable to parameter of type 'string | number'.
+src/app/(dashboard)/resumes/[id]/match/page.tsx(65,25): error TS2322: Type 'unknown' is not assignable to type 'string'.
+src/app/(dashboard)/resumes/[id]/score/page.tsx(60,25): error TS2322: Type 'unknown' is not assignable to type 'string'.
+src/app/(dashboard)/resumes/[id]/tailor/page.tsx(99,30): error TS2741: Property 'summary' is missing in type 'Record<string, unknown>' but required in type '{ summary: { original: string; suggested: string; }; bullets?: { id: string; original: string; suggested: string; }[] | undefined; keywords?: { missing?: string[] | undefined; } | undefined; }'.
+src/components/matching/jd-input.tsx(27,17): error TS2353: Object literal may only specify known properties, and 'jobId' does not exist in type '{ resumeId: string; jdId: string; }'.
+src/components/matching/jd-input.tsx(43,17): error TS2353: Object literal may only specify known properties, and 'jobId' does not exist in type '{ resumeId: string; jdId: string; }'.
+src/components/resume/resume-card.tsx(71,61): error TS2345: Argument of type 'string' is not assignable to parameter of type '{ id: string; }'.
+src/components/resume/resume-form.tsx(33,17): error TS2353: Object literal may only specify known properties, and 'data' does not exist in type '{ id: string; title?: string | undefined; status?: "DRAFT" | "COMPLETE" | "ARCHIVED" | undefined; contactInfo?: Record<string, unknown> | undefined; summary?: string | undefined; ... 4 more ...; certifications?: Record<...>[] | undefined; }'.
+src/components/resume/upload-dropzone.tsx(4,29): error TS2307: Cannot find module 'react-dropzone' or its corresponding type declarations.
+src/components/scoring/ats-score-card.tsx(27,25): error TS2345: Argument of type 'string' is not assignable to parameter of type '{ resumeId: string; targetKeywords?: string[] | undefined; }'.
+src/hooks/use-ats-score.ts(9,43): error TS2559: Type 'string' has no properties in common with type '{ resumeId?: string | undefined; }'.
+src/hooks/use-ats-score.ts(10,45): error TS2559: Type 'string' has no properties in common with type '{ id?: string | undefined; }'.
+src/hooks/use-jd-match.ts(9,58): error TS2339: Property 'jdId' does not exist on type 'ServiceResult<MatchReport>'.
+  Property 'jdId' does not exist on type '{ success: false; error: string; code?: string | undefined; }'.
+src/hooks/use-resume.ts(42,47): error TS2322: Type 'unknown' is not assignable to type 'string | undefined'.
+src/modules/ai/providers/gemini.ts(45,42): error TS2339: Property 'promptTokens' does not exist on type 'LanguageModelUsage'.
+src/modules/ai/providers/gemini.ts(46,46): error TS2339: Property 'completionTokens' does not exist on type 'LanguageModelUsage'.
+src/modules/export/docx-generator.ts(252,52): error TS2873: This kind of expression is always falsy.
+src/modules/export/templates/classic.tsx(66,13): error TS2339: Property 'contact' does not exist on type 'CanonicalResume'.
+src/modules/export/templates/classic.tsx(69,10): error TS2304: Cannot find name 'contactInfo'.
+src/modules/export/templates/classic.tsx(70,10): error TS2304: Cannot find name 'contactInfo'.
+src/modules/export/templates/classic.tsx(71,10): error TS2304: Cannot find name 'contactInfo'.
+src/modules/export/templates/classic.tsx(72,10): error TS2304: Cannot find name 'contactInfo'.
+src/modules/export/templates/classic.tsx(73,10): error TS2304: Cannot find name 'contactInfo'.
+src/modules/export/templates/classic.tsx(74,10): error TS2304: Cannot find name 'contactInfo'.
+src/modules/export/templates/classic.tsx(82,41): error TS2339: Property 'fullName' does not exist on type '{ page: { padding: number; fontFamily: string; fontSize: number; color: string; backgroundColor: string; }; header: { marginBottom: number; textAlign: "center"; }; name: { fontSize: number; fontFamily: string; color: string; fontWeight: string; marginBottom: number; }; ... 14 more ...; link: { ...; }; }'.
+src/modules/export/templates/classic.tsx(82,52): error TS2304: Cannot find name 'contactInfo'.
+src/modules/export/templates/classic.tsx(138,38): error TS2873: This kind of expression is always falsy.
+src/modules/export/templates/minimal.tsx(59,13): error TS2339: Property 'contact' does not exist on type 'CanonicalResume'.
+src/modules/export/templates/minimal.tsx(62,10): error TS2304: Cannot find name 'contactInfo'.
+src/modules/export/templates/minimal.tsx(63,10): error TS2304: Cannot find name 'contactInfo'.
+src/modules/export/templates/minimal.tsx(64,10): error TS2304: Cannot find name 'contactInfo'.
+src/modules/export/templates/minimal.tsx(65,10): error TS2304: Cannot find name 'contactInfo'.
+src/modules/export/templates/minimal.tsx(66,10): error TS2304: Cannot find name 'contactInfo'.
+src/modules/export/templates/minimal.tsx(67,10): error TS2304: Cannot find name 'contactInfo'.
+src/modules/export/templates/minimal.tsx(74,41): error TS2339: Property 'fullName' does not exist on type '{ page: { padding: number; fontFamily: string; fontSize: number; color: string; backgroundColor: string; }; header: { marginBottom: number; textAlign: "left"; }; name: { fontSize: number; fontFamily: string; color: string; fontWeight: string; marginBottom: number; }; ... 13 more ...; link: { ...; }; }'.
+src/modules/export/templates/minimal.tsx(74,52): error TS2304: Cannot find name 'contactInfo'.
+src/modules/export/templates/minimal.tsx(124,38): error TS2873: This kind of expression is always falsy.
+src/modules/export/templates/modern.tsx(105,13): error TS2339: Property 'contact' does not exist on type 'CanonicalResume'.
+src/modules/export/templates/modern.tsx(111,41): error TS2339: Property 'fullName' does not exist on type '{ page: { padding: number; fontFamily: string; fontSize: number; color: string; backgroundColor: string; }; header: { marginBottom: number; textAlign: "center" | "left"; }; name: { fontSize: number; fontFamily: string; color: string; fontWeight: string; marginBottom: number; }; ... 18 more ...; skillText: { ...; }; }'.
+src/modules/export/templates/modern.tsx(111,52): error TS2304: Cannot find name 'contactInfo'.
+src/modules/export/templates/modern.tsx(113,27): error TS2304: Cannot find name 'contactInfo'.
+src/modules/export/templates/modern.tsx(113,87): error TS2304: Cannot find name 'contactInfo'.
+src/modules/export/templates/modern.tsx(114,27): error TS2304: Cannot find name 'contactInfo'.
+src/modules/export/templates/modern.tsx(114,87): error TS2304: Cannot find name 'contactInfo'.
+src/modules/export/templates/modern.tsx(115,27): error TS2304: Cannot find name 'contactInfo'.
+src/modules/export/templates/modern.tsx(115,91): error TS2304: Cannot find name 'contactInfo'.
+src/modules/export/templates/modern.tsx(116,27): error TS2304: Cannot find name 'contactInfo'.
+src/modules/export/templates/modern.tsx(116,89): error TS2304: Cannot find name 'contactInfo'.
+src/modules/export/templates/modern.tsx(117,27): error TS2304: Cannot find name 'contactInfo'.
+src/modules/export/templates/modern.tsx(117,90): error TS2304: Cannot find name 'contactInfo'.
+src/modules/export/templates/modern.tsx(118,27): error TS2304: Cannot find name 'contactInfo'.
+src/modules/export/templates/modern.tsx(118,91): error TS2304: Cannot find name 'contactInfo'.
+src/modules/export/templates/modern.tsx(166,38): error TS2873: This kind of expression is always falsy.
+src/server/services/affiliate.service.ts(1,15): error TS2305: Module '"@/types/job"' has no exported member 'RankedSkillGap'.
+src/server/services/export.service.ts(59,17): error TS2322: Type 'string | null' is not assignable to type 'string | undefined'.
+  Type 'null' is not assignable to type 'string | undefined'.
+src/server/services/linkedin.service.ts(57,17): error TS2353: Object literal may only specify known properties, and 'rawText' does not exist in type 'UpdateResumeInput'.
+src/server/services/user.service.ts(139,67): error TS2554: Expected 1 arguments, but got 2.
+src/server/services/version.service.ts(34,17): error TS2322: Type 'string | null' is not assignable to type 'string | undefined'.
+  Type 'null' is not assignable to type 'string | undefined'.
+src/server/services/version.service.ts(127,67): error TS2339: Property 'error' does not exist on type 'ServiceResult<{ id: string; resumeId: string; version: number; snapshot: JsonValue; changeNote: string | null; githubCommitSha: string | null; createdAt: Date; }>'.
+  Property 'error' does not exist on type '{ success: true; data: { id: string; resumeId: string; version: number; snapshot: JsonValue; changeNote: string | null; githubCommitSha: string | null; createdAt: Date; }; }'.
+tests/unit/services/affiliate.service.test.ts(3,15): error TS2305: Module '"@/types/job"' has no exported member 'RankedSkillGap'.
+ ELIFECYCLE  Command failed with exit code 2.

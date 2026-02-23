@@ -18,7 +18,7 @@ export function useATSScore(resumeId: string) {
 }
 
 export function useCachedScore(resumeId: string) {
-    return trpc.ats.getScore.useQuery(resumeId, {
+    return trpc.ats.getScore.useQuery({ resumeId: resumeId || '' }, {
         enabled: !!resumeId,
     });
 }

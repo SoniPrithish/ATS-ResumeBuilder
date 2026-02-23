@@ -28,13 +28,13 @@ export async function generateDocx(
 ): Promise<ExportResult> {
     // 1. Basic empty check
     const hasData =
-        resume.contact.name ||
+        resume.contactInfo.fullName ||
         resume.summary ||
         resume.experience.length > 0 ||
         resume.education.length > 0 ||
         Object.values(resume.skills).some(arr => arr.length > 0) ||
-        resume.projects.length > 0 ||
-        resume.certifications.length > 0
+        (resume.projects?.length || 0) > 0 ||
+        (resume.certifications?.length || 0) > 0
 
     if (!hasData) {
         throw new Error('EXPORT_EMPTY_RESUME')
@@ -42,12 +42,12 @@ export async function generateDocx(
 
     // Filter valid contact fields for the top line
     const contactLine = [
-        resume.contact.email,
-        resume.contact.phone,
-        resume.contact.linkedin,
-        resume.contact.github,
-        resume.contact.website,
-        resume.contact.location,
+        resume.contactInfo.email,
+        resume.contactInfo.phone,
+        resume.contactInfo.linkedin,
+        resume.contactInfo.github,
+        resume.contactInfo.website,
+        resume.contactInfo.location,
     ]
         .filter(Boolean)
         .join(' | ')
@@ -64,7 +64,7 @@ export async function generateDocx(
                         alignment: AlignmentType.CENTER,
                         children: [
                             new TextRun({
-                                text: resume.contact.name || 'Your Name',
+                                text: resume.contactInfo.fullName || 'Your Name',
                                 bold: true,
                                 size: 28, // Half-points (so 14pt)
                                 font: 'Calibri',
@@ -91,8 +91,8 @@ export async function generateDocx(
                     ...buildExperienceParagraphs(resume.experience),
                     ...buildEducationParagraphs(resume.education),
                     ...buildSkillsParagraphs(resume.skills),
-                    ...buildProjectsParagraphs(resume.projects),
-                    ...buildCertificationsParagraphs(resume.certifications),
+                    ...buildProjectsParagraphs(resume.projects || []),
+                    ...buildCertificationsParagraphs(resume.certifications || []),
                 ],
             },
         ],
@@ -107,7 +107,7 @@ export async function generateDocx(
         )
     }
 
-    const baseName = slugify(resume.contact.name || 'resume')
+    const baseName = slugify(resume.contactInfo.fullName || 'resume')
     const timestamp = Date.now()
     const fileName = `${baseName}_${options.templateId}_${timestamp}.docx`
 
@@ -249,12 +249,12 @@ function buildEducationParagraphs(education: EducationEntry[]): Paragraph[] {
             new Paragraph({
                 children: [
                     new TextRun({
-                        text: `${edu.institution}${edu.location ? `, ${edu.location}` : ''}`,
+                        text: `${edu.institution}${'' ? `, ${''}` : ''}`,
                         size: 20,
                         font: 'Calibri',
                     }),
                     new TextRun({
-                        text: `  |  ${edu.graduationDate}`,
+                        text: `  |  ${edu.endDate}`,
                         size: 18,
                         color: '666666',
                         font: 'Calibri',
@@ -273,11 +273,11 @@ function buildEducationParagraphs(education: EducationEntry[]): Paragraph[] {
             )
         }
 
-        if (edu.relevantCoursework && edu.relevantCoursework.length > 0) {
+        if (edu.coursework && edu.coursework.length > 0) {
             paragraphs.push(
                 new Paragraph({
                     children: [
-                        new TextRun({ text: `Relevant Coursework: ${edu.relevantCoursework.join(', ')}`, size: 20, font: 'Calibri' }),
+                        new TextRun({ text: `Relevant Coursework: ${edu.coursework.join(', ')}`, size: 20, font: 'Calibri' }),
                     ],
                     spacing: { after: 50 },
                 })
@@ -292,7 +292,7 @@ function buildSkillsParagraphs(skills: any): Paragraph[] {
     if (
         !skills ||
         (!skills.technical?.length &&
-            !skills.frameworks?.length &&
+            !skills.languages?.length &&
             !skills.tools?.length &&
             !skills.soft?.length)
     )
@@ -308,14 +308,14 @@ function buildSkillsParagraphs(skills: any): Paragraph[] {
                         new TextRun({ text: `${label}: `, bold: true, size: 20, font: 'Calibri' }),
                         new TextRun({ text: items.join(', '), size: 20, font: 'Calibri' }),
                     ],
-                    spacing: { befores: 50, after: 50 },
+                    spacing: { before: 50, after: 50 },
                 })
             )
         }
     }
 
     addSkillLine('Languages', skills.technical)
-    addSkillLine('Frameworks', skills.frameworks)
+    addSkillLine('Languages', skills.languages)
     addSkillLine('Tools', skills.tools)
     addSkillLine('Soft Skills', skills.soft)
 
@@ -383,8 +383,8 @@ function buildProjectsParagraphs(projects: ProjectEntry[]): Paragraph[] {
             )
         }
 
-        if (proj.bullets) {
-            proj.bullets.forEach((bullet) => {
+        if (proj.highlights) {
+            proj.highlights.forEach((bullet) => {
                 paragraphs.push(buildBulletParagraph(bullet))
             })
         }

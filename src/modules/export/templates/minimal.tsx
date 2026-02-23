@@ -56,22 +56,21 @@ export function MinimalTemplate({
         link: { color: config.colors.text, fontSize: 9, textDecoration: 'none' },
     })
 
-    const { contact, summary, experience, education, skills, projects, certifications } = resume
-
+    const { contactInfo, summary, experience, education, skills, projects, certifications } = resume as any
     const contactItems = [
-        contact.email,
-        contact.phone,
-        contact.linkedin,
-        contact.github,
-        contact.website,
-        contact.location,
+        (contactInfo?.email),
+        (contactInfo?.phone),
+        (contactInfo?.linkedin),
+        (contactInfo?.github),
+        (contactInfo?.website),
+        (contactInfo?.location),
     ].filter(Boolean)
 
     return (
         <Document>
             <Page size="A4" style={styles.page}>
                 <View style={styles.header}>
-                    <Text style={styles.name}>{contact.name || 'Your Name'}</Text>
+                    <Text style={styles.fullName}>{contactInfo?.fullName || 'Your Name'}</Text>
                     {contactItems.length > 0 && (
                         <Text style={styles.contactLine}>{contactItems.join(' | ')}</Text>
                     )}
@@ -99,7 +98,7 @@ export function MinimalTemplate({
                                     {exp.company}
                                     {exp.location ? `, ${exp.location}` : ''}
                                 </Text>
-                                {exp.bullets.map((bullet, j) => (
+                                {(exp.bullets || []).map((bullet, j) => (
                                     <View key={j} style={styles.bulletRow}>
                                         <Text style={styles.bulletDot}>•</Text>
                                         <Text style={styles.bulletText}>{bullet}</Text>
@@ -117,16 +116,16 @@ export function MinimalTemplate({
                             <View key={i} style={styles.item}>
                                 <View style={styles.itemHeader}>
                                     <Text style={styles.itemTitle}>{edu.degree}</Text>
-                                    <Text style={styles.itemDate}>{edu.graduationDate}</Text>
+                                    <Text style={styles.itemDate}>{edu.endDate}</Text>
                                 </View>
                                 <Text style={styles.itemSubtitle}>
                                     {edu.institution}
-                                    {edu.location ? `, ${edu.location}` : ''}
+                                    {'' ? `, ${''}` : ''}
                                 </Text>
                                 {edu.gpa && <Text style={styles.bodyText}>GPA: {edu.gpa}</Text>}
-                                {edu.relevantCoursework && edu.relevantCoursework.length > 0 && (
+                                {(edu.coursework || []) && (edu.coursework || []).length > 0 && (
                                     <Text style={styles.bodyText}>
-                                        Coursework: {edu.relevantCoursework.join(', ')}
+                                        Coursework: {(edu.coursework || []).join(', ')}
                                     </Text>
                                 )}
                             </View>
@@ -134,34 +133,34 @@ export function MinimalTemplate({
                     </View>
                 )}
 
-                {(skills?.technical?.length > 0 ||
-                    skills?.frameworks?.length > 0 ||
-                    skills?.tools?.length > 0 ||
-                    skills?.soft?.length > 0) && (
+                {((skills?.technical || []).length > 0 ||
+                    (skills?.languages || []).length > 0 ||
+                    (skills?.tools || []).length > 0 ||
+                    (skills?.soft || []).length > 0) && (
                         <View style={styles.section}>
                             <Text style={styles.sectionHeader}>Skills</Text>
-                            {skills.technical.length > 0 && (
+                            {(skills?.technical || []).length > 0 && (
                                 <Text style={styles.bodyText}>
                                     <Text style={styles.bold}>Languages: </Text>
-                                    {skills.technical.join(', ')}
+                                    {(skills?.technical || []).join(', ')}
                                 </Text>
                             )}
-                            {skills.frameworks.length > 0 && (
+                            {(skills?.languages || []).length > 0 && (
                                 <Text style={styles.bodyText}>
                                     <Text style={styles.bold}>Frameworks: </Text>
-                                    {skills.frameworks.join(', ')}
+                                    {(skills?.languages || []).join(', ')}
                                 </Text>
                             )}
-                            {skills.tools.length > 0 && (
+                            {(skills?.tools || []).length > 0 && (
                                 <Text style={styles.bodyText}>
                                     <Text style={styles.bold}>Tools: </Text>
-                                    {skills.tools.join(', ')}
+                                    {(skills?.tools || []).join(', ')}
                                 </Text>
                             )}
-                            {skills.soft.length > 0 && (
+                            {(skills?.soft || []).length > 0 && (
                                 <Text style={styles.bodyText}>
                                     <Text style={styles.bold}>Soft Skills: </Text>
-                                    {skills.soft.join(', ')}
+                                    {(skills?.soft || []).join(', ')}
                                 </Text>
                             )}
                         </View>
@@ -184,8 +183,8 @@ export function MinimalTemplate({
                                     </Text>
                                 )}
                                 {proj.description && <Text style={styles.bodyText}>{proj.description}</Text>}
-                                {proj.bullets &&
-                                    proj.bullets.map((bullet, j) => (
+                                {(proj.highlights || []) &&
+                                    (proj.highlights || []).map((bullet, j) => (
                                         <View key={j} style={styles.bulletRow}>
                                             <Text style={styles.bulletDot}>•</Text>
                                             <Text style={styles.bulletText}>{bullet}</Text>

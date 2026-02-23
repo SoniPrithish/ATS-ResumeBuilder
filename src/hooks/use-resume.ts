@@ -3,17 +3,16 @@ import { toast } from 'sonner';
 
 
 export function useResume(id: string) {
-    return trpc.resume.getById.useQuery(id, {
+    return trpc.resume.getById.useQuery({ id }, {
         enabled: !!id,
     });
 }
 
-export function useResumes(page = 1, limit = 10) {
+export function useResumes(page = 1, pageSize = 10) {
     return trpc.resume.list.useQuery({
         page,
-        limit,
-        sortBy: 'updatedAt',
-        sortOrder: 'desc'
+        pageSize,
+        
     });
 }
 
@@ -40,7 +39,7 @@ export function useUpdateResume() {
 
     return trpc.resume.update.useMutation({
         onSuccess: (data) => {
-            utils.resume.getById.invalidate(data.id);
+            utils.resume.getById.invalidate({ id: data.id });
             utils.resume.list.invalidate();
         },
     });

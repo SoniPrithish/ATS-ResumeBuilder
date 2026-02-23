@@ -50,7 +50,7 @@ export const analyticsService = {
 
     async getUserStats(userId: string): Promise<ServiceResult<UserStats>> {
         const cacheKey = `analytics:stats:${userId}`
-        const cached = await cacheService.getCached<UserStats>(cacheKey)
+        const cached = await cacheService.get<UserStats>(cacheKey)
         if (cached) {
             return { success: true, data: cached }
         }
@@ -99,7 +99,7 @@ export const analyticsService = {
                 resumesThisMonth,
             }
 
-            await cacheService.setCached(cacheKey, stats, 5 * 60) // 5 minutes TTL
+            await cacheService.set(cacheKey, stats, 5 * 60) // 5 minutes TTL
             return { success: true, data: stats }
         } catch (error) {
             logger.error({ err: error, userId }, 'Failed to get user stats')

@@ -124,7 +124,7 @@ export const versionService = {
     ): Promise<ServiceResult<Resume>> {
         const targetVersionResponse = await this.getVersion(resumeId, userId, version)
         if (!targetVersionResponse.success || !targetVersionResponse.data) {
-            return { success: false, error: targetVersionResponse.error }
+            return { success: false, error: targetVersionResponse.error } as any
         }
 
         const targetVersion = targetVersionResponse.data
@@ -142,9 +142,9 @@ export const versionService = {
             skills: snapshotData.skills,
             projects: snapshotData.projects,
             certifications: snapshotData.certifications,
-            rawText: snapshotData.rawText,
+            
         })
 
-        return updated
+        return { success: true, data: updated as any }
     },
 }

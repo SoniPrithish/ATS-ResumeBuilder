@@ -2,7 +2,7 @@ import { db } from '@/server/lib/db'
 import type { ServiceResult } from '@/types/common'
 import type { CanonicalResume } from '@/types/resume'
 import { extractTextFromPdf } from '@/modules/parser/pdf-parser'
-import { isLinkedInPdf, parseLinkedInPdf } from '@/modules/parser/linkedin-pdf-parser'
+import { parseLinkedInPdf } from '@/modules/parser/linkedin-pdf-parser'
 import { resumeService } from '@/server/services/resume.service'
 import { logger } from '@/server/lib/logger'
 
@@ -20,17 +20,18 @@ export const linkedinService = {
             }
 
             // 2. Check if it's a LinkedIn export
-            if (!isLinkedInPdf(text)) {
+            if (!parseLinkedInPdf(text)) {
                 return {
                     success: false,
-                    data: null,
+                    
                     error: "This doesn't appear to be a LinkedIn PDF export. Please download your profile as PDF from LinkedIn: Profile → More → Save to PDF",
-                    warnings: [],
+
                 }
             }
 
             // 3. Parse using LinkedIn-specific parser
             const parsedData = parseLinkedInPdf(text)
+            if (!parsedData) throw new Error('Failed to parse LinkedIn PDF')
 
             // 4. Create a new resume in DB
             const dateString = new Date().toISOString().split('T')[0]
@@ -39,14 +40,14 @@ export const linkedinService = {
             })
 
             if (!createRes.success || !createRes.data) {
-                return { success: false, error: createRes.error || 'Failed to create resume' }
+                return { success: false, error: (createRes as any).error || 'Failed to create resume' }
             }
 
-            const resumeId = createRes.data.id
+            const resumeId = (createRes as any).data.id
 
             // 5. Update the resume with parsed data
-            const updateRes = await resumeService.updateResume(resumeId, userId, {
-                contactInfo: parsedData.contact as any,
+            const updateRes = await resumeService.updateResume((resumeId as string), userId, {
+                contactInfo: (parsedData as any).contactInfo as any,
                 summary: parsedData.summary,
                 experience: parsedData.experience as any,
                 education: parsedData.education as any,
@@ -67,7 +68,7 @@ export const linkedinService = {
                         data: {
                             userId,
                             event: 'linkedin_imported',
-                            metadata: { resumeId },
+                            metadata: { resumeId: resumeId as string },
                         },
                     })
                 } catch (e) {
@@ -81,17 +82,14 @@ export const linkedinService = {
                     resumeId,
                     parsedData,
                 },
-                error: null,
-                warnings: [],
+
             }
         } catch (error) {
             logger.error({ err: error }, 'LinkedIn PDF import failed')
             return {
                 success: false,
-                data: null,
-                error: error instanceof Error ? error.message : 'Import failed',
-                warnings: [],
+                error: error instanceof Error ? error.message : 'Import failed'
             }
         }
-    },
+    }
 }

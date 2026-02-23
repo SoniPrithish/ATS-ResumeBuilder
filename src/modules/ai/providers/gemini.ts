@@ -33,7 +33,7 @@ export class GeminiProvider implements AIProvider, ExtendedAIProvider {
                 model: google(this.model),
                 system: extOptions?.systemPrompt,
                 prompt,
-                maxTokens: options?.maxTokens ?? 2048,
+                maxRetries: options?.maxTokens ?? 2048,
                 temperature: options?.temperature ?? 0.7,
             });
 
@@ -42,8 +42,8 @@ export class GeminiProvider implements AIProvider, ExtendedAIProvider {
             return {
                 data: text,
                 usage: {
-                    promptTokens: usage.promptTokens ?? 0,
-                    completionTokens: usage.completionTokens ?? 0,
+                    promptTokens: usage?.promptTokens ?? 0,
+                    completionTokens: usage?.completionTokens ?? 0,
                     totalTokens: usage.totalTokens ?? 0,
                 },
                 model: this.model,
@@ -85,7 +85,7 @@ export class GeminiProvider implements AIProvider, ExtendedAIProvider {
             model: google(this.model),
             system: extOptions?.systemPrompt,
             prompt,
-            maxTokens: options?.maxTokens ?? 2048,
+            maxRetries: options?.maxTokens ?? 2048,
             temperature: options?.temperature ?? 0.7,
         });
 

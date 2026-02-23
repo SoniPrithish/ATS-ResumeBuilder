@@ -25,7 +25,7 @@ describe('POST /api/upload/linkedin', () => {
     }
 
     it('returns 401 if not authenticated', async () => {
-        vi.mocked(auth).mockResolvedValue(null)
+        vi.mocked(auth).mockResolvedValue(null as any)
         const req = new Request('http://localhost/api/upload/linkedin', { method: 'POST' })
         const res = await POST(req)
         expect(res.status).toBe(401)
@@ -73,9 +73,8 @@ describe('POST /api/upload/linkedin', () => {
         vi.mocked(auth).mockResolvedValue({ user: { id: 'u1' } } as any)
         vi.mocked(linkedinService.importFromPdf).mockResolvedValue({
             success: false,
-            data: null,
             error: 'Not a linkedin PDF',
-            warnings: [],
+            
         })
 
         const fakeFile = new File(['pdf-data'], 'resume.pdf', { type: 'application/pdf' })
@@ -95,8 +94,7 @@ describe('POST /api/upload/linkedin', () => {
         vi.mocked(linkedinService.importFromPdf).mockResolvedValue({
             success: true,
             data: { resumeId: 'res-linkedin', parsedData: {} as any },
-            error: null,
-            warnings: [],
+                        
         })
 
         const fakeFile = new File(['pdf-data'], 'resume.pdf', { type: 'application/pdf' })

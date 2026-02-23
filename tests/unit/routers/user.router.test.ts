@@ -20,7 +20,7 @@ describe('userRouter', () => {
     const createCaller = (userId: string) => {
         return userRouter.createCaller({
             session: { user: { id: userId, email: 'test@test.com', role: 'USER' } } as any,
-            db: {} as any,
+            db: {} as any, headers: undefined, redis: {} as any,
         })
     }
 

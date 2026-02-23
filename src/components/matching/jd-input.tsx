@@ -24,7 +24,7 @@ export function JDInput({ resumeId, onMatchStart, onMatchComplete }: { resumeId:
         try {
             const data = await matchMutation.mutateAsync({
                 resumeId,
-                content: jdText,
+                jobId: jdText,
                 title: title || "New Job",
                 company: company || "Unknown Company",
             });

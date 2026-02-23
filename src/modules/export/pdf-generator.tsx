@@ -32,7 +32,7 @@ export async function generatePdf(
 ): Promise<ExportResult> {
     // 1. Basic empty check
     const hasData =
-        resume.contact.name ||
+        resume.contactInfo.fullName ||
         resume.summary ||
         resume.experience.length > 0 ||
         resume.education.length > 0 ||
@@ -83,7 +83,7 @@ export async function generatePdf(
     }
 
     // 6. Generate filename
-    const baseName = slugify(resume.contact.name || 'resume')
+    const baseName = slugify(resume.contactInfo.fullName || 'resume')
     const timestamp = Date.now()
     const fileName = `${baseName}_${options.templateId}_${timestamp}.pdf`
 

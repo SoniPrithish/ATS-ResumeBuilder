@@ -115,8 +115,7 @@ export const githubService = {
                 commitSha: putJson.commit.sha,
                 url: putJson.commit.html_url,
             },
-            error: null,
-            warnings: [],
+                        
         }
     },
 

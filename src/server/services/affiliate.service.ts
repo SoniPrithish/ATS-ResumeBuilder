@@ -1,4 +1,4 @@
-import type { RankedSkillGap } from '@/types/job'
+// import type { RankedSkillGap } from '@/types/job'
 
 export interface AffiliateRecommendation {
     id: string

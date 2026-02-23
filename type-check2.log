@@ -1,0 +1,17 @@
+
+> techresume-ai@0.1.0 type-check /Users/prithishsoni/Desktop/TechResume
+> tsc --noEmit
+
+src/modules/ai/providers/gemini.ts(45,59): error TS1109: Expression expected.
+src/modules/ai/providers/gemini.ts(45,66): error TS1005: ',' expected.
+src/modules/ai/providers/gemini.ts(45,79): error TS1005: ',' expected.
+src/modules/ai/providers/gemini.ts(45,101): error TS1005: ':' expected.
+src/modules/ai/providers/gemini.ts(45,106): error TS1109: Expression expected.
+src/modules/ai/providers/gemini.ts(46,64): error TS1109: Expression expected.
+src/modules/ai/providers/gemini.ts(46,71): error TS1005: ',' expected.
+src/modules/ai/providers/gemini.ts(46,88): error TS1005: ',' expected.
+src/modules/ai/providers/gemini.ts(46,110): error TS1005: ':' expected.
+src/modules/ai/providers/gemini.ts(46,116): error TS1109: Expression expected.
+src/server/services/linkedin.service.ts(96,6): error TS1472: 'catch' or 'finally' expected.
+src/server/services/linkedin.service.ts(98,1): error TS1005: '}' expected.
+ ELIFECYCLE  Command failed with exit code 2.

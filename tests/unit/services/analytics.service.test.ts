@@ -25,6 +25,8 @@ vi.mock('@/server/lib/db', () => ({
 
 vi.mock('@/server/services/cache.service', () => ({
     cacheService: {
+        get: vi.fn(),
+        set: vi.fn(),
         getCached: vi.fn(),
         setCached: vi.fn(),
     },
@@ -55,7 +57,7 @@ describe('analyticsService', () => {
     })
 
     it('getUserStats: correct aggregation from mock data', async () => {
-        vi.mocked(cacheService.getCached).mockResolvedValue(null)
+        vi.mocked(cacheService.get).mockResolvedValue(null)
 
         vi.mocked(db.resume.count).mockResolvedValueOnce(5) // totalResumes
         vi.mocked(db.resume.findMany).mockResolvedValue([{ lastAtsScore: 80 }, { lastAtsScore: 90 }] as any) // scores
@@ -75,11 +77,11 @@ describe('analyticsService', () => {
             bestMatchScore: 95,
             resumesThisMonth: 2,
         })
-        expect(cacheService.setCached).toHaveBeenCalled()
+        expect(cacheService.set).toHaveBeenCalled()
     })
 
     it('getUserStats: returns cached if available', async () => {
-        vi.mocked(cacheService.getCached).mockResolvedValue({ totalResumes: 99 } as any)
+        vi.mocked(cacheService.get).mockResolvedValue({ totalResumes: 99 } as any)
 
         const res = await analyticsService.getUserStats('u1')
 

@@ -1,6 +1,6 @@
 import { describe, it, expect } from 'vitest'
 import { affiliateService } from '@/server/services/affiliate.service'
-import type { RankedSkillGap } from '@/types/job'
+// import type { RankedSkillGap } from '@/types/job'
 
 describe('affiliateService', () => {
     it('getRecommendations: returns recommendations for known skills', async () => {

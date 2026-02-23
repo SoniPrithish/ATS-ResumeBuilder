@@ -57,8 +57,7 @@ export const userService = {
                 githubConnected,
                 googleConnected,
             },
-            error: null,
-            warnings: [],
+                        
         }
     },
 
@@ -120,8 +119,7 @@ export const userService = {
                     analyticsEvents,
                     exportedAt: new Date().toISOString(),
                 },
-                error: null,
-                warnings: [],
+                                
             }
         } catch (e) {
             return { success: false, error: 'Failed to export data' }

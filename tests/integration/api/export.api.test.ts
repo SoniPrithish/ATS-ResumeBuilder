@@ -19,7 +19,7 @@ describe('GET /api/export/[id]', () => {
     })
 
     it('returns 401 if not authenticated', async () => {
-        vi.mocked(auth).mockResolvedValue(null)
+        vi.mocked(auth).mockResolvedValue(null as any)
         const request = new Request('http://localhost/api/export/res-1')
         const response = await GET(request, { params: { id: 'res-1' } })
 
@@ -39,9 +39,8 @@ describe('GET /api/export/[id]', () => {
         vi.mocked(auth).mockResolvedValue({ user: { id: 'user-1' } } as any)
         vi.mocked(exportService.exportResume).mockResolvedValue({
             success: false,
-            data: null,
             error: 'Resume not found',
-            warnings: [],
+            
         })
 
         const request = new Request('http://localhost/api/export/res-1')
@@ -54,9 +53,8 @@ describe('GET /api/export/[id]', () => {
         vi.mocked(auth).mockResolvedValue({ user: { id: 'user-1' } } as any)
         vi.mocked(exportService.exportResume).mockResolvedValue({
             success: false,
-            data: null,
             error: 'Unauthorized',
-            warnings: [],
+            
         })
 
         const request = new Request('http://localhost/api/export/res-1')
@@ -75,8 +73,7 @@ describe('GET /api/export/[id]', () => {
                 fileName: 'resume.pdf',
                 sizeBytes: 8,
             },
-            error: null,
-            warnings: [],
+                        
         })
 
         const request = new Request('http://localhost/api/export/res-1')

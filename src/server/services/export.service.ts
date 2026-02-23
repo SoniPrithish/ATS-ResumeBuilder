@@ -27,34 +27,28 @@ export const exportService = {
             if (!resume) {
                 return {
                     success: false,
-                    data: null,
                     error: 'Resume not found',
-                    warnings: [],
                 }
             }
 
             if (resume.userId !== userId) {
                 return {
                     success: false,
-                    data: null,
                     error: 'Unauthorized',
-                    warnings: [],
                 }
             }
 
             if (resume.status === 'ARCHIVED') {
                 return {
                     success: false,
-                    data: null,
                     error: 'Cannot export archived resume',
-                    warnings: [],
                 }
             }
 
             // Build CanonicalResume
             const canonicalResume: CanonicalResume = {
-                contact: (resume.contactInfo as unknown as ContactInfo) || {
-                    name: '',
+                contactInfo: (resume.contactInfo as unknown as ContactInfo) || {
+                    fullName: '',
                     email: '',
                     phone: '',
                     linkedin: '',
@@ -67,11 +61,11 @@ export const exportService = {
                 education: (resume.education as unknown as EducationEntry[]) || [],
                 skills: (resume.skills as unknown as SkillSet) || {
                     technical: [],
-                    frameworks: [],
+                    
                     tools: [],
                     languages: [],
                     soft: [],
-                    other: [],
+                    
                 },
                 projects: (resume.projects as unknown as ProjectEntry[]) || [],
                 certifications: (resume.certifications as unknown as CertificationEntry[]) || [],
@@ -100,17 +94,13 @@ export const exportService = {
 
             return {
                 success: true,
-                data: exportResult,
-                error: null,
-                warnings: [],
+                data: exportResult
             }
         } catch (error) {
             logger.error({ err: error, resumeId }, 'Failed to export resume')
             return {
                 success: false,
-                data: null,
-                error: error instanceof Error ? error.message : 'Export failed',
-                warnings: [],
+                error: error instanceof Error ? error.message : 'Export failed'
             }
         }
     },
