@@ -6,7 +6,14 @@ import {
     Packer,
     BorderStyle,
 } from 'docx'
-import type { CanonicalResume, ExperienceEntry, EducationEntry, ProjectEntry, CertificationEntry } from '@/types/resume'
+import type {
+    CanonicalResume,
+    ExperienceEntry,
+    EducationEntry,
+    ProjectEntry,
+    CertificationEntry,
+    SkillSet,
+} from '@/types/resume'
 import type { ExportOptions, ExportResult } from './types'
 
 /**
@@ -249,7 +256,7 @@ function buildEducationParagraphs(education: EducationEntry[]): Paragraph[] {
             new Paragraph({
                 children: [
                     new TextRun({
-                        text: `${edu.institution}${'' ? `, ${''}` : ''}`,
+                        text: edu.institution,
                         size: 20,
                         font: 'Calibri',
                     }),
@@ -288,7 +295,7 @@ function buildEducationParagraphs(education: EducationEntry[]): Paragraph[] {
     return paragraphs
 }
 
-function buildSkillsParagraphs(skills: any): Paragraph[] {
+function buildSkillsParagraphs(skills: SkillSet | undefined): Paragraph[] {
     if (
         !skills ||
         (!skills.technical?.length &&
@@ -314,8 +321,8 @@ function buildSkillsParagraphs(skills: any): Paragraph[] {
         }
     }
 
-    addSkillLine('Languages', skills.technical)
-    addSkillLine('Languages', skills.languages)
+    addSkillLine('Technical', skills.technical)
+    addSkillLine('Languages', skills.languages ?? [])
     addSkillLine('Tools', skills.tools)
     addSkillLine('Soft Skills', skills.soft)
 

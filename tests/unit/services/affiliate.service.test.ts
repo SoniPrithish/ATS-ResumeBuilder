@@ -1,6 +1,6 @@
 import { describe, it, expect } from 'vitest'
 import { affiliateService } from '@/server/services/affiliate.service'
-// import type { RankedSkillGap } from '@/types/job'
+import type { RankedSkillGap } from '@/modules/matcher/types'
 
 describe('affiliateService', () => {
     it('getRecommendations: returns recommendations for known skills', async () => {
@@ -12,7 +12,9 @@ describe('affiliateService', () => {
                 relatedSkillsInResume: [],
                 rank: 1,
                 priority: 50,
-            } as any,
+                estimatedLearningTime: '4 weeks',
+                suggestedResources: [],
+            },
         ]
 
         const recs = await affiliateService.getRecommendations(gaps, 5)
@@ -23,8 +25,26 @@ describe('affiliateService', () => {
 
     it('getRecommendations: returns deduplicated mix of recommendations', async () => {
         const gaps: RankedSkillGap[] = [
-            { skill: 'Python', category: 'critical' } as any,
-            { skill: 'Django', category: 'recommended' } as any, // might not exist directly, but Python does
+            {
+                skill: 'Python',
+                category: 'critical',
+                source: 'required',
+                relatedSkillsInResume: [],
+                rank: 1,
+                priority: 80,
+                estimatedLearningTime: '6 weeks',
+                suggestedResources: [],
+            },
+            {
+                skill: 'Django',
+                category: 'recommended',
+                source: 'preferred',
+                relatedSkillsInResume: ['Python'],
+                rank: 2,
+                priority: 60,
+                estimatedLearningTime: '3 weeks',
+                suggestedResources: [],
+            }, // might not exist directly, but Python does
         ]
 
         const recs = await affiliateService.getRecommendations(gaps, 10)

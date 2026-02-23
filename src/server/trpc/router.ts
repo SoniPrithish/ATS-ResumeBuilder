@@ -1,42 +1,22 @@
-/**
- * @module server/trpc/router
- * @description Root tRPC router that merges all sub-routers.
- * Other agents will add their routers here as they build features.
- *
- * @example
- * ```ts
- * import type { AppRouter } from "@/server/trpc/router";
- * ```
- */
-
 import { router } from "./trpc";
 import { resumeRouter } from "@/server/routers/resume.router";
 import { atsRouter } from "@/server/routers/ats.router";
+import { aiRouter } from "@/server/routers/ai.router";
 import { matchRouter } from "@/server/routers/match.router";
 import { jobRouter } from "@/server/routers/job.router";
 import { versionRouter } from "@/server/routers/version.router";
 import { analyticsRouter } from "@/server/routers/analytics.router";
 import { userRouter } from "@/server/routers/user.router";
 
-/**
- * Root application router.
- * Sub-routers will be added by other agents:
- * - resumeRouter (Agent 1) ✓
- * - parserRouter (Agent 2)
- * - atsRouter (Agent 2) ✓
- * - aiRouter (Agent 4)
- * - dashboardRouter (Agent 5)
- * - exportRouter (Agent 6)
- */
 export const appRouter = router({
-    resume: resumeRouter,
-    ats: atsRouter,
-    match: matchRouter,
-    job: jobRouter,
-    version: versionRouter,
-    analytics: analyticsRouter,
-    user: userRouter,
+  resume: resumeRouter,
+  ats: atsRouter,
+  ai: aiRouter,
+  match: matchRouter,
+  job: jobRouter,
+  version: versionRouter,
+  analytics: analyticsRouter,
+  user: userRouter,
 });
 
-/** Type definition for the root router (used by tRPC client) */
 export type AppRouter = typeof appRouter;

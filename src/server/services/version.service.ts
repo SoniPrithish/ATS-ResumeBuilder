@@ -2,7 +2,7 @@ import { db } from '@/server/lib/db'
 import type { ServiceResult } from '@/types/common'
 import { resumeService } from '@/server/services/resume.service'
 import { githubService } from '@/server/services/github.service'
-import type { ResumeVersion, Resume } from '@prisma/client'
+import type { Prisma, ResumeVersion, Resume } from '@prisma/client'
 import type { CanonicalResume } from '@/types/resume'
 import { logger } from '@/server/lib/logger'
 
@@ -28,24 +28,30 @@ export const versionService = {
 
             const nextVersion = (latestVersion?.version ?? 0) + 1
 
-            // Create snapshot from current DB data
             const snapshot: CanonicalResume = {
-                contact: (resume.contactInfo as any) || {},
-                summary: resume.summary,
-                experience: (resume.experience as any) || [],
-                education: (resume.education as any) || [],
-                skills: (resume.skills as any) || { technical: [], frameworks: [], tools: [], languages: [], soft: [], other: [] },
-                projects: (resume.projects as any) || [],
-                certifications: (resume.certifications as any) || [],
-                rawText: resume.rawText ?? '',
+                contactInfo: (resume.contactInfo as unknown as CanonicalResume['contactInfo']) || {
+                    fullName: '',
+                    email: '',
+                },
+                summary: resume.summary ?? undefined,
+                experience: (resume.experience as unknown as CanonicalResume['experience']) || [],
+                education: (resume.education as unknown as CanonicalResume['education']) || [],
+                skills: (resume.skills as unknown as CanonicalResume['skills']) || {
+                    technical: [],
+                    soft: [],
+                    tools: [],
+                    languages: [],
+                },
+                projects: (resume.projects as unknown as CanonicalResume['projects']) || [],
+                certifications: (resume.certifications as unknown as CanonicalResume['certifications']) || [],
+                customSections: (resume.customSections as unknown as CanonicalResume['customSections']) || [],
             }
 
-            // 4. Create ResumeVersion record in DB
             let newVersion = await db.resumeVersion.create({
                 data: {
                     resumeId: resume.id,
                     version: nextVersion,
-                    snapshot: snapshot as any,
+                    snapshot: snapshot as unknown as Prisma.InputJsonValue,
                     changeNote: changeNote || null,
                 },
             })
@@ -123,28 +129,53 @@ export const versionService = {
         version: number
     ): Promise<ServiceResult<Resume>> {
         const targetVersionResponse = await this.getVersion(resumeId, userId, version)
-        if (!targetVersionResponse.success || !targetVersionResponse.data) {
-            return { success: false, error: targetVersionResponse.error } as any
+        if (!targetVersionResponse.success) {
+            return { success: false, error: targetVersionResponse.error }
+        }
+        if (!targetVersionResponse.data) {
+            return { success: false, error: 'Version not found' }
         }
 
         const targetVersion = targetVersionResponse.data
 
-        // Backup current state first
         await this.createVersion(resumeId, userId, `Backup before restoring to v${version}`)
 
-        // Update resume data
-        const snapshotData = targetVersion.snapshot as any
-        const updated = await resumeService.updateResume(resumeId, userId, {
-            contactInfo: snapshotData.contact,
-            summary: snapshotData.summary,
-            experience: snapshotData.experience,
-            education: snapshotData.education,
-            skills: snapshotData.skills,
-            projects: snapshotData.projects,
-            certifications: snapshotData.certifications,
-            
-        })
+        const snapshotData = targetVersion.snapshot as unknown as Record<string, unknown>
+        const contactInfo = (snapshotData.contactInfo ?? snapshotData.contact ?? {}) as Record<string, unknown>
+        const summary = typeof snapshotData.summary === 'string' ? snapshotData.summary : undefined
+        const experience = Array.isArray(snapshotData.experience)
+            ? (snapshotData.experience as Record<string, unknown>[])
+            : []
+        const education = Array.isArray(snapshotData.education)
+            ? (snapshotData.education as Record<string, unknown>[])
+            : []
+        const skills =
+            snapshotData.skills && typeof snapshotData.skills === 'object'
+                ? (snapshotData.skills as Record<string, unknown>)
+                : { technical: [], soft: [], tools: [] }
+        const projects = Array.isArray(snapshotData.projects)
+            ? (snapshotData.projects as Record<string, unknown>[])
+            : []
+        const certifications = Array.isArray(snapshotData.certifications)
+            ? (snapshotData.certifications as Record<string, unknown>[])
+            : []
 
-        return { success: true, data: updated as any }
+        const updated = await resumeService.updateResume(resumeId, userId, {
+            contactInfo,
+            summary,
+            experience,
+            education,
+            skills,
+            projects,
+            certifications,
+        })
+        if (!updated.success) {
+            return { success: false, error: updated.error || 'Failed to restore version' }
+        }
+        if (!updated.data) {
+            return { success: false, error: 'Failed to restore version' }
+        }
+
+        return { success: true, data: updated.data as Resume }
     },
 }

@@ -30,6 +30,7 @@ export interface CreateResumeInput {
 /** Input for updating a resume */
 export interface UpdateResumeInput {
   title?: string;
+  templateId?: string;
   status?: "DRAFT" | "COMPLETE" | "ARCHIVED";
   contactInfo?: Record<string, unknown>;
   summary?: string;
@@ -38,6 +39,7 @@ export interface UpdateResumeInput {
   skills?: Record<string, unknown>;
   projects?: Record<string, unknown>[];
   certifications?: Record<string, unknown>[];
+  customSections?: Record<string, unknown>[];
 }
 
 /** Pagination options */

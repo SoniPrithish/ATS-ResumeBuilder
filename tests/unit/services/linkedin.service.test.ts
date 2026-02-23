@@ -1,7 +1,7 @@
 import { describe, it, expect, vi, beforeEach } from 'vitest'
 import { linkedinService } from '@/server/services/linkedin.service'
 import { extractTextFromPdf } from '@/modules/parser/pdf-parser'
-import { parseLinkedInPdf } from '@/modules/parser/linkedin-pdf-parser'
+import { isLinkedInFormat, parseLinkedInPdf } from '@/modules/parser/linkedin-pdf-parser'
 import { resumeService } from '@/server/services/resume.service'
 import { db } from '@/server/lib/db'
 
@@ -10,6 +10,7 @@ vi.mock('@/modules/parser/pdf-parser', () => ({
 }))
 
 vi.mock('@/modules/parser/linkedin-pdf-parser', () => ({
+    isLinkedInFormat: vi.fn(),
     parseLinkedInPdf: vi.fn(),
 }))
 
@@ -36,22 +37,28 @@ describe('linkedinService', () => {
     it('imports from valid LinkedIn PDF', async () => {
         const fakeBuffer = Buffer.from('data')
         const fakeText = 'LinkedIn Profile'
-        const parsedData = { contact: { name: 'John' }, summary: 'Hello' }
+        const parsedData = {
+            contactInfo: { fullName: 'John', email: '' },
+            summary: 'Hello',
+            experience: [],
+            education: [],
+            skills: { technical: [], soft: [], tools: [] },
+            projects: [],
+            certifications: [],
+        }
 
         vi.mocked(extractTextFromPdf).mockResolvedValue(fakeText)
-        vi.mocked(parseLinkedInPdf).mockReturnValue({} as any)
-        vi.mocked(parseLinkedInPdf).mockReturnValue(parsedData as any)
+        vi.mocked(isLinkedInFormat).mockReturnValue(true)
+        vi.mocked(parseLinkedInPdf).mockReturnValue(parsedData)
 
         vi.mocked(resumeService.createResume).mockResolvedValue({
             success: true,
             data: { id: 'res-import-1' },
-                        
-        } as any)
+        })
 
         vi.mocked(resumeService.updateResume).mockResolvedValue({
             success: true,
-            data: {} as any,
-                        
+            data: {},
         })
 
         const result = await linkedinService.importFromPdf('user-1', fakeBuffer)
@@ -74,7 +81,7 @@ describe('linkedinService', () => {
 
     it('fails if not a LinkedIn PDF', async () => {
         vi.mocked(extractTextFromPdf).mockResolvedValue('Some generic resume text')
-        vi.mocked(parseLinkedInPdf).mockImplementation(() => { throw new Error('parse error') })
+        vi.mocked(isLinkedInFormat).mockReturnValue(false)
 
         const result = await linkedinService.importFromPdf('user-1', Buffer.from(''))
 
@@ -84,12 +91,19 @@ describe('linkedinService', () => {
 
     it('fails if createResume fails', async () => {
         vi.mocked(extractTextFromPdf).mockResolvedValue('LinkedIn Profile')
-        vi.mocked(parseLinkedInPdf).mockReturnValue({} as any)
-        vi.mocked(parseLinkedInPdf).mockReturnValue({} as any)
+        vi.mocked(isLinkedInFormat).mockReturnValue(true)
+        vi.mocked(parseLinkedInPdf).mockReturnValue({
+            contactInfo: { fullName: 'John', email: '' },
+            summary: 'Hello',
+            experience: [],
+            education: [],
+            skills: { technical: [], soft: [], tools: [] },
+            projects: [],
+            certifications: [],
+        })
         vi.mocked(resumeService.createResume).mockResolvedValue({
             success: false,
             error: 'DB Error',
-            
         })
 
         const result = await linkedinService.importFromPdf('user-1', Buffer.from(''))
@@ -100,17 +114,23 @@ describe('linkedinService', () => {
 
     it('fails if updateResume fails', async () => {
         vi.mocked(extractTextFromPdf).mockResolvedValue('LinkedIn Profile')
-        vi.mocked(parseLinkedInPdf).mockReturnValue({} as any)
-        vi.mocked(parseLinkedInPdf).mockReturnValue({} as any)
+        vi.mocked(isLinkedInFormat).mockReturnValue(true)
+        vi.mocked(parseLinkedInPdf).mockReturnValue({
+            contactInfo: { fullName: 'John', email: '' },
+            summary: 'Hello',
+            experience: [],
+            education: [],
+            skills: { technical: [], soft: [], tools: [] },
+            projects: [],
+            certifications: [],
+        })
         vi.mocked(resumeService.createResume).mockResolvedValue({
             success: true,
-            data: { id: 'res-import-1' } as any,
-                        
+            data: { id: 'res-import-1' },
         })
         vi.mocked(resumeService.updateResume).mockResolvedValue({
             success: false,
             error: 'Failed',
-            
         })
 
         const result = await linkedinService.importFromPdf('user-1', Buffer.from(''))

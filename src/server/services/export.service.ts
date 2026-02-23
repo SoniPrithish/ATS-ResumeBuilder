@@ -56,7 +56,7 @@ export const exportService = {
                     website: '',
                     location: '',
                 },
-                summary: resume.summary,
+                summary: resume.summary ?? undefined,
                 experience: (resume.experience as unknown as ExperienceEntry[]) || [],
                 education: (resume.education as unknown as EducationEntry[]) || [],
                 skills: (resume.skills as unknown as SkillSet) || {
@@ -69,7 +69,6 @@ export const exportService = {
                 },
                 projects: (resume.projects as unknown as ProjectEntry[]) || [],
                 certifications: (resume.certifications as unknown as CertificationEntry[]) || [],
-                rawText: resume.rawText ?? '',
             }
 
             const exportResult = await exportResume(canonicalResume, options)

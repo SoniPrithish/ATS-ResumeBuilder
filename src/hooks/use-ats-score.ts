@@ -6,8 +6,8 @@ export function useATSScore(resumeId: string) {
 
     return trpc.ats.score.useMutation({
         onSuccess: () => {
-            utils.ats.getScore.invalidate(resumeId);
-            utils.resume.getById.invalidate(resumeId);
+            utils.ats.getScore.invalidate({ resumeId });
+            utils.resume.getById.invalidate({ id: resumeId });
         },
         onError: (error) => {
             toast.error('Scoring failed', {
@@ -22,4 +22,3 @@ export function useCachedScore(resumeId: string) {
         enabled: !!resumeId,
     });
 }
-// group 1 modifications

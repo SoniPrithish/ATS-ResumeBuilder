@@ -1,4 +1,4 @@
-// import type { RankedSkillGap } from '@/types/job'
+import type { RankedSkillGap } from '@/modules/matcher/types'
 
 export interface AffiliateRecommendation {
     id: string
@@ -386,7 +386,7 @@ export const affiliateService = {
         category?: string,
         limit: number = 5
     ): Promise<AffiliateRecommendation[]> {
-        const sorted = [...RECOMMATION_DATABASE].sort((a, b) => (b.rating || 0) - (a.rating || 0))
+        const sorted = [...RECOMMENDATION_DATABASE].sort((a, b) => (b.rating || 0) - (a.rating || 0))
         const filtered = category ? sorted.filter((r) => r.type === category) : sorted
 
         return filtered.slice(0, limit).map((rec) => ({
@@ -403,6 +403,3 @@ export const affiliateService = {
         }))
     },
 }
-
-// Typo fix for above
-const RECOMMATION_DATABASE = RECOMMENDATION_DATABASE

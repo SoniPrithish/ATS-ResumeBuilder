@@ -4,12 +4,23 @@ import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Sparkles, PlusCircle } from "lucide-react";
 
+export interface TailorPanelData {
+    summary: { original: string; suggested: string };
+    bullets?: { id: string; original: string; suggested: string }[];
+    keywords?: { missing?: string[] };
+}
+
+export interface TailorApplyPayload {
+    summary?: string;
+    bullets: Record<string, boolean>;
+}
+
 export function TailorPanel({
     tailorData,
     onApplyAll,
 }: {
-    tailorData: { summary: { original: string, suggested: string }, bullets?: { id: string, original: string, suggested: string }[], keywords?: { missing?: string[] } };
-    onApplyAll: (data: Record<string, unknown>) => void;
+    tailorData: TailorPanelData;
+    onApplyAll: (data: TailorApplyPayload) => void;
 }) {
     const [acceptedSummary, setAcceptedSummary] = useState(false);
     const [acceptedBullets, setAcceptedBullets] = useState<Record<string, boolean>>({});

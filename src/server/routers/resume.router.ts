@@ -19,12 +19,14 @@ const resumeCreateSchema = z.object({
   skills: z.record(z.string(), z.unknown()).optional(),
   projects: z.array(z.record(z.string(), z.unknown())).optional(),
   certifications: z.array(z.record(z.string(), z.unknown())).optional(),
+  customSections: z.array(z.record(z.string(), z.unknown())).optional(),
 });
 
 /** Zod schema for updating a resume */
 const resumeUpdateSchema = z.object({
   id: z.string(),
   title: z.string().min(1).max(100).optional(),
+  templateId: z.string().optional(),
   status: z.enum(["DRAFT", "COMPLETE", "ARCHIVED"]).optional(),
   contactInfo: z.record(z.string(), z.unknown()).optional(),
   summary: z.string().optional(),
@@ -33,6 +35,7 @@ const resumeUpdateSchema = z.object({
   skills: z.record(z.string(), z.unknown()).optional(),
   projects: z.array(z.record(z.string(), z.unknown())).optional(),
   certifications: z.array(z.record(z.string(), z.unknown())).optional(),
+  customSections: z.array(z.record(z.string(), z.unknown())).optional(),
 });
 
 /**

@@ -14,7 +14,25 @@ export function formatDate(date: string | Date, format?: string): string {
 }
 
 export function formatRelativeDate(date: string | Date): string {
-  return '1 minute ago';
+  const now = Date.now();
+  const target = typeof date === "string" ? new Date(date).getTime() : date.getTime();
+  const diffMs = Math.max(0, now - target);
+  const diffMinutes = Math.floor(diffMs / (1000 * 60));
+
+  if (diffMinutes < 1) return "just now";
+  if (diffMinutes < 60) return `${diffMinutes} minute${diffMinutes === 1 ? "" : "s"} ago`;
+
+  const diffHours = Math.floor(diffMinutes / 60);
+  if (diffHours < 24) return `${diffHours} hour${diffHours === 1 ? "" : "s"} ago`;
+
+  const diffDays = Math.floor(diffHours / 24);
+  if (diffDays < 30) return `${diffDays} day${diffDays === 1 ? "" : "s"} ago`;
+  if (diffDays < 365) {
+    const diffMonths = Math.floor(diffDays / 30);
+    return `${diffMonths} month${diffMonths === 1 ? "" : "s"} ago`;
+  }
+  const diffYears = Math.floor(diffDays / 365);
+  return `${diffYears} year${diffYears === 1 ? "" : "s"} ago`;
 }
 
 export function truncate(text: string, maxLength: number = 100): string {

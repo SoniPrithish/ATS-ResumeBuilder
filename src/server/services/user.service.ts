@@ -22,11 +22,11 @@ export interface UpdateProfileInput {
 
 export interface UserDataExport {
     user: UserProfile
-    resumes: any[]
-    jobDescriptions: any[]
-    matchResults: any[]
-    aiGenerations: any[]
-    analyticsEvents: any[]
+    resumes: unknown[]
+    jobDescriptions: unknown[]
+    matchResults: unknown[]
+    aiGenerations: unknown[]
+    analyticsEvents: unknown[]
     exportedAt: string
 }
 
@@ -68,7 +68,8 @@ export const userService = {
                 data: { name: data.name },
             })
             return this.getProfile(userId)
-        } catch (e) {
+        } catch (error) {
+            console.error(error)
             return { success: false, error: 'Failed to update profile' }
         }
     },
@@ -85,7 +86,8 @@ export const userService = {
                 data: { githubRepoUrl: repoUrl },
             })
             return { success: true, data: undefined }
-        } catch (e) {
+        } catch (error) {
+            console.error(error)
             return { success: false, error: 'Failed to update repository URL' }
         }
     },
@@ -121,7 +123,8 @@ export const userService = {
                 },
                                 
             }
-        } catch (e) {
+        } catch (error) {
+            console.error(error)
             return { success: false, error: 'Failed to export data' }
         }
     },

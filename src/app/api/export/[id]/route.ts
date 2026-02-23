@@ -50,7 +50,7 @@ export async function GET(
         headers.set('Content-Disposition', `attachment; filename="${result.data.fileName}"`)
         headers.set('Content-Length', result.data.sizeBytes.toString())
 
-        return new NextResponse(result.data.buffer as any, {
+        return new NextResponse(new Uint8Array(result.data.buffer), {
             status: 200,
             headers,
         })

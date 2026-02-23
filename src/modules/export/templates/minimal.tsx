@@ -1,5 +1,5 @@
 import React from 'react'
-import { Document, Page, Text, View, Link, StyleSheet } from '@react-pdf/renderer'
+import { Document, Page, Text, View, StyleSheet } from '@react-pdf/renderer'
 import type { CanonicalResume } from '@/types/resume'
 import type { TemplateConfig } from '../types'
 
@@ -56,7 +56,7 @@ export function MinimalTemplate({
         link: { color: config.colors.text, fontSize: 9, textDecoration: 'none' },
     })
 
-    const { contactInfo, summary, experience, education, skills, projects, certifications } = resume as any
+    const { contactInfo, summary, experience, education, skills, projects, certifications } = resume
     const contactItems = [
         (contactInfo?.email),
         (contactInfo?.phone),
@@ -70,7 +70,7 @@ export function MinimalTemplate({
         <Document>
             <Page size="A4" style={styles.page}>
                 <View style={styles.header}>
-                    <Text style={styles.fullName}>{contactInfo?.fullName || 'Your Name'}</Text>
+                    <Text style={styles.name}>{contactInfo?.fullName || 'Your Name'}</Text>
                     {contactItems.length > 0 && (
                         <Text style={styles.contactLine}>{contactItems.join(' | ')}</Text>
                     )}
@@ -120,7 +120,6 @@ export function MinimalTemplate({
                                 </View>
                                 <Text style={styles.itemSubtitle}>
                                     {edu.institution}
-                                    {'' ? `, ${''}` : ''}
                                 </Text>
                                 {edu.gpa && <Text style={styles.bodyText}>GPA: {edu.gpa}</Text>}
                                 {(edu.coursework || []) && (edu.coursework || []).length > 0 && (

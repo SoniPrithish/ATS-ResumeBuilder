@@ -22,16 +22,24 @@ export interface ActivityItem {
     id: string
     event: string
     description: string
-    metadata: Record<string, any> | null
+    metadata: Record<string, unknown> | null
     createdAt: string
     icon: string
+}
+
+function asString(value: unknown, fallback: string): string {
+    return typeof value === 'string' ? value : fallback
+}
+
+function asNumber(value: unknown, fallback: number): number {
+    return typeof value === 'number' ? value : fallback
 }
 
 export const analyticsService = {
     async trackEvent(
         userId: string | null,
         event: string,
-        metadata?: Record<string, any>
+        metadata?: Record<string, unknown>
     ): Promise<void> {
         queueMicrotask(async () => {
             try {
@@ -40,7 +48,7 @@ export const analyticsService = {
                         userId,
                         event,
                         metadata: metadata || null,
-                    } as any,
+                    } as never,
                 })
             } catch (error) {
                 logger.warn({ err: error, event }, 'Failed to track analytics event')
@@ -119,11 +127,11 @@ export const analyticsService = {
             })
 
             const points: ScoreTrendPoint[] = events.map((event) => {
-                const metadata = (event.metadata as Record<string, any>) || {}
+                const metadata = (event.metadata as Record<string, unknown>) || {}
                 return {
                     date: event.createdAt.toISOString(),
-                    score: metadata.score || 0,
-                    resumeTitle: metadata.resumeTitle || 'Unknown Resume',
+                    score: asNumber(metadata.score, 0),
+                    resumeTitle: asString(metadata.resumeTitle, 'Unknown Resume'),
                 }
             })
 
@@ -147,25 +155,25 @@ export const analyticsService = {
             })
 
             const items: ActivityItem[] = events.map((event) => {
-                const metadata = (event.metadata as Record<string, any>) || {}
+                const metadata = (event.metadata as Record<string, unknown>) || {}
                 let description = event.event
                 let icon = 'Activity'
 
                 switch (event.event) {
                     case 'resume_created':
-                        description = `Created resume: ${metadata.title || 'Untitled'}`
+                        description = `Created resume: ${asString(metadata.title, 'Untitled')}`
                         icon = 'FilePlus'
                         break
                     case 'resume_uploaded':
-                        description = `Uploaded resume: ${metadata.fileName || 'File'}`
+                        description = `Uploaded resume: ${asString(metadata.fileName, 'File')}`
                         icon = 'Upload'
                         break
                     case 'ats_scored':
-                        description = `ATS scored resume: ${metadata.resumeTitle || 'Resume'} — Score: ${metadata.score || 0}`
+                        description = `ATS scored resume: ${asString(metadata.resumeTitle, 'Resume')} — Score: ${asNumber(metadata.score, 0)}`
                         icon = 'BarChart'
                         break
                     case 'jd_matched':
-                        description = `Matched with JD: ${metadata.jdTitle || 'Job'} — Score: ${metadata.score || 0}%`
+                        description = `Matched with JD: ${asString(metadata.jdTitle, 'Job')} — Score: ${asNumber(metadata.score, 0)}%`
                         icon = 'GitCompare'
                         break
                     case 'ai_enhancement':
@@ -181,7 +189,7 @@ export const analyticsService = {
                         icon = 'Linkedin'
                         break
                     case 'version_created':
-                        description = `Saved version v${metadata.version || 1}`
+                        description = `Saved version v${asNumber(metadata.version, 1)}`
                         icon = 'GitBranch'
                         break
                 }
@@ -190,7 +198,7 @@ export const analyticsService = {
                     id: event.id,
                     event: event.event,
                     description,
-                    metadata: event.metadata as Record<string, any> | null,
+                    metadata: event.metadata as Record<string, unknown> | null,
                     createdAt: event.createdAt.toISOString(),
                     icon,
                 }

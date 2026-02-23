@@ -63,7 +63,7 @@ export function ClassicTemplate({
         link: { color: config.colors.accent, fontSize: 9, textDecoration: 'underline' },
     })
 
-    const { contactInfo, summary, experience, education, skills, projects, certifications } = resume as any
+    const { contactInfo, summary, experience, education, skills, projects, certifications } = resume
     const contactItems = [
         (contactInfo?.email),
         (contactInfo?.phone),
@@ -78,7 +78,7 @@ export function ClassicTemplate({
             <Page size="A4" style={styles.page}>
                 {/* HEADER */}
                 <View style={styles.header}>
-                    <Text style={styles.fullName}>{contactInfo?.fullName || 'Your Name'}</Text>
+                    <Text style={styles.name}>{contactInfo?.fullName || 'Your Name'}</Text>
                     {contactItems.length > 0 && (
                         <Text style={styles.contactLine}>{contactItems.join(' | ')}</Text>
                     )}
@@ -134,7 +134,6 @@ export function ClassicTemplate({
                                 </View>
                                 <Text style={styles.itemSubtitle}>
                                     {edu.institution}
-                                    {'' ? `, ${''}` : ''}
                                 </Text>
                                 {edu.gpa && <Text style={styles.bodyText}>GPA: {edu.gpa}</Text>}
                                 {(edu.coursework || []) && (edu.coursework || []).length > 0 && (

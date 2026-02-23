@@ -125,10 +125,16 @@ export const storageService = {
   /**
    * Delete a resume file from R2 storage.
    *
-   * @param key - The storage key
-   * @returns ServiceResult indicating success or failure
-   */
-  async deleteResumeFile(key: string): Promise<ServiceResult<void>> {
+    * @param userIdOrKey - User ID (legacy call style) or key (current style)
+    * @param maybeKey - Optional key when user ID is passed as first arg
+    * @returns ServiceResult indicating success or failure
+    */
+  async deleteResumeFile(
+    userIdOrKey: string,
+    maybeKey?: string
+  ): Promise<ServiceResult<void>> {
+    const key = maybeKey ?? userIdOrKey;
+    const userId = maybeKey ? userIdOrKey : undefined;
     try {
       const result = await deleteFile(key);
 
@@ -136,12 +142,12 @@ export const storageService = {
         return { success: false, error: result.error, code: "DELETE_FAILED" };
       }
 
-      log.info({ key }, "Resume file deleted");
+      log.info({ key, userId }, "Resume file deleted");
       return { success: true, data: undefined };
     } catch (err) {
       const message =
         err instanceof Error ? err.message : "Unknown error";
-      log.error({ key, error: message }, "Failed to delete resume file");
+      log.error({ key, userId, error: message }, "Failed to delete resume file");
       return {
         success: false,
         error: `Failed to delete file: ${message}`,

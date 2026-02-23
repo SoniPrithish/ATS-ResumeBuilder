@@ -145,8 +145,15 @@ export const githubService = {
             return { success: false, error: 'Failed to fetch commits from GitHub' }
         }
 
-        const commits = await res.json()
-        const versions: GitHubVersion[] = commits.map((c: any) => {
+        const commits = await res.json() as Array<{
+            sha: string
+            html_url: string
+            commit: {
+                message: string
+                author: { date: string }
+            }
+        }>
+        const versions: GitHubVersion[] = commits.map((c) => {
             // Extract version from commit message if possible
             const match = c.commit.message.match(/v(\d+)/)
             const version = match ? parseInt(match[1], 10) : 0
@@ -201,7 +208,7 @@ export const githubService = {
         try {
             const canonicalResume = JSON.parse(fileContent) as CanonicalResume
             return { success: true, data: canonicalResume }
-        } catch (e) {
+        } catch {
             return { success: false, error: 'Failed to parse version JSON data' }
         }
     },

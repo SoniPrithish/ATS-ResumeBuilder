@@ -1,13 +1,10 @@
 import { AlertCircle, AlertTriangle, BookOpen, Star } from "lucide-react";
+import type { RankedSkillGap } from "@/modules/matcher/types";
 
 export function GapReport({
     gaps,
 }: {
-    gaps: {
-        skillName: string;
-        importance: "high" | "medium" | "low";
-        relatedSkills: string[];
-    }[];
+    gaps: RankedSkillGap[];
 }) {
     if (!gaps || gaps.length === 0) {
         return (
@@ -19,9 +16,9 @@ export function GapReport({
         );
     }
 
-    const critical = gaps.filter((g) => g.importance === "high");
-    const recommended = gaps.filter((g) => g.importance === "medium");
-    const bonus = gaps.filter((g) => g.importance === "low");
+    const critical = gaps.filter((g) => g.category === "critical");
+    const recommended = gaps.filter((g) => g.category === "recommended");
+    const bonus = gaps.filter((g) => g.category === "bonus");
 
     return (
         <div className="space-y-6">
@@ -71,7 +68,7 @@ function GapGroup({
 }: {
     title: string;
     icon: React.ReactNode;
-    items: { skillName: string; relatedSkills: string[] }[];
+    items: RankedSkillGap[];
     colorClass: string;
     iconColor: string;
 }) {
@@ -88,10 +85,10 @@ function GapGroup({
                             <div className={`mt-0.5 ${iconColor}`}>{icon}</div>
                             <div className="space-y-1 w-full">
                                 <div className="flex justify-between items-center">
-                                    <p className="font-bold text-foreground">{item.skillName}</p>
+                                    <p className="font-bold text-foreground">{item.skill}</p>
                                 </div>
                                 <p className="text-sm text-muted-foreground mt-2 leading-relaxed h-[42px] overflow-hidden text-ellipsis line-clamp-2">
-                                    Often seen alongside: <span className="italic">{item.relatedSkills.join(", ") || "various technologies"}</span>.
+                                    Often seen alongside: <span className="italic">{item.relatedSkillsInResume.join(", ") || "various technologies"}</span>.
                                 </p>
                             </div>
                         </div>
