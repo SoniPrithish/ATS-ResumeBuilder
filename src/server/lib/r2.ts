@@ -31,18 +31,30 @@ const ALLOWED_TYPES = new Set([
     "application/vnd.openxmlformats-officedocument.wordprocessingml.document",
 ]);
 
-/** S3-compatible client for Cloudflare R2 */
-const s3Client = new S3Client({
-    region: "auto",
-    endpoint: `https://${process.env.R2_ACCOUNT_ID}.r2.cloudflarestorage.com`,
-    credentials: {
-        accessKeyId: process.env.R2_ACCESS_KEY_ID!,
-        secretAccessKey: process.env.R2_SECRET_ACCESS_KEY!,
-    },
-});
+function createS3Client(): S3Client | null {
+    const accountId = process.env.R2_ACCOUNT_ID;
+    const accessKeyId = process.env.R2_ACCESS_KEY_ID;
+    const secretAccessKey = process.env.R2_SECRET_ACCESS_KEY;
 
-const BUCKET_NAME = process.env.R2_BUCKET_NAME!;
-const PUBLIC_URL = process.env.R2_PUBLIC_URL!;
+    if (!accountId || !accessKeyId || !secretAccessKey) {
+        return null;
+    }
+
+    return new S3Client({
+        region: "auto",
+        endpoint: `https://${accountId}.r2.cloudflarestorage.com`,
+        credentials: {
+            accessKeyId,
+            secretAccessKey,
+        },
+    });
+}
+
+/** S3-compatible client for Cloudflare R2 */
+const s3Client = createS3Client();
+
+const BUCKET_NAME = process.env.R2_BUCKET_NAME;
+const PUBLIC_URL = process.env.R2_PUBLIC_URL;
 
 /**
  * Upload a file to Cloudflare R2 storage.
@@ -75,6 +87,14 @@ export async function uploadFile(
     }
 
     // ── Upload ─────────────────────────────────────────────
+    if (!s3Client || !BUCKET_NAME || !PUBLIC_URL) {
+        return {
+            success: false,
+            error: "File storage is not configured",
+            code: "UPLOAD_FAILED",
+        };
+    }
+
     const extension = fileName.split(".").pop() || "bin";
     const key = `uploads/${nanoid()}.${extension}`;
 
@@ -118,6 +138,10 @@ export async function uploadFile(
  * @returns The public URL for the file
  */
 export function getFileUrl(key: string): string {
+    if (!PUBLIC_URL) {
+        return "";
+    }
+
     return `${PUBLIC_URL}/${key}`;
 }
 
@@ -130,6 +154,14 @@ export function getFileUrl(key: string): string {
 export async function deleteFile(
     key: string
 ): Promise<ServiceResult<{ key: string }>> {
+    if (!s3Client || !BUCKET_NAME) {
+        return {
+            success: false,
+            error: "File storage is not configured",
+            code: "DELETE_FAILED",
+        };
+    }
+
     try {
         await s3Client.send(
             new DeleteObjectCommand({

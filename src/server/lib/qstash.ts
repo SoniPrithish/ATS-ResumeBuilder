@@ -16,24 +16,37 @@
 import { Client, Receiver } from "@upstash/qstash";
 
 const globalForQStash = globalThis as unknown as {
-    qstashClient: Client | undefined;
-    qstashReceiver: Receiver | undefined;
+    qstashClient: Client | null | undefined;
+    qstashReceiver: Receiver | null | undefined;
 };
 
+function createQStashClient(): Client | null {
+    const token = process.env.QSTASH_TOKEN;
+    if (!token) {
+        return null;
+    }
+
+    return new Client({ token });
+}
+
+function createQStashReceiver(): Receiver | null {
+    const currentSigningKey = process.env.QSTASH_CURRENT_SIGNING_KEY;
+    const nextSigningKey = process.env.QSTASH_NEXT_SIGNING_KEY;
+
+    if (!currentSigningKey || !nextSigningKey) {
+        return null;
+    }
+
+    return new Receiver({ currentSigningKey, nextSigningKey });
+}
+
 /** QStash client for publishing messages */
-const qstashClient: Client =
-    globalForQStash.qstashClient ??
-    new Client({
-        token: process.env.QSTASH_TOKEN!,
-    });
+const qstashClient: Client | null =
+    globalForQStash.qstashClient ?? createQStashClient();
 
 /** QStash receiver for verifying webhook signatures */
-const qstashReceiver: Receiver =
-    globalForQStash.qstashReceiver ??
-    new Receiver({
-        currentSigningKey: process.env.QSTASH_CURRENT_SIGNING_KEY!,
-        nextSigningKey: process.env.QSTASH_NEXT_SIGNING_KEY!,
-    });
+const qstashReceiver: Receiver | null =
+    globalForQStash.qstashReceiver ?? createQStashReceiver();
 
 if (process.env.NODE_ENV !== "production") {
     globalForQStash.qstashClient = qstashClient;
@@ -66,6 +79,10 @@ export async function publishJob<T extends Record<string, unknown>>(
         retries?: number;
     } = {}
 ): Promise<{ messageId: string }> {
+    if (!qstashClient) {
+        return { messageId: "" };
+    }
+
     const appUrl = process.env.NEXT_PUBLIC_APP_URL || "http://localhost:3000";
     const url = `${appUrl}/api/jobs/${type.replace(".", "/")}`;
 
@@ -86,6 +103,10 @@ export async function publishJob<T extends Record<string, unknown>>(
  * @returns True if the signature is valid
  */
 export async function verifySignature(request: Request): Promise<{ valid: boolean; body?: string }> {
+    if (!qstashReceiver) {
+        return { valid: false };
+    }
+
     try {
         const body = await request.text();
         const signature = request.headers.get("upstash-signature");

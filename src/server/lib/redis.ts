@@ -17,19 +17,26 @@
 import { Redis } from "@upstash/redis";
 
 const globalForRedis = globalThis as unknown as {
-    redis: Redis | undefined;
+    redis: Redis | null | undefined;
 };
+
+function createRedisClient(): Redis | null {
+    const url = process.env.UPSTASH_REDIS_REST_URL;
+    const token = process.env.UPSTASH_REDIS_REST_TOKEN;
+
+    if (!url || !token) {
+        return null;
+    }
+
+    return new Redis({ url, token });
+}
 
 /**
  * Upstash Redis client singleton.
  * Creates a single instance reused across hot reloads in development.
  */
-export const redis: Redis =
-    globalForRedis.redis ??
-    new Redis({
-        url: process.env.UPSTASH_REDIS_REST_URL!,
-        token: process.env.UPSTASH_REDIS_REST_TOKEN!,
-    });
+export const redis: Redis | null =
+    globalForRedis.redis ?? createRedisClient();
 
 if (process.env.NODE_ENV !== "production") {
     globalForRedis.redis = redis;
@@ -43,6 +50,10 @@ if (process.env.NODE_ENV !== "production") {
  * @returns The cached value (deserialized) or null
  */
 export async function getCache<T>(key: string): Promise<T | null> {
+    if (!redis) {
+        return null;
+    }
+
     try {
         const data = await redis.get<T>(key);
         return data ?? null;
@@ -64,6 +75,10 @@ export async function setCache<T>(
     value: T,
     ttlSeconds: number = 3600
 ): Promise<void> {
+    if (!redis) {
+        return;
+    }
+
     try {
         await redis.set(key, JSON.stringify(value), { ex: ttlSeconds });
     } catch (error) {
@@ -79,6 +94,10 @@ export async function setCache<T>(
  * @param key - The exact cache key to delete
  */
 export async function invalidateCache(key: string): Promise<void> {
+    if (!redis) {
+        return;
+    }
+
     try {
         await redis.del(key);
     } catch (error) {

@@ -54,6 +54,10 @@ export const cacheService = {
    * @param prefix - The key prefix to match
    */
   async invalidateByPrefix(prefix: string): Promise<void> {
+    if (!redis) {
+      return;
+    }
+
     try {
       const keys = await redis.keys(`${prefix}*`);
       if (keys.length > 0) {

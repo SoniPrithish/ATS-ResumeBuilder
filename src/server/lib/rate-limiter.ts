@@ -17,33 +17,47 @@
 import { Ratelimit } from "@upstash/ratelimit";
 import { redis } from "./redis";
 
+function createLimiter(config: {
+    requests: number;
+    window: `${number} ${"s" | "m" | "h" | "d"}`;
+    prefix: string;
+}): Ratelimit | null {
+    if (!redis) {
+        return null;
+    }
+
+    return new Ratelimit({
+        redis,
+        limiter: Ratelimit.slidingWindow(config.requests, config.window),
+        prefix: config.prefix,
+        analytics: true,
+    });
+}
+
 /**
  * Rate limiter configurations for different operation types.
  * Each limiter uses a sliding window algorithm backed by Upstash Redis.
  */
 export const rateLimiters = {
     /** AI generation: 5 requests per minute per user */
-    "ai-generation": new Ratelimit({
-        redis,
-        limiter: Ratelimit.slidingWindow(5, "1 m"),
+    "ai-generation": createLimiter({
+        requests: 5,
+        window: "1 m",
         prefix: "ratelimit:ai-generation",
-        analytics: true,
     }),
 
     /** File upload: 10 requests per hour per user */
-    upload: new Ratelimit({
-        redis,
-        limiter: Ratelimit.slidingWindow(10, "1 h"),
+    upload: createLimiter({
+        requests: 10,
+        window: "1 h",
         prefix: "ratelimit:upload",
-        analytics: true,
     }),
 
     /** General API: 60 requests per minute per user */
-    general: new Ratelimit({
-        redis,
-        limiter: Ratelimit.slidingWindow(60, "1 m"),
+    general: createLimiter({
+        requests: 60,
+        window: "1 m",
         prefix: "ratelimit:general",
-        analytics: true,
     }),
 } as const;
 
@@ -71,6 +85,15 @@ export async function checkRateLimit(
 ): Promise<RateLimitResult> {
     try {
         const limiter = rateLimiters[type];
+        if (!limiter) {
+            return {
+                success: true,
+                limit: 0,
+                remaining: 0,
+                reset: 0,
+            };
+        }
+
         const result = await limiter.limit(identifier);
 
         return {
