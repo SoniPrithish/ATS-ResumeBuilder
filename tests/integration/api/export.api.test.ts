@@ -21,7 +21,7 @@ describe('GET /api/export/[id]', () => {
     it('returns 401 if not authenticated', async () => {
         vi.mocked(auth).mockResolvedValue(null as any)
         const request = new Request('http://localhost/api/export/res-1')
-        const response = await GET(request, { params: { id: 'res-1' } })
+        const response = await GET(request, { params: Promise.resolve({ id: 'res-1' }) })
 
         expect(response.status).toBe(401)
     })
@@ -29,7 +29,7 @@ describe('GET /api/export/[id]', () => {
     it('returns 400 for invalid format', async () => {
         vi.mocked(auth).mockResolvedValue({ user: { id: 'user-1' } } as any)
         const request = new Request('http://localhost/api/export/res-1?format=txt')
-        const response = await GET(request, { params: { id: 'res-1' } })
+        const response = await GET(request, { params: Promise.resolve({ id: 'res-1' }) })
 
         expect(response.status).toBe(400)
         expect(await response.text()).toBe('Invalid format')
@@ -44,7 +44,7 @@ describe('GET /api/export/[id]', () => {
         })
 
         const request = new Request('http://localhost/api/export/res-1')
-        const response = await GET(request, { params: { id: 'res-1' } })
+        const response = await GET(request, { params: Promise.resolve({ id: 'res-1' }) })
 
         expect(response.status).toBe(404)
     })
@@ -58,7 +58,7 @@ describe('GET /api/export/[id]', () => {
         })
 
         const request = new Request('http://localhost/api/export/res-1')
-        const response = await GET(request, { params: { id: 'res-1' } })
+        const response = await GET(request, { params: Promise.resolve({ id: 'res-1' }) })
 
         expect(response.status).toBe(403)
     })
@@ -77,7 +77,7 @@ describe('GET /api/export/[id]', () => {
         })
 
         const request = new Request('http://localhost/api/export/res-1')
-        const response = await GET(request, { params: { id: 'res-1' } })
+        const response = await GET(request, { params: Promise.resolve({ id: 'res-1' }) })
 
         expect(response.status).toBe(200)
         expect(response.headers.get('Content-Type')).toBe('application/pdf')

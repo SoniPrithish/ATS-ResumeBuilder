@@ -1,0 +1,21 @@
+import type { ReactNode } from "react";
+
+interface SectionEditorProps {
+  title: string;
+  description?: string;
+  children: ReactNode;
+}
+
+export function SectionEditor({ title, description, children }: SectionEditorProps) {
+  return (
+    <section className="space-y-4 rounded-lg border bg-card p-4">
+      <div>
+        <h3 className="text-base font-semibold">{title}</h3>
+        {description ? (
+          <p className="text-sm text-muted-foreground">{description}</p>
+        ) : null}
+      </div>
+      {children}
+    </section>
+  );
+}

@@ -1,3 +1,5 @@
+"use client";
+
 import { useUIStore } from '@/stores/ui-store';
 import { Menu, Search, Bell } from 'lucide-react';
 import { Button } from '@/components/ui/button';

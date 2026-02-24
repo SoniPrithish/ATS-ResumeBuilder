@@ -1,3 +1,5 @@
+"use client";
+
 import { useUIStore } from '@/stores/ui-store';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';

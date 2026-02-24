@@ -5,7 +5,7 @@ import type { ExportOptions, TemplateId } from '@/modules/export'
 
 export async function GET(
     request: Request,
-    { params }: { params: { id: string } }
+    { params }: { params: Promise<{ id: string }> }
 ): Promise<Response> {
     try {
         const session = await auth()
@@ -32,7 +32,7 @@ export async function GET(
             colorAccent: searchParams.get('colorAccent') || undefined,
         }
 
-        const { id: resumeId } = params // Ensure id is resolved synchronously (or just use params.id)
+        const { id: resumeId } = await params
         const result = await exportService.exportResume(resumeId, session.user.id, options)
 
         if (!result.success) {
