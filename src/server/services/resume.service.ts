@@ -290,6 +290,23 @@ export const resumeService = {
 
       if (!parseResult.success || !parseResult.data) {
         const parseErrors = parseResult.errors.join(", ") || "Unknown parse error";
+
+        log.warn(
+          { userId, fileName, parseErrors },
+          "Automatic parsing failed; creating draft resume fallback"
+        );
+
+        const fallbackResume = await resumeService.createResume(userId, {
+          title: fileName.replace(/\.(pdf|docx)$/i, "") || "Uploaded Resume",
+          rawText: parseResult.rawText,
+          originalFileName: fileName,
+          originalFileType: fileType,
+        });
+
+        if (fallbackResume.success) {
+          return fallbackResume;
+        }
+
         return {
           success: false,
           error:
