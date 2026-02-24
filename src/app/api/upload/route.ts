@@ -17,6 +17,24 @@ const ALLOWED_TYPES: Record<string, "pdf" | "docx"> = {
     "docx",
 };
 
+function detectFileType(file: File): "pdf" | "docx" | null {
+  const mimeType = ALLOWED_TYPES[file.type];
+  if (mimeType) {
+    return mimeType;
+  }
+
+  const name = file.name.toLowerCase();
+  if (name.endsWith(".pdf")) {
+    return "pdf";
+  }
+
+  if (name.endsWith(".docx")) {
+    return "docx";
+  }
+
+  return null;
+}
+
 /**
  * Handle resume file upload.
  */
@@ -44,12 +62,12 @@ export async function POST(request: Request): Promise<Response> {
     }
 
     // Validate file type
-    const fileType = ALLOWED_TYPES[file.type];
+    const fileType = detectFileType(file);
     if (!fileType) {
       return NextResponse.json(
         {
           success: false,
-          error: "Invalid file type. Only PDF and DOCX files are allowed.",
+          error: "Invalid file type. Only .pdf and .docx files are allowed.",
         },
         { status: 400 }
       );
@@ -75,9 +93,10 @@ export async function POST(request: Request): Promise<Response> {
     );
 
     if (!result.success) {
+      const statusCode = result.code === "PARSE_FAILED" ? 422 : 500;
       return NextResponse.json(
-        { success: false, error: result.error },
-        { status: 500 }
+        { success: false, error: result.error, code: result.code },
+        { status: statusCode }
       );
     }
 

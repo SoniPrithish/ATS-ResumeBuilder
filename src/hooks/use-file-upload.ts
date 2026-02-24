@@ -47,7 +47,16 @@ export function useFileUpload(): UseFileUploadReturn {
             setProgress(100);
 
             if (!response.ok) {
-                throw new Error('Upload failed');
+                let errorMessage = 'Upload failed';
+                try {
+                    const errorJson = await response.json() as { error?: string };
+                    if (errorJson?.error) {
+                        errorMessage = errorJson.error;
+                    }
+                } catch {
+                    errorMessage = `Upload failed (HTTP ${response.status})`;
+                }
+                throw new Error(errorMessage);
             }
 
             const result = await response.json();

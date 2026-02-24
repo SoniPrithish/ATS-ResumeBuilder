@@ -289,9 +289,12 @@ export const resumeService = {
       const parseResult = await parseResume(buffer, fileType);
 
       if (!parseResult.success || !parseResult.data) {
+        const parseErrors = parseResult.errors.join(", ") || "Unknown parse error";
         return {
           success: false,
-          error: `Parse failed: ${parseResult.errors.join(", ")}`,
+          error:
+            `We couldn't parse this resume automatically. ${parseErrors}. ` +
+            "Please try another PDF/DOCX export or create a new resume manually.",
           code: "PARSE_FAILED",
         };
       }
