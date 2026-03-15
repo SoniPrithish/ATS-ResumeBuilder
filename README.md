@@ -138,7 +138,7 @@ Benefits of using LaTeX + GitHub:
 * Easy sharing and backups
 * Reproducible resume generation
 
----
+----
 
 # 📬 Contact
 
