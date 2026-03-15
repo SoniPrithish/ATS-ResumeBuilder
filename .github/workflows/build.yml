@@ -27,8 +27,8 @@ jobs:
 
       - name: Compile resume
         run: |
-          pdflatex Resume_PrithishSoni.tex
-          pdflatex Resume_PrithishSoni.tex
+          pdflatex resume.tex
+          pdflatex resume.tex
 
       - name: Rename PDF
         run: mv resume.pdf Resume_PrithishSoni.pdf
