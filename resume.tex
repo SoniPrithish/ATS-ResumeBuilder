@@ -5,7 +5,7 @@
 % License : MIT
 %------------------------
 
-\documentclass[letterpaper,11pt]{article}
+\documentclass[letterpaper,10pt]{article}
 
 \usepackage{latexsym}
 \usepackage[empty]{fullpage}
@@ -62,18 +62,19 @@
 \addtolength{\oddsidemargin}{-0.5in}
 \addtolength{\evensidemargin}{0in}
 \addtolength{\textwidth}{1in}
-\addtolength{\topmargin}{-.5in}
-\addtolength{\textheight}{1.0in}
+\addtolength{\topmargin}{-.62in}
+\addtolength{\textheight}{1.22in}
 
 \urlstyle{same}
 
 \raggedbottom
 \raggedright
 \setlength{\tabcolsep}{0in}
+\linespread{0.99}
 
 % section formatting
 \titleformat{\section}{
-    \bfseries \vspace{2pt} \raggedright \large
+  \bfseries \vspace{0pt} \raggedright \large
 }{}{0em}{}[\color{light-grey} {\titlerule[2pt]} \vspace{-4pt}]
 
 %-------------------------
@@ -84,11 +85,11 @@
 }
 
 \newcommand{\resumeSubheading}[4]{
-  \vspace{-1pt}\item
+  \vspace{-2pt}\item
   \begin{tabular*}{\textwidth}[t]{l@{\extracolsep{\fill}}r}
     \textbf{#1} & {\color{dark-grey}\small #2}\vspace{1pt}\\
     \textit{#3} & {\color{dark-grey} \small #4}\\
-  \end{tabular*}\vspace{-4pt}
+  \end{tabular*}\vspace{-6pt}
 }
 
 \newcommand{\resumeSubSubheading}[2]{
@@ -102,16 +103,16 @@
 \item
 \begin{tabular*}{\textwidth}{l@{\extracolsep{\fill}}r}
 #1 & {\color{dark-grey}} \\
-\end{tabular*}\vspace{-4pt}
+\end{tabular*}\vspace{-5pt}
 }
 
 \newcommand{\resumeSubItem}[1]{\resumeItem{#1}\vspace{-4pt}}
 
 \renewcommand\labelitemii{$\vcenter{\hbox{\tiny$\bullet$}}$}
 
-\newcommand{\resumeSubHeadingListStart}{\begin{itemize}[leftmargin=0in,label={}]}
+\newcommand{\resumeSubHeadingListStart}{\begin{itemize}[leftmargin=0in,label={},itemsep=2pt,topsep=3pt,parsep=0pt,partopsep=0pt]}
 \newcommand{\resumeSubHeadingListEnd}{\end{itemize}}
-\newcommand{\resumeItemListStart}{\begin{itemize}}
+\newcommand{\resumeItemListStart}{\begin{itemize}[leftmargin=0.2in,itemsep=2pt,topsep=2pt,parsep=0pt,partopsep=0pt]}
 \newcommand{\resumeItemListEnd}{\end{itemize}\vspace{0pt}}
 
 \color{text-grey}
@@ -123,49 +124,35 @@
 
 %----------HEADING----------
 \begin{center}
-\textbf{\Huge Prithish Soni} \\ \vspace{5pt}
+\textbf{\Huge Prithish Soni} \\ \vspace{2pt}
 \small
-\faPhone* \texttt{(916)516-9032} $|$
-\faEnvelope \texttt{soniprithish25@gmail.com} $|$
-\faLinkedin \texttt{Prithish Soni} $|$
-\faMapMarker* \texttt{San Francisco Bay Area} $|$
-\\ \vspace{-3pt}
+\faPhone* \href{tel:+19165169032}{\texttt{(916)516-9032}} $|$
+\faEnvelope \href{mailto:soniprithish25@gmail.com}{\texttt{soniprithish25@gmail.com}} $|$
+\faGithub \href{https://github.com/SoniPrithish}{\texttt{github.com/SoniPrithish}} $|$
+\faLinkedin \href{https://www.linkedin.com/in/soniprithish}{\texttt{linkedin.com/in/soniprithish}} $|$
+\faMapMarker* \texttt{San Francisco Bay Area}
+\\ \vspace{-6pt}
 \end{center}
 
+%-----------PROFILE-----------
+\section{PROFILE}
+\resumeSubHeadingListStart
+\item\small{MS Computer Science student at CSU Sacramento focused on real-time computer vision and ML systems. Built GPU-accelerated multi-camera tracking pipelines optimized for low-latency, multi-stream inference. Experience with end-to-end ML model development, deployment, software debugging, and performance benchmarking.}
+\resumeSubHeadingListEnd
+
 %-----------EXPERIENCE-----------
-\section{EXPERIENCE}
+\section{PROFESSIONAL EXPERIENCE}
 \resumeSubHeadingListStart
 
 \resumeSubheading
-{YouTube}{Aug. 2019 -- Present}
-{Creator (\href{https://www.youtube.com/c/harshibar}{\myuline{@harshibar}})}{San Francisco, CA}
+{Froyo Technologies}{May 2022 -- Aug. 2022}
+{Data Analytics Intern}{Remote}
 
 \resumeItemListStart
-\resumeItem{Grew channel to \textbf{60k subscribers in 1.5 years}; created 80+ videos on tech and productivity}
-\resumeItem{Conducted A/B testing on titles and thumbnails; \textbf{increased video impressions by 2.5M} in 3 months}
-\resumeItem{Designed a Notion workflow to streamline video production and roadmapping; boosted productivity by 20\%}
-\resumeItem{\textbf{Partnered with brands like Skillshare and Squarespace} to expand their outreach via sponsorships}
-\resumeItem{\textbf{Highlights}: \href{https://www.youtube.com/watch?v=HhWUjp5pD0g}{\myuline{The Problem with Productivity Apps}}, \href{https://www.youtube.com/watch?v=ms4cWMsOITs}{\myuline{Obsidian App Review}}, \href{https://www.youtube.com/watch?v=PkDbkyIR44w}{\myuline{Not-So-Minimal Desk Setup}}}
-\resumeItemListEnd
-
-\resumeSubheading
-{Google Verily}{Aug. 2018 -- Sept. 2019}
-{Software Engineer}{San Francisco, CA}
-
-\resumeItemListStart
-\resumeItem{\textbf{Led front-end development} of a dashboard to process 50k blood samples and detect early-stage cancer}
-\resumeItem{Rebuilt a Quality Control product with input from 20 cross-functional stakeholders, \textbf{saving \$1M annually}}
-\resumeItem{Spearheaded product development of a new lab workflow tool, leading to a 40\% increase in efficiency}
-\resumeItemListEnd
-
-\resumeSubheading
-{Amazon}{May 2017 -- Aug. 2017}
-{Software Engineering Intern}{Seattle, WA}
-
-\resumeItemListStart
-\resumeItem{Worked on the Search Customer Experience Team; \textbf{received a return offer}}
-\resumeItem{\textbf{Shipped a new feature to 2M+ users}}
-\resumeItem{Built a back-end database service in Java}
+\resumeItem{Analyzed customer data (5K+ rows) using SQL and Python (Pandas) to identify purchasing patterns and summarize key trends for the marketing team}
+\resumeItem{Built two interactive Tableau dashboards to track key performance metrics and streamline weekly reporting}
+\resumeItem{Cleaned and preprocessed datasets using Python and Excel, improving data accuracy and reducing manual effort}
+\resumeItem{Supported senior analysts with ad-hoc reports and exploratory data analysis for ongoing business projects}
 \resumeItemListEnd
 
 \resumeSubHeadingListEnd
@@ -175,25 +162,32 @@
 
 \resumeSubHeadingListStart
 
-\resumeProjectHeading{\textbf{Hyku Consulting}}{Sept. 2019 -- Mar. 2021}
+\resumeProjectHeading{\textbf{\href{https://github.com/SoniPrithish/multi_camera_tracking_system}{Multi-Camera Intelligent Monitoring System (Detection, Tracking \& Re-Identification)}}}{}
 
 \resumeItemListStart
-\resumeItem{Mentored 15 students towards acceptance at top US boarding schools}
-\resumeItem{Designed collaborative learning ecosystem with Trello, Miro, Google Suite}
+\resumeItem{Built a real-time multi-camera tracking system supporting 2--6 RTSP/MP4 streams with cross-camera identity consistency}
+\resumeItem{Achieved 15--30 FPS on 720p--1080p video using CUDA-accelerated inference with CPU fallback support}
+\resumeItem{Implemented cross-camera Re-ID using deep embeddings with temporal and spatial gating}
+\resumeItem{Reduced inference overhead via CUDA stream parallelism to enable multi-stream processing on a single GPU}
+\resumeItem{Debugged and profiled pipeline bottlenecks across concurrent video streams, reducing per-frame latency through targeted optimizations}
+\resumeItem{Evaluated system quality using IDF1, MOTA, HOTA, plus latency and throughput metrics}
 \resumeItemListEnd
 
-\resumeProjectHeading{\textbf{Minimal Icon Pack}}{Sept. 2020 -- Nov. 2020}
+\resumeProjectHeading{\textbf{\href{https://prithish.me}{Privacy-First In-Browser Image \& PDF Processing Platform}}}{}
 
 \resumeItemListStart
-\resumeItem{Designed and released 100+ minimal iOS and Android icons}
-\resumeItem{Generated \$250 in sales through YouTube marketing}
+\resumeItem{Built 10+ in-browser file processing tools with all computation done client-side and zero server uploads}
+\resumeItem{Optimized processing paths to handle files up to 100 MB with task completion under 3 seconds}
 \resumeItemListEnd
 
-\resumeProjectHeading{\textbf{CommonIntern}}{Sept. 2019 -- May 2020}
+\resumeProjectHeading{\textbf{\href{https://github.com/SoniPrithish/MetroTrafficVolume}{Metro Traffic Volume Prediction Pipeline}}}{}
 
 \resumeItemListStart
-\resumeItem{Python script to automatically apply to jobs on Glassdoor}
-\resumeItem{500 stars on GitHub and featured on Hackaday}
+\resumeItem{Built an end-to-end ML pipeline on 48,000+ records across 9 features for metro traffic prediction}
+\resumeItem{Benchmarked and validated 8 regression models using cross-validation and R\textsuperscript{2} scoring, automating model selection}
+\resumeItem{Engineered 4 time-based features from raw datetime data and filtered temperature and rainfall outliers}
+\resumeItem{Designed preprocessing with StandardScaler and OrdinalEncoder via ColumnTransformer}
+\resumeItem{Deployed a Flask web app serving real-time predictions from serialized model artifacts}
 \resumeItemListEnd
 
 \resumeSubHeadingListEnd
@@ -204,12 +198,19 @@
 \resumeSubHeadingListStart
 
 \resumeSubheading
-{Wellesley College}{Aug. 2014 -- May 2018}
-{Bachelor of Arts in Computer Science and Pre-Med}{Wellesley, MA}
+{California State University, Sacramento}{Aug. 2024 -- Present}
+{Master of Science in Computer Science}{Sacramento, US}
 
 \resumeItemListStart
-\resumeItem{\textbf{Coursework}: Data Structures, Algorithms, Databases, Computer Systems, Machine Learning}
-\resumeItem{\textbf{Research}: MIT Graybiel Lab, MIT Media Lab}
+\resumeItem{Focus: Real-time computer vision, machine learning systems, and scalable deployment}
+\resumeItemListEnd
+
+\resumeSubheading
+{The NorthCap University}{Graduated June 2024}
+{B.Tech}{Gurugram, India}
+
+\resumeItemListStart
+\resumeItem{Foundation in software engineering and applied computing}
 \resumeItemListEnd
 
 \resumeSubHeadingListEnd
@@ -219,8 +220,19 @@
 
 \begin{itemize}[leftmargin=0in,label={}]
 \small{\item{
-\textbf{Languages}: Python, JavaScript (React.js), HTML/CSS, SQL (PostgreSQL, MySQL) \\
-\textbf{Tools}: Figma, Notion, Jira, Trello, Miro, Google Analytics, GitHub, DaVinci Resolve, OBS
+\textbf{Languages \& Programming}: Python, Java, C, JavaScript, SQL, Bash \\
+\textbf{AI/ML}: PyTorch, TensorFlow, Scikit-learn, CUDA, OpenCV, NumPy, Pandas \\
+\textbf{Systems}: Operating Systems, Distributed Systems, Multithreading, Concurrency, Computer Networks, Software Architecture \\
+\textbf{Tools \& Infra}: Docker, Git, Linux, AWS, Flask, RESTful APIs, MySQL, MongoDB
+}}
+\end{itemize}
+
+%-----------CERTIFICATIONS-----------
+\section{CERTIFICATIONS}
+
+\begin{itemize}[leftmargin=0in,label={}]
+\small{\item{
+\textbf{AWS Academy Graduate}: AWS Academy Machine Learning Foundations
 }}
 \end{itemize}
 
