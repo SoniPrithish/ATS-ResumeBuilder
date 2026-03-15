@@ -1,12 +1,12 @@
 # LaTeX Resume with Automatic GitHub PDF Build
 ![Build Resume](https://github.com/SoniPrithish/resume/actions/workflows/build.yml/badge.svg)
 
-This repository contains my resume written in **LaTeX**.
-The PDF version is **automatically generated using GitHub Actions** whenever I push changes to the repository.
+This repository contains my(Prithish Soni) resume written in **LaTeX**.
+The PDF version is **automatically generated using GitHub Actions** whenever changes are pushed to the repository.
 
-This allows me to:
+This allows:
 
-* ✏️ Edit my resume locally using LaTeX
+* ✏️ Edit the resume locally using LaTeX
 * 👀 Preview it locally before committing
 * ☁️ Store the source on GitHub
 * 🤖 Automatically generate the latest **resume.pdf** on every push
@@ -16,7 +16,7 @@ This allows me to:
 
 Download the latest version here:
 
-https://SoniPrithish.github.io/resume/Resume_PrithishSoni.pdf
+https://SoniPrithish.github.io/resume/resume.pdf
 
 # 📁 Repository Structure
 
@@ -36,9 +36,9 @@ resume/
 
 # 🚀 How It Works
 
-1. I edit `resume.tex` locally.
-2. I preview the PDF locally using LaTeX.
-3. I push changes to GitHub.
+1. Edit `resume.tex` locally.
+2. Preview the PDF locally using LaTeX.
+3. Push changes to GitHub.
 4. GitHub Actions automatically:
 
    * installs LaTeX
