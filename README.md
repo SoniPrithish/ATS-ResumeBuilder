@@ -1,5 +1,5 @@
 # LaTeX Resume with Automatic GitHub PDF Build
-![Build Resume](https://github.com/YOURUSERNAME/resume/actions/workflows/build.yml/badge.svg)
+![Build Resume](https://github.com/SoniPrithish/resume/actions/workflows/build.yml/badge.svg)
 
 This repository contains my resume written in **LaTeX**.
 The PDF version is **automatically generated using GitHub Actions** whenever I push changes to the repository.
