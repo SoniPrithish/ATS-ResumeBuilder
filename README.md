@@ -16,7 +16,7 @@ This allows:
 
 Download the latest version here:
 
-https://SoniPrithish.github.io/resume/resume.pdf
+https://SoniPrithish.github.io/resume/resume
 
 # 📁 Repository Structure
 
